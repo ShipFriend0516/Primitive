@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <RouterProvider router={router}>
-    <Router basename="/">
+    <Router basename="/primitive">
       <Routes>
         {routes.map((router) => (
           <Route key={router.path} path={router.path} element={router.element} />
