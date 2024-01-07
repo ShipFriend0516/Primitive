@@ -8,12 +8,20 @@ const ProjectPage = () => {
     border-radius: 32px;
     cursor: pointer;
 
-    background-color: #2a2d32 !important;
+    background-color: #2a2d32;
     height: 54px !important;
     padding-left: 24px;
     padding-right: 24px;
     color: white;
     line-height: 54px;
+
+    &:hover {
+      background-color: #555555;
+    }
+
+    &:focus {
+      outline: 3px solid #9ba1df;
+    }
   `;
 
   return (
