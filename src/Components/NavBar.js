@@ -10,6 +10,21 @@ const NavBar = () => {
     &:hover {
       cursor: pointer;
       color: gray;
+      margin: 0 6px;
+    }
+
+    &:first-elment {
+      margin: 0;
+    }
+
+    &:last-child {
+      margin-left: 6px;
+      margin-right: 0;
+    }
+
+    &:last-child:hover {
+      color: black;
+      margin-left: 8px;
     }
   `;
 
@@ -27,9 +42,8 @@ const NavBar = () => {
             navigate("/");
           }}
         >
-          홈
+          소개
         </To>
-        <To>소개</To>
         <To
           onClick={() => {
             navigate("/project");
@@ -37,7 +51,21 @@ const NavBar = () => {
         >
           프로젝트
         </To>
-        <To>운영진</To>
+        <To
+          onClick={() => {
+            navigate("/members");
+          }}
+        >
+          운영진
+        </To>
+        <To
+          className="bg-blue-500 hover:text-black"
+          onClick={() => {
+            navigate("/members");
+          }}
+        >
+          JOIN US!
+        </To>
       </ul>
     </div>
   );
