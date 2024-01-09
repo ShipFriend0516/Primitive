@@ -35,11 +35,15 @@ const ProjectCard = ({
           isEmpty ? `bg-indigo-300` : ""
         }`}
       >
-        <img className="object-cover aspect-video" src={projectThumbnail} alt={projectName} />
+        <img
+          className="cursor-pointer object-cover aspect-video"
+          src={projectThumbnail}
+          alt={projectName}
+        />
       </div>
       <div className="w-full aspect-video p-0.5">
         <p className="text-indigo-400 text-sm">{projectDate}</p>
-        <p className="text-black text-xl">{projectName}</p>
+        <p className=" cursor-pointer text-black text-xl">{projectName}</p>
         <p className="text-sm">{projectDescription}</p>
         <p className="text-sm">
           {projectParticipate.map((m) => {

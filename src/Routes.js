@@ -1,3 +1,4 @@
+import RecruitPage from "./Pages/RecruitPage";
 import MainPage from "./Pages/MainPage";
 import MembersPage from "./Pages/MembersPage";
 import ProjectPage from "./Pages/ProjectPage";
@@ -14,6 +15,10 @@ const routes = [
   {
     element: <MembersPage />,
     path: "/members",
+  },
+  {
+    element: <RecruitPage />,
+    path: "/recruit",
   },
 ];
 

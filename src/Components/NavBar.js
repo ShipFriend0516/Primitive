@@ -61,7 +61,7 @@ const NavBar = () => {
         <To
           className="bg-blue-500 hover:text-black"
           onClick={() => {
-            navigate("/members");
+            navigate("/recruit");
           }}
         >
           JOIN US!
