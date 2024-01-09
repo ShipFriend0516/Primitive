@@ -23,7 +23,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://ShipFriend0516.github.io/Primitive",
+  "homepage": "https://shipfriend0516.github.io/primitive",
   "eslintConfig": {
     "extends": [
       "react-app",
