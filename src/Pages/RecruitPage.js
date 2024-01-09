@@ -4,6 +4,7 @@ import primitive23 from "../Images/primitive23.jpg";
 
 const RecruitPage = () => {
   const [showLast, setShowLast] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
   return (
     <>
       <NavBar />
@@ -17,8 +18,17 @@ const RecruitPage = () => {
           지난 모집공고 {showLast ? "닫기" : "확인하기"}
         </button>
         {showLast ? (
-          <div className="flex justify-center items-center overflow-hidden border-2 p-3 rounded-lg">
-            <img className="fade_in  w-1/2" src={primitive23} alt="23년도 모집공고"></img>
+          <div className="flex justify-center items-center overflow-hidden border-2 p-3 rounded-lg ">
+            <img
+              className={`fade_in w-1/2 ${
+                isZoomed ? "w-full cursor-zoom-out" : "w-1/2 cursor-zoom-in"
+              }`}
+              onClick={() => {
+                setIsZoomed((prev) => !prev);
+              }}
+              src={primitive23}
+              alt="23년도 모집공고"
+            ></img>
           </div>
         ) : (
           ""

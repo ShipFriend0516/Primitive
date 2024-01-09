@@ -59,6 +59,13 @@ const NavBar = () => {
           운영진
         </To>
         <To
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
+          로그인
+        </To>
+        <To
           className="bg-blue-500 hover:text-black"
           onClick={() => {
             navigate("/recruit");
