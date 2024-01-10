@@ -5,6 +5,7 @@ import primitive23 from "../Images/primitive23.jpg";
 const RecruitPage = () => {
   const [showLast, setShowLast] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
+  const [loading, setLoading] = useState(true);
   return (
     <>
       <NavBar />
@@ -19,6 +20,7 @@ const RecruitPage = () => {
         </button>
         {showLast ? (
           <div className="flex justify-center items-center overflow-hidden border-2 p-3 rounded-lg ">
+            {loading && <svg class="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24"></svg>}
             <img
               className={`fade_in w-1/2 ${
                 isZoomed ? "w-full cursor-zoom-out" : "w-1/2 cursor-zoom-in"
@@ -28,6 +30,9 @@ const RecruitPage = () => {
               }}
               src={primitive23}
               alt="23년도 모집공고"
+              onLoad={() => {
+                setLoading(false);
+              }}
             ></img>
           </div>
         ) : (
