@@ -18,11 +18,17 @@ const RecruitPage = () => {
         >
           지난 모집공고 {showLast ? "닫기" : "확인하기"}
         </button>
+
         {showLast ? (
-          <div className="flex justify-center items-center overflow-hidden border-2 p-3 rounded-lg ">
-            {loading && <svg class="animate-spin h-5 w-5 mr-3 ..." viewBox="0 0 24 24"></svg>}
+          <div className="flex flex-col justify-center items-center overflow-hidden border-2 p-3 rounded-lg ">
+            {loading && (
+              <svg
+                class="animate-pulse h-5 w-5 rounded-full bg-green-950"
+                viewBox="0 0 24 24"
+              ></svg>
+            )}
             <img
-              className={`fade_in w-1/2 ${
+              className={`fade_in w-1/2  ${loading ? "hidden" : ""} ${
                 isZoomed ? "w-full cursor-zoom-out" : "w-1/2 cursor-zoom-in"
               }`}
               onClick={() => {
