@@ -29,9 +29,9 @@ const ProjectCard = ({
   `;
 
   return (
-    <div className="shadow-sm p-2">
+    <div className="p-2">
       <div
-        className={`w-full rounded-xl aspect-video overflow-hidden  ${
+        className={`w-full rounded-lg aspect-video overflow-hidden  ${
           isEmpty ? `bg-indigo-300` : ""
         }`}
       >
