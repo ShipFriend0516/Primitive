@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import "../Styles/animations.css";
 
 const NavBar = () => {
   const To = styled.li`
@@ -106,6 +107,16 @@ const NavBar = () => {
   };
 
   // 모달 관련
+
+  useEffect(() => {
+    // 모달이 열릴 때 body에 클래스 추가
+    if (modalIsOpen) {
+      document.body.classList.add("modal-open");
+    } else {
+      document.body.classList.remove("modal-open");
+    }
+  }, [modalIsOpen]);
+
   const loginModalStyle = {
     overlay: {
       backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -120,6 +131,8 @@ const NavBar = () => {
       border: "1px solid #ccc",
       borderRadius: "12px",
       padding: "20px",
+      boxShadow: "1px 1px 8px gray",
+      animation: "fade_in .9s ease-out .1s 1",
     },
   };
 
@@ -137,6 +150,7 @@ const NavBar = () => {
         onRequestClose={closeModal}
         contentLabel="로그인 및 회원가입 모달"
         style={loginModalStyle}
+        portalClassName="modal"
       >
         <div className="p-4 ">
           <div className="text-2xl font-bold mb-5">{activeTab.toLocaleUpperCase()}</div>

@@ -20,3 +20,6 @@
   }
 }
 
+.modal {
+  animation: fade_in .9s ease-out .1s 1;
+}
