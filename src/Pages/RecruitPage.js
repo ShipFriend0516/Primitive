@@ -13,7 +13,7 @@ const RecruitPage = () => {
         <h3 className="text-4xl">지금은 지원기간이 아닙니다!</h3>
         <p>지난 기수 모집 기간: 2월 21일 (화) ~ 3월 13일 (월)</p>
         <button
-          className="bg-green-200 py-1 px-4 rounded-lg m-3"
+          className="bg-green-200 py-1 px-4 rounded-lg m-3 hover:bg-green-300"
           onClick={() => setShowLast((prev) => !prev)}
         >
           지난 모집공고 {showLast ? "닫기" : "확인하기"}
