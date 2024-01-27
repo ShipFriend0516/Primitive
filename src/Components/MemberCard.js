@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const MemberCard = ({ name, number, position, description }) => {
+const MemberCard = ({ emoji, name, number, position, description }) => {
   const MemberCard = styled.div`
     display: flex;
     flex-direction: column;
@@ -35,7 +35,7 @@ const MemberCard = ({ name, number, position, description }) => {
 
   return (
     <MemberCard>
-      <div className="w-full bg-white text-9xl flex justify-center items-center">🔥</div>
+      <div className="w-full bg-white text-9xl flex justify-center items-center">{emoji}</div>
       <div className="bg-slate-900 w-full">
         <span>{position}</span>
         <span className="text-2xl">
