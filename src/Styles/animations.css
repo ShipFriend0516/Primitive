@@ -1,6 +1,5 @@
-
 .fade_in {
-  animation: fade_in .9s ease-out .1s 1;
+  animation: fade_in 0.9s ease-out 0.1s 1;
   /* transition: .5s; */
 }
 
@@ -21,5 +20,5 @@
 }
 
 .modal {
-  animation: fade_in .9s ease-out .1s 1;
+  animation: fade_in 0.9s ease-out 0.1s 1;
 }

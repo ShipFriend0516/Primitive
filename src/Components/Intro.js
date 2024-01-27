@@ -1,28 +1,29 @@
 import styled from "styled-components";
-
+import logoBanner from "../Images/프미배너.jpg";
 const Intro = () => {
   const Cover = styled.div`
     width: 100vw;
     height: 100vh;
     position: relative;
 
-    div {
+    > div {
       position: absolute;
     }
 
-    div:first-child {
+    > div:first-child {
       top: 25%;
       right: 2.5rem;
     }
 
-    div:last-child {
+    > div:last-child {
       top: 75%;
       left: 2.5rem;
     }
   `;
 
   return (
-    <div className="bg-white from-slate-400 to-gray-900 w-screen min-h-screen">
+    <div className="bg-white w-screen min-h-screen pt-14">
+      <img src={logoBanner} alt="logoBanner" />
       <Cover className="">
         <div className="top-1/4 right-10 fade_in">
           <p className="text-9xl">PRIMITIVE</p>
@@ -51,10 +52,9 @@ const Intro = () => {
           <p className="text-6xl">무슨 활동을 하나요?</p>
         </div>
         <div>
-          <p>
-            우리 동아리는 신입생 프로그래밍 교육부터 공모전 참여 같은 학술적인 부분부터 시작해,
-            회식이나 MT 등 노는 것도 잘하는 동아리입니다!
-          </p>
+          <div>활동1</div>
+          <div>활동2</div>
+          <div>활동3</div>
         </div>
       </Cover>
 

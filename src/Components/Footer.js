@@ -16,6 +16,7 @@ const Footer = () => {
             {/* 소셜 미디어 아이콘 등을 추가하세요 */}
             <a
               href="https://www.instagram.com/primitive_knu/"
+              target="_blank"
               className="text-gray-300 hover:text-white ml-2"
             >
               <i className="fab">
@@ -24,6 +25,7 @@ const Footer = () => {
             </a>
             <a
               href="https://github.com/ShipFriend0516"
+              target="_blank"
               className="text-gray-300 hover:text-white ml-2"
             >
               <i className="fab">
@@ -32,6 +34,7 @@ const Footer = () => {
             </a>
             <a
               href="https://cafe.naver.com/primitive315"
+              target="_blank"
               className="text-gray-300 hover:text-white ml-2"
             >
               <i className="fab">

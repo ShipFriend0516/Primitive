@@ -15,15 +15,15 @@ const MembersPage = () => {
           <div className="flex flex-row gap-4">
             <MemberCard
               emoji={emojis[Math.floor(Math.random() * emojis.length)]}
-              name={"이 모씨"}
-              number={19}
+              name={"심상치 않은 회장"}
+              number={22}
               position={"회장"}
               description={"오..."}
             />
             <MemberCard
               emoji={emojis[Math.floor(Math.random() * emojis.length)]}
-              name={"윤 모씨"}
-              number={21}
+              name={"심상치 않은 부회장"}
+              number={20}
               position={"부회장"}
               description={"오....?"}
             />
