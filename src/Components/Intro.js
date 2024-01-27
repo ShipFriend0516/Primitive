@@ -23,7 +23,7 @@ const Intro = () => {
 
   return (
     <div className="bg-white w-screen min-h-screen pt-14">
-      <img src={logoBanner} alt="logoBanner" />
+      {/* <img src={logoBanner} alt="logoBanner" /> */}
       <Cover className="">
         <div className="top-1/4 right-10 fade_in">
           <p className="text-9xl">PRIMITIVE</p>
