@@ -2,8 +2,8 @@ import QuestionBox from "./QuestionBox";
 
 const FAQ = () => {
   return (
-    <div className="p-20">
-      <div className="text-4xl text-center py-10">자주 묻는 질문</div>
+    <div className="md:p-20 p-10">
+      <div className="text-4xl font-bold text-center py-10">자주 묻는 질문</div>
       <div className="flex flex-col">
         <QuestionBox
           question={"모집은 언제부터 시작하나요?"}
@@ -18,9 +18,9 @@ const FAQ = () => {
           }
         />
         <QuestionBox
-          question={"코딩을 배운 적이 없는데도 신청 가능한가요?"}
+          question={"코딩을 배운 적이 없어도 신청 가능한가요?"}
           answer={
-            "Primitive는 개인의 실력이나 능력보다는 동아리 활동에 참여하고자 하는 의지와 열정, 그리고 협업 태도를 중심으로 부원을 선정합니다. 1학년 분들은 재밌게 대학 생활을 하고 싶으면 망설이지 말고 신청하세요!"
+            "Primitive는 개인의 실력이나 능력보다는 동아리 활동에 참여하고자 하는 의지와 열정, 그리고 협업 태도를 중심으로 부원을 선정합니다. 신입생분들은 재밌게 대학 생활을 하고 싶으면 망설이지 말고 신청하세요!"
           }
         />
         <QuestionBox

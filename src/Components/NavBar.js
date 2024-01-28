@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "../Styles/animations.css";
+import { IoHomeSharp } from "react-icons/io5";
 
 const NavBar = () => {
   const To = styled.li`
@@ -289,7 +290,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="w-screen h-14 fixed bg-gray-950 z-10 text-white flex flex-row gap-5 justify-between border-b-gray-50">
+    <div className="w-screen h-14 fixed bg-gray-950 z-10 text-white flex flex-row gap-5 justify-between border-b-gray-50 sm:text-lg text-xs">
       <>
         <To>Primitive</To>
         {/* <img src="" alt="logo" /> */}
