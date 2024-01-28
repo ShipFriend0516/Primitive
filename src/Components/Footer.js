@@ -66,7 +66,7 @@ const Footer = () => {
         </div>
         <hr className="my-4 border-gray-600"/>
         <p className="text-center">충청남도 천안시 서북구 천안대로 1223-24 공주대학교 학생회관 315호</p>
-        <p className="text-center">© 2024 Primitive. All rights reserved.</p>
+        <p className="text-center">Copyright© 2024 Primitive. All rights reserved.</p>
       </div>
     </footer>
   );

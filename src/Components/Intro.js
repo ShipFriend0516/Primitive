@@ -65,18 +65,6 @@ const Intro = () => {
           <div>활동3</div>
         </div>
       </Cover>
-
-      <Cover className="">
-        <div className="top-1/4 right-10 fade_in">
-          <p className="text-6xl">대표 프로젝트</p>
-          <p className="text-3xl">이런 활동들을 했습니다!</p>
-        </div>
-        <div className="grid grid-cols-3 grid-rows-1 ">
-          <div className="bg-blue-300 w-full h-full"></div>
-          <div className="bg-blue-300 w-full h-full"></div>
-          <div className="bg-blue-300 w-full h-full"></div>
-        </div>
-      </Cover>
     </div>
   );
 };
