@@ -10,7 +10,9 @@ const Footer = () => {
         <div className="flex justify-between items-center">
           <div>
             <h2 className="text-xl font-bold">Primitive Contact</h2>
-            <p>다른 활동도 확인해보세요!</p>
+            <p className="text-sm">
+              충청남도 천안시 서북구 천안대로 1223-24 공주대학교 학생회관 315호
+            </p>
           </div>
           <div className="flex">
             {/* 소셜 미디어 아이콘 등을 추가하세요 */}
@@ -18,6 +20,7 @@ const Footer = () => {
               href="https://www.instagram.com/primitive_knu/"
               target="_blank"
               className="text-gray-300 hover:text-white ml-2"
+              rel="noreferrer"
             >
               <i className="fab">
                 <FaInstagram style={{ width: 24 + "px", height: 24 + "px" }} />
@@ -27,6 +30,7 @@ const Footer = () => {
               href="https://github.com/ShipFriend0516"
               target="_blank"
               className="text-gray-300 hover:text-white ml-2"
+              rel="noreferrer"
             >
               <i className="fab">
                 <FaGithub style={{ width: 24 + "px", height: 24 + "px" }} />
@@ -36,6 +40,7 @@ const Footer = () => {
               href="https://cafe.naver.com/primitive315"
               target="_blank"
               className="text-gray-300 hover:text-white ml-2"
+              rel="noreferrer"
             >
               <i className="fab">
                 <svg

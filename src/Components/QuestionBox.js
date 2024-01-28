@@ -19,7 +19,7 @@ const QuestionBox = ({ question, answer }) => {
     margin-bottom: 20px;
     overflow: hidden;
 
-    div {
+    > div {
       padding: 10px;
     }
   `;
@@ -42,13 +42,14 @@ const QuestionBox = ({ question, answer }) => {
       to: {
         padding: springs.padding.get() === 0 ? 10 : 0,
         opacity: springs.opacity.get() === 0 ? 1 : 0,
-        maxHeight: springs.maxHeight.get() === 0 ? 100 : 0,
+        maxHeight: springs.maxHeight.get() === 0 ? 400 : 0,
       },
     });
   };
 
   return (
     <Question
+      className="md:text-lg text-sm"
       style={{ backgroundColor: isOpen ? "#2a2d32" : "white" }}
       onClick={() => {
         handleClick();
@@ -56,7 +57,10 @@ const QuestionBox = ({ question, answer }) => {
       }}
     >
       <div className="flex justify-between items-center">
-        <p>Q : {question}</p>
+        <div className="flex gap-1">
+          <span>Q : </span>
+          <p className="flex-1">{question}</p>
+        </div>
         <div>{isOpen ? <FaAngleUp /> : <FaAngleDown />}</div>
       </div>
 
