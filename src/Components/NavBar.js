@@ -290,7 +290,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="w-screen h-14 fixed bg-gray-950 z-10 text-white flex flex-row gap-5 justify-between border-b-gray-50 sm:text-lg text-xs">
+    <div className="w-screen h-14 fixed bg-gray-950 z-10 text-white flex flex-row gap-5 justify-between border-b-gray-50 sm:text-lg text-xs hahmlet">
       <>
         <To>Primitive</To>
         {/* <img src="" alt="logo" /> */}
