@@ -18,9 +18,12 @@ const ProjectCard = ({
     margin-right: 4px;
     color: black;
     font-size: 10px;
-    background-color: trasparent;
+    background-color: transparent;
     border: 1px solid gray;
     border-radius: 0.25em;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 
     &:hover {
       background-color: #f0f0f0;

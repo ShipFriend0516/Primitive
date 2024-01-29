@@ -4,6 +4,7 @@ import ProjectCard from "../Components/ProjectCard";
 import styled from "styled-components";
 
 import project1 from "../Images/cover4.jpg";
+import project2 from "../Images/Title-Invisible.png";
 
 const ProjectPage = () => {
   const Filter = styled.span`
