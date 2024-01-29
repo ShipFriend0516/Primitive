@@ -28,7 +28,6 @@
     "deploy": "gh-pages -d build",
     "db": "json-server --watch db.json --port 3001"
   },
-  "homepage": "http://ShipFriend0516.github.io/Primitive",
   "eslintConfig": {
     "extends": [
       "react-app",
