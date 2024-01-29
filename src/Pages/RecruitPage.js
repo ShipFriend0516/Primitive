@@ -1,6 +1,7 @@
 import { useState } from "react";
 import NavBar from "../Components/NavBar";
 import primitive23 from "../Images/primitive23.jpg";
+import Footer from "../Components/Footer";
 
 const RecruitPage = () => {
   const [showLast, setShowLast] = useState(false);
@@ -45,6 +46,7 @@ const RecruitPage = () => {
           ""
         )}
       </div>
+      <Footer />
     </>
   );
 };

@@ -10,6 +10,9 @@ import Introduction3 from "../Images/3.png";
 import Introduction4 from "../Images/4.png";
 
 import ProjectCard from "./ProjectCard";
+
+import Footer from "../Components/Footer";
+import FAQ from "../Components/FAQ";
 const Intro = () => {
   const Cover = styled.div`
     width: 100vw;
@@ -153,6 +156,7 @@ const Intro = () => {
           />
         </div>
       </Cover>
+
     </div>
   );
 };
