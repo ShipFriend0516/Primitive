@@ -12,6 +12,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 code {
@@ -19,7 +20,7 @@ code {
 }
 
 body {
-  background-color: black;
+  /* background-color: black; */
   font-family: "Pretendard-Regular", "LINESeedKR-Bd", "Orbit-Regular", "NEXON Lv1 Gothic OTF";
 }
 
