@@ -2,7 +2,7 @@ import QuestionBox from "./QuestionBox";
 
 const FAQ = () => {
   return (
-    <div className="md:p-20 p-10">
+    <div className="bg-white md:p-20 p-10">
       <div className="text-4xl font-bold text-center py-10">자주 묻는 질문</div>
       <div className="flex flex-col">
         <QuestionBox

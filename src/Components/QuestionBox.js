@@ -64,7 +64,7 @@ const QuestionBox = ({ question, answer }) => {
         <div>{isOpen ? <FaAngleUp /> : <FaAngleDown />}</div>
       </div>
 
-      <animated.div style={{ backgroundColor: "gray", ...springs }}>
+      <animated.div style={{ color: "black", backgroundColor: "white", ...springs }}>
         <p>A : {answer}</p>
       </animated.div>
     </Question>
