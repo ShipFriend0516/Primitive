@@ -73,7 +73,9 @@ const Footer = () => {
         <hr className="my-4 border-gray-600" />
         <p className="text-center relative">
           Copyright© 2024 Primitive. All rights reserved.{" "}
-          <span className="absolute right-0 text-gray-800"></span>
+          <span className="absolute right-0 text-gray-800">
+            Special Thanks.... 윤...누구더라..?
+          </span>
         </p>
       </div>
     </footer>
