@@ -2,7 +2,7 @@ import styled from "styled-components";
 import logoBanner from "../Images/프미배너.jpg";
 import project1 from "../Images/cover4.jpg";
 import project2 from "../Images/Title-Invisible.png";
-import project3 from "../Images/2.jpg"
+import project3 from "../Images/2.jpg";
 
 import Introduction1 from "../Images/1.png";
 import Introduction2 from "../Images/2.png";
@@ -27,8 +27,6 @@ const Intro = () => {
     > div:last-child {
       right: 2.5rem;
     }
-
-    
   `;
 
   const ActivityCard = styled.div`
@@ -39,29 +37,27 @@ const Intro = () => {
     position: relative;
     aspect-ratio: 16/9;
     background-color: white;
-    
-    
+
     h4 {
       font-size: 1.5rem;
       position: relative;
-      color : white;
+      color: white;
     }
-   
+
     p {
       position: relative;
-      color : white;
+      color: white;
     }
-    
-    &:before{
-      content: '';
+
+    &:before {
+      content: "";
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0, 0.2);
+      background: rgba(0, 0, 0, 0.2);
       border-radius: 20px;
-      
     }
     background-image: ${(props) => `url(${props.backgroundImage})`};
     background-repeat: no-repeat;
@@ -70,24 +66,28 @@ const Intro = () => {
   `;
 
   return (
-    <div className="bg-white w-screen min-h-screen pt-14">
+    <div className="bg-black w-screen min-h-screen pt-14">
       {/* <img src={logoBanner} alt="logoBanner" /> */}
-      <Cover className="bg-gradient-to-br from-violet-300 to-white ">
-        <div className=" top-1/4 fade_in mb-10">
-          <p className="2xl:text-6xl xl:text-6xl lg:text-6xl md:text-5xl sm:text-4xl text-2xl">
-            PRIMITIVE
-          </p>
-          <p className="sm:text-3xl text-xl">공주대학교 IT 창업동아리</p>
+      <Cover className="bg-gradient-to-b from-black to-indigo-950 bg-black text-white h-screen flex flex-col justify-center items-center">
+        <div className="top-1/4 fade_in mb-10">
+          <h1 className="text-center primitive">PRIMITIVE</h1>
+
+          <h2 className="btn-shine text-center sm:text-3xl text-xl">
+            <span className=" text-blue-500">0</span>과 <span className="text-red-600">1</span> 사이
+            무한한 가능성, KNU 프로그래밍 동아리
+          </h2>
         </div>
         <div className="top-3/4 fade_in md:text-xl">
-          <p>
-            Primitive는 2002년도에 임재현 교수님의 지도 아래 모바일 컴퓨팅 기술을 개발하고 경진대회에도 참가하면서 시작했어요.
+          {/* <p>
+            Primitive는 2002년도에 임재현 교수님의 지도 아래 모바일 컴퓨팅 기술을 개발하고
+            경진대회에도 참가하면서 시작했어요.
           </p>
-          <br/>
+          <br />
           <p>
             우리 동아리는 프로그래밍을 통해 앱이나 웹사이트처럼 실제로 사용할 수 있는 멋진
-            결과물들을 만들어 내고 있습니다. 함께 프로그래밍의 재미를 느껴보고 싶다면, Primitive와 함께 하세요!
-          </p>
+            결과물들을 만들어 내고 있습니다. 함께 프로그래밍의 재미를 느껴보고 싶다면, Primitive와
+            함께 하세요!
+          </p> */}
         </div>
       </Cover>
 
@@ -128,28 +128,28 @@ const Intro = () => {
         </div>
         <div className="w-full h-2/4 grid grid-cols-3 grid-rows-1 gap-5 ">
           <ProjectCard
-              projectThumbnail={project1}
-              projectName={"EcoChoice"}
-              projectDate={"23/09 ~ 23/12"}
-              projectDescription={"친환경 이커머스 서비스"}
-              // projectParticipate={["서정우", "윤가은"]}
-              projectTechStacks={["Web", "React", "Redux"]}
+            projectThumbnail={project1}
+            projectName={"EcoChoice"}
+            projectDate={"23/09 ~ 23/12"}
+            projectDescription={"친환경 이커머스 서비스"}
+            // projectParticipate={["서정우", "윤가은"]}
+            projectTechStacks={["Web", "React", "Redux"]}
           />
           <ProjectCard
-              projectThumbnail={project2}
-              projectName={"솜뭉치"}
-              projectDate={"24/01 ~ "}
-              projectDescription={"장애인생산품 판매 중개 플랫폼"}
-              // projectParticipate={["이진성", "김유진", "이나경"]}
-              projectTechStacks={["App", "Flutter", "Spring"]}
+            projectThumbnail={project2}
+            projectName={"솜뭉치"}
+            projectDate={"24/01 ~ "}
+            projectDescription={"장애인생산품 판매 중개 플랫폼"}
+            // projectParticipate={["이진성", "김유진", "이나경"]}
+            projectTechStacks={["App", "Flutter", "Spring"]}
           />
           <ProjectCard
-              projectThumbnail={project3}
-              projectName={"뜨개랑"}
-              projectDate={"24/01 ~ "}
-              projectDescription={"뜨개용품 판매 특화 커뮤니티 서비스"}
-              // projectParticipate={["이찬규", "홍현지", "박시현"]}
-              projectTechStacks={["Web", "React", "Spring"]}
+            projectThumbnail={project3}
+            projectName={"뜨개랑"}
+            projectDate={"24/01 ~ "}
+            projectDescription={"뜨개용품 판매 특화 커뮤니티 서비스"}
+            // projectParticipate={["이찬규", "홍현지", "박시현"]}
+            projectTechStacks={["Web", "React", "Spring"]}
           />
         </div>
       </Cover>
