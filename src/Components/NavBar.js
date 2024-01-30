@@ -17,7 +17,7 @@ const NavBar = () => {
       margin: 0 6px;
     }
 
-    &:first-elment {
+    &:first:hover {
       margin: 0;
     }
 
@@ -292,7 +292,7 @@ const NavBar = () => {
   return (
     <div className="w-screen h-14 fixed bg-gray-950 z-10 text-white flex flex-row gap-5 justify-between border-b-gray-50 sm:text-lg text-xs hahmlet">
       <>
-        <To>Primitive</To>
+        <To onClick={() => navigate("/")}>PRIMITIVE</To>
         {/* <img src="" alt="logo" /> */}
       </>
       <ul className="flex flex-row">

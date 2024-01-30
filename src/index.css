@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import url("./Styles/fonts.css");
+@import url("./Styles/animations.css");
 
 body {
   margin: 0;
@@ -15,7 +16,7 @@ body {
   overflow-x: hidden;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 14px;
   height: 14px;
 }
@@ -35,7 +36,7 @@ body {
 ::-webkit-scrollbar-track {
   box-shadow: none;
   background-color: transparent;
-}
+} */
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
@@ -72,49 +73,71 @@ h2 {
 /* Primitive */
 @import url("https://fonts.googleapis.com/css?family=Roboto:700");
 
-.container {
+/* 
+<div class="shuffleBox">
+  <p>Hello 👋 We're</p>
+  <div class="shuffleAnimation">
+    <div class="first"><div>프로그래밍 동아리</div></div>
+    <div class="second"><div>창업 동아리</div></div>
+    <div class="third"><div>음</div></div>
+  </ㅠ>
+</div>
+*/
+
+.shuffleBox {
   font-family: "Roboto";
   background-color: #131417;
+  line-height: initial;
 }
 
-.container p {
+.shuffleBox p {
   text-shadow: 0 0 7px rgba(255, 255, 255, 0.3), 0 0 3px rgba(255, 255, 255, 0.3);
 }
 
-.container {
+.shuffleBox {
   color: #e5e5e5;
   font-size: 2.26rem;
   text-transform: uppercase;
-  height: 100vh;
+  padding: 30px 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.animation {
+.shuffleAnimation {
   height: 50px;
   overflow: hidden;
   margin-left: 1rem;
 }
 
-.animation > div > div {
+.shuffleAnimation > div > div {
   padding: 0.25rem 0.75rem;
   height: 2.81rem;
   margin-bottom: 2.81rem;
   display: inline-block;
+  padding: 0;
+  /* font-size: 0.95em; */
 }
 
-.animation div:first-child {
+.shuffleAnimation div:first-child {
   animation: text-animation 8s infinite;
 }
 
 .first div {
+  display: inline-flex;
+  align-items: center;
   background-color: #20a7d8;
 }
 .second div {
+  display: inline-flex;
+
+  align-items: center;
   background-color: #cd921e;
 }
 .third div {
+  display: inline-flex;
+
+  align-items: center;
   background-color: #c10528;
 }
 

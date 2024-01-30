@@ -20,6 +20,8 @@ const Intro = () => {
     padding: 5rem;
     padding-top: 100px;
     padding-bottom: 100px;
+    max-width: 80rem;
+    margin: 0 auto;
     > div {
     }
 
@@ -40,14 +42,16 @@ const Intro = () => {
     position: relative;
     aspect-ratio: 16/9;
     background-color: white;
+    font-weight: bold;
 
     h4 {
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       position: relative;
       color: white;
     }
 
     p {
+      font-size: 1.2rem;
       position: relative;
       color: white;
     }
@@ -69,94 +73,99 @@ const Intro = () => {
   `;
 
   return (
-    <div className="bg-black w-screen min-h-screen pt-14">
+    <div className="bg-black w-screen min-h-screen">
       {/* <img src={logoBanner} alt="logoBanner" /> */}
-      <Cover className="bg-gradient-to-b from-black to-indigo-950 bg-black text-white h-screen flex flex-col justify-center items-center">
+      <section className="bg-gradient-to-b from-black to-indigo-950 bg-black text-white h-screen flex flex-col justify-center items-center">
         <div className="top-1/4 fade_in mb-10">
           <h1 className="text-center primitive">PRIMITIVE</h1>
-
           <h2 className="btn-shine text-center sm:text-3xl text-xl">
             <span className=" text-blue-500">0</span>과 <span className="text-red-600">1</span> 사이
             무한한 가능성, KNU 프로그래밍 동아리
           </h2>
         </div>
-        <div className="top-3/4 fade_in md:text-xl">
-          {/* <p>
-            Primitive는 2002년도에 임재현 교수님의 지도 아래 모바일 컴퓨팅 기술을 개발하고
-            경진대회에도 참가하면서 시작했어요.
-          </p>
-          <br />
-          <p>
-            우리 동아리는 프로그래밍을 통해 앱이나 웹사이트처럼 실제로 사용할 수 있는 멋진
-            결과물들을 만들어 내고 있습니다. 함께 프로그래밍의 재미를 느껴보고 싶다면, Primitive와
-            함께 하세요!
-          </p> */}
+      </section>
+      <section className="bg-white w-screen">
+        <div class="shuffleBox">
+          <p>Hello 👋 We're</p>
+          <div class="shuffleAnimation">
+            <div class="first">
+              <div>Programming Club</div>
+            </div>
+            <div class="second">
+              <div>창업 동아리</div>
+            </div>
+            <div class="third">
+              <div>음</div>
+            </div>
+          </div>
         </div>
-      </Cover>
-
-      <Cover className="bg-slate-50 p-20">
-        <div className="top-1/4 mb-10">
-          <p className="2xl:text-6xl xl:text-6xl lg:text-4xl md:text-3xl sm:text-3xl text-2xl">
-            무슨 활동을 하나요?
-          </p>
-          <p className="text-xl">
-            정규 활동으로는 신입생 교육과 창업동아리가 있고, 비정규 시간에는 자율적으로
-            스터디·공모전·프로젝트를 진행합니다.
-          </p>
-        </div>
-        <div className="w-full h-1/2 grid grid-cols-2 grid-rows-2  md:px-10 px-20 gap-5">
-          <ActivityCard backgroundImage={Introduction4}>
-            <h4>신입생 교육</h4>
-            <p>신입생을 위한 코딩 교육을 진행합니다!</p>
-          </ActivityCard>
-          <ActivityCard backgroundImage={Introduction3}>
-            <h4>홈커밍데이, 졸업생 멘토링</h4>
-            <p>졸업생 선배님들의 이야기와 지식을 공유합니다!</p>
-          </ActivityCard>
-          <ActivityCard backgroundImage={Introduction1}>
-            <h4>팀 프로젝트 진행</h4>
-            <p>팀을 이루어 스터디·공모전·창업동아리를 진행합니다!</p>
-          </ActivityCard>
-          <ActivityCard backgroundImage={Introduction2}>
-            <h4>네트워킹</h4>
-            <p>회식과 MT 등 동아리 부원과 함께 즐거운 추억을 쌓는 Primitive!</p>
-          </ActivityCard>
-        </div>
-      </Cover>
-      <Cover className="bg-slate-100">
-        <div className="top-1/4 right-10 fade_in">
-          <p className="2xl:text-6xl xl:text-6xl lg:text-5xl md:text-4xl sm:text-3xl text-2xl">
-            대표 프로젝트
-          </p>
-        </div>
-        <div className="w-full h-2/4 grid grid-cols-3 grid-rows-1 gap-5 ">
-          <ProjectCard
-            projectThumbnail={project1}
-            projectName={"EcoChoice"}
-            projectDate={"23/09 ~ 23/12"}
-            projectDescription={"친환경 이커머스 서비스"}
-            // projectParticipate={["서정우", "윤가은"]}
-            projectTechStacks={["Web", "React", "Redux"]}
-          />
-          <ProjectCard
-            projectThumbnail={project2}
-            projectName={"솜뭉치"}
-            projectDate={"24/01 ~ "}
-            projectDescription={"장애인생산품 판매 중개 플랫폼"}
-            // projectParticipate={["이진성", "김유진", "이나경"]}
-            projectTechStacks={["App", "Flutter", "Spring"]}
-          />
-          <ProjectCard
-            projectThumbnail={project3}
-            projectName={"뜨개랑"}
-            projectDate={"24/01 ~ "}
-            projectDescription={"뜨개용품 판매 특화 커뮤니티 서비스"}
-            // projectParticipate={["이찬규", "홍현지", "박시현"]}
-            projectTechStacks={["Web", "React", "Spring"]}
-          />
-        </div>
-      </Cover>
-
+      </section>
+      <section className="bg-slate-50">
+        <Cover className="bg-slate-50 p-20">
+          <div className="top-1/4 mb-10">
+            <p className="2xl:text-6xl xl:text-6xl lg:text-4xl md:text-3xl sm:text-3xl text-2xl">
+              무슨 활동을 하나요?
+            </p>
+            <p className="text-xl">
+              정규 활동으로는 신입생 교육과 창업동아리가 있고, 비정규 시간에는 자율적으로
+              스터디·공모전·프로젝트를 진행합니다.
+            </p>
+          </div>
+          <div className="max-w-7xl mx-auto w-full h-1/2 grid grid-cols-2 grid-rows-2  md:px-10 px-20 gap-5">
+            <ActivityCard backgroundImage={Introduction4}>
+              <h4>신입생 교육</h4>
+              <p>신입생을 위한 코딩 교육을 진행합니다!</p>
+            </ActivityCard>
+            <ActivityCard backgroundImage={Introduction3}>
+              <h4>홈커밍데이, 졸업생 멘토링</h4>
+              <p>졸업생 선배님들의 이야기와 지식을 공유합니다!</p>
+            </ActivityCard>
+            <ActivityCard backgroundImage={Introduction1}>
+              <h4>팀 프로젝트 진행</h4>
+              <p>팀을 이루어 스터디·공모전·창업동아리를 진행합니다!</p>
+            </ActivityCard>
+            <ActivityCard backgroundImage={Introduction2}>
+              <h4>네트워킹</h4>
+              <p>회식과 MT 등 동아리 부원과 함께 즐거운 추억을 쌓는 Primitive!</p>
+            </ActivityCard>
+          </div>
+        </Cover>
+      </section>
+      <section className="bg-slate-100">
+        <Cover className="bg-slate-100">
+          <div className="top-1/4 right-10 fade_in">
+            <p className="2xl:text-6xl xl:text-6xl lg:text-5xl md:text-4xl sm:text-3xl text-2xl">
+              대표 프로젝트
+            </p>
+          </div>
+          <div className="w-full h-2/4 grid grid-cols-3 grid-rows-1 gap-5 ">
+            <ProjectCard
+              projectThumbnail={project1}
+              projectName={"EcoChoice"}
+              projectDate={"23/09 ~ 23/12"}
+              projectDescription={"친환경 이커머스 서비스"}
+              // projectParticipate={["서정우", "윤가은"]}
+              projectTechStacks={["Web", "React", "Redux"]}
+            />
+            <ProjectCard
+              projectThumbnail={project2}
+              projectName={"솜뭉치"}
+              projectDate={"24/01 ~ "}
+              projectDescription={"장애인생산품 판매 중개 플랫폼"}
+              // projectParticipate={["이진성", "김유진", "이나경"]}
+              projectTechStacks={["App", "Flutter", "Spring"]}
+            />
+            <ProjectCard
+              projectThumbnail={project3}
+              projectName={"뜨개랑"}
+              projectDate={"24/01 ~ "}
+              projectDescription={"뜨개용품 판매 특화 커뮤니티 서비스"}
+              // projectParticipate={["이찬규", "홍현지", "박시현"]}
+              projectTechStacks={["Web", "React", "Spring"]}
+            />
+          </div>
+        </Cover>
+      </section>
     </div>
   );
 };
