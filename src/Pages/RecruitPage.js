@@ -1,6 +1,7 @@
 import { useState } from "react";
 import NavBar from "../Components/NavBar";
 import primitive23 from "../Images/primitive23.jpg";
+import Footer from "../Components/Footer";
 
 const RecruitPage = () => {
   const [showLast, setShowLast] = useState(false);
@@ -11,7 +12,7 @@ const RecruitPage = () => {
       <NavBar />
       <div className="bg-slate-50 w-screen min-h-screen flex flex-col items-center justify-center py-20">
         <h3 className="text-4xl">지금은 지원기간이 아닙니다!</h3>
-        <p>지난 기수 모집 기간: 2월 21일 (화) ~ 3월 13일 (월)</p>
+        <p>2024년 모집 기간: 2월 13일 (화) ~ 3월 11일 (월)</p>
         <button
           className="bg-green-200 py-1 px-4 rounded-lg m-3 hover:bg-green-300"
           onClick={() => setShowLast((prev) => !prev)}
@@ -45,6 +46,7 @@ const RecruitPage = () => {
           ""
         )}
       </div>
+      <Footer />
     </>
   );
 };
