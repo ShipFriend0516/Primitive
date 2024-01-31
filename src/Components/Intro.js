@@ -89,13 +89,13 @@ const Intro = () => {
           <p>Hello 👋 We're</p>
           <div class="shuffleAnimation">
             <div class="first">
-              <div>Programming Club</div>
+              <div>개발 동아리</div>
             </div>
             <div class="second">
               <div>창업 동아리</div>
             </div>
             <div class="third">
-              <div>음</div>
+              <div></div>
             </div>
           </div>
         </div>
