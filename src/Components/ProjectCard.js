@@ -14,10 +14,10 @@ const ProjectCard = ({
   }
 
   const Tag = styled.span`
-    padding: 2px 4px;
+    padding: 2px 6px;
     margin-right: 4px;
     color: black;
-    font-size: 10px;
+    font-size: 12px;
     background-color: transparent;
     border: 1px solid gray;
     border-radius: 0.25em;
@@ -26,7 +26,8 @@ const ProjectCard = ({
     background-position: center;
 
     &:hover {
-      background-color: #f0f0f0;
+      background-color: lightgray;
+      // color: white;
       transition: 0.2s;
     }
   `;

@@ -10,8 +10,8 @@ const Footer = () => {
         <div className="flex justify-between items-center">
           <div>
             <h2 className="text-xl font-bold">Primitive Contact</h2>
-            <p className="text-sm">
-              충청남도 천안시 서북구 천안대로 1223-24 공주대학교 학생회관 315호
+            <p className="md:text-sm hidden md:block ">
+              천안시 서북구 천안대로 1223-24 공주대학교 학생회관 315호
             </p>
           </div>
           <div className="flex">

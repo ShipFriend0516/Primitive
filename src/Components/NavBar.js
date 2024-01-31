@@ -3,7 +3,8 @@ import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "../Styles/animations.css";
-import { IoHomeSharp } from "react-icons/io5";
+
+import { IoMenuOutline } from "react-icons/io5";
 
 const NavBar = () => {
   const To = styled.li`
@@ -37,6 +38,31 @@ const NavBar = () => {
     font-size: 0.8em;
   `;
 
+  // Menu
+  const Menu = styled.ul`
+    position: fixed;
+    right: 0;
+    top: 2.5rem;
+    text-align: right;
+    width: 100px;
+    font-size: 1.25em;
+    box-shadow: 0 1px 3px lightgray;
+    padding: 0.625rem;
+    z-index: 2;
+    background-color: white;
+    color: black;
+
+    li {
+      padding: 0.25em 0.5em;
+    }
+
+    & li:hover {
+      cursor: pointer;
+      background-color: lightgray;
+      border-radius: 3px;
+    }
+  `;
+
   const navigate = useNavigate();
 
   // 상태관리
@@ -46,6 +72,25 @@ const NavBar = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [error, setError] = useState("");
+
+  // 모바일 메뉴 관련
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [isMobile, setIsMobile] = useState(windowWidth <= 768 ? true : false);
+
+  // 모바일 메뉴 관련
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+      setIsMobile(windowWidth <= 768 ? true : false);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   // 로그인 처리
   const validateEmail = (email) => {
@@ -290,49 +335,71 @@ const NavBar = () => {
   };
 
   return (
-    <div className="w-screen h-14 fixed bg-gray-950 z-10 text-white flex flex-row gap-5 justify-between border-b-gray-50 sm:text-lg text-xs hahmlet">
+    <div className="w-screen md:h-14 h-10 fixed bg-gray-950 z-10 text-white flex flex-row gap-5 justify-between border-b-gray-50 sm:text-lg text-xs hahmlet">
       <>
-        <To onClick={() => navigate("/")}>PRIMITIVE</To>
-        {/* <img src="" alt="logo" /> */}
-      </>
-      <ul className="flex flex-row">
         <To
           onClick={() => {
             navigate("/");
           }}
         >
-          소개
+          PRIMITIVE
         </To>
-        <To
-          onClick={() => {
-            navigate("/project");
-          }}
-        >
-          프로젝트
-        </To>
-        <To
-          onClick={() => {
-            navigate("/members");
-          }}
-        >
-          운영진
-        </To>
-        <To
-          onClick={() => {
-            openModal();
-          }}
-        >
-          로그인
-        </To>
-        <To
-          className="bg-blue-500 hover:text-black"
-          onClick={() => {
-            navigate("/recruit");
-          }}
-        >
-          JOIN US!
-        </To>
-      </ul>
+        {/* <img src="" alt="logo" /> */}
+      </>
+      {isMobile ? (
+        <div className="flex items-center cursor-pointer">
+          <IoMenuOutline size={35} onClick={() => setIsMenuOpen(!isMenuOpen)} />
+          {isMenuOpen && (
+            <Menu>
+              <li onClick={() => navigate("/")}>소개</li>
+              <li onClick={() => navigate("/project")}>프로젝트</li>
+              <li onClick={() => navigate("/members")}>운영진</li>
+              <li onClick={() => openModal()}>로그인</li>
+              <li onClick={() => navigate("/recruit")}>JOIN US</li>
+            </Menu>
+          )}
+        </div>
+      ) : (
+        <ul className="flex flex-row">
+          <To
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            소개
+          </To>
+          <To
+            onClick={() => {
+              navigate("/project");
+            }}
+          >
+            프로젝트
+          </To>
+          <To
+            onClick={() => {
+              navigate("/members");
+            }}
+          >
+            운영진
+          </To>
+          <To
+            onClick={() => {
+              openModal();
+            }}
+          >
+            로그인
+          </To>
+          <To
+            className="bg-blue-500 hover:text-black"
+            onClick={() => {
+              navigate("/recruit");
+            }}
+          >
+            JOIN US!
+          </To>
+        </ul>
+      )}
+
       {renderModal()}
     </div>
   );

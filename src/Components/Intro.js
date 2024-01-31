@@ -11,8 +11,6 @@ import Introduction4 from "../Images/4.png";
 
 import ProjectCard from "./ProjectCard";
 
-import Footer from "../Components/Footer";
-import FAQ from "../Components/FAQ";
 const Intro = () => {
   const Cover = styled.div`
     width: 100vw;
@@ -32,6 +30,10 @@ const Intro = () => {
     > div:last-child {
       right: 2.5rem;
     }
+
+    @media (max-width: 768px) {
+      padding: 3rem;
+    }
   `;
 
   const ActivityCard = styled.div`
@@ -48,12 +50,18 @@ const Intro = () => {
       font-size: 1.8rem;
       position: relative;
       color: white;
+      text-shadow: 0 0 5px black;
+      padding-left: 0.1em;
+
+      border-radius: 5px;
     }
 
     p {
       font-size: 1.2rem;
       position: relative;
+      text-shadow: 0 0 5px black;
       color: white;
+      padding-left: 0.1em;
     }
 
     &:before {
@@ -78,13 +86,13 @@ const Intro = () => {
       <section className="bg-gradient-to-b from-black to-indigo-950 bg-black text-white h-screen flex flex-col justify-center items-center">
         <div className="top-1/4 fade_in mb-10">
           <h1 className="text-center primitive">PRIMITIVE</h1>
-          <h2 className="btn-shine text-center sm:text-3xl text-xl">
+          <h2 className="btn-shine text-center">
             <span className=" text-blue-500">0</span>과 <span className="text-red-600">1</span> 사이
             무한한 가능성, KNU 프로그래밍 동아리
           </h2>
         </div>
       </section>
-      <section className="bg-white w-screen">
+      {/* <section className="bg-white w-screen">
         <div class="shuffleBox">
           <p>Hello 👋 We're</p>
           <div class="shuffleAnimation">
@@ -99,34 +107,34 @@ const Intro = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       <section className="bg-slate-50">
-        <Cover className="bg-slate-50 p-20">
+        <Cover className="bg-slate-50 md:p-20 p-10">
           <div className="top-1/4 mb-10">
-            <p className="2xl:text-6xl xl:text-6xl lg:text-4xl md:text-3xl sm:text-3xl text-2xl">
+            <p className="2xl:text-6xl xl:text-6xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold">
               무슨 활동을 하나요?
             </p>
             <p className="text-xl">
-              정규 활동으로는 신입생 교육과 창업동아리가 있고, 비정규 시간에는 자율적으로
-              스터디·공모전·프로젝트를 진행합니다.
+              정규 활동으로는 신입생 교육과 창업동아리가 있고, 자율적으로 스터디·공모전·프로젝트를
+              진행합니다.
             </p>
           </div>
-          <div className="max-w-7xl mx-auto w-full h-1/2 grid grid-cols-2 grid-rows-2  md:px-10 px-20 gap-5">
+          <div className="max-w-7xl mx-auto w-full h-1/2 grid md:grid-cols-2 md:grid-rows-2 grid-cols-1 gap-5">
             <ActivityCard backgroundImage={Introduction4}>
               <h4>신입생 교육</h4>
-              <p>신입생을 위한 코딩 교육을 진행합니다!</p>
+              <p>신입생을 위한 코딩 교육을 진행해요!</p>
             </ActivityCard>
             <ActivityCard backgroundImage={Introduction3}>
-              <h4>홈커밍데이, 졸업생 멘토링</h4>
-              <p>졸업생 선배님들의 이야기와 지식을 공유합니다!</p>
+              <h4>홈커밍데이</h4>
+              <p>졸업생 선배님들의 이야기와 지식을 공유해요!</p>
             </ActivityCard>
             <ActivityCard backgroundImage={Introduction1}>
               <h4>팀 프로젝트 진행</h4>
-              <p>팀을 이루어 스터디·공모전·창업동아리를 진행합니다!</p>
+              <p>팀을 이루어 스터디·공모전·창업동아리를 진행해요!</p>
             </ActivityCard>
             <ActivityCard backgroundImage={Introduction2}>
               <h4>네트워킹</h4>
-              <p>회식과 MT 등 동아리 부원과 함께 즐거운 추억을 쌓는 Primitive!</p>
+              <p>회식과 MT 등 동아리 부원과 함께 즐거운 추억을 만들어요!</p>
             </ActivityCard>
           </div>
         </Cover>
@@ -134,11 +142,12 @@ const Intro = () => {
       <section className="bg-slate-100">
         <Cover className="bg-slate-100">
           <div className="top-1/4 right-10 fade_in">
-            <p className="2xl:text-6xl xl:text-6xl lg:text-5xl md:text-4xl sm:text-3xl text-2xl">
+            <p className="2xl:text-6xl xl:text-6xl lg:text-5xl md:text-4xl sm:text-3xl text-3xl font-bold">
               대표 프로젝트
             </p>
+            <p className="text-xl">Primitive의 대표 프로젝트에는 이런 것들이 있어요</p>
           </div>
-          <div className="w-full h-2/4 grid grid-cols-3 grid-rows-1 gap-5 ">
+          <div className="w-full h-2/4 grid grid-cols-1 grid-rows-1 md:grid-cols-3 gap-5 ">
             <ProjectCard
               projectThumbnail={project1}
               projectName={"EcoChoice"}
