@@ -45,6 +45,11 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Playfair Display";
+  src: url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600");
+}
+
 .hahmlet {
   font-family: "Hahmlet-Regular";
 }
