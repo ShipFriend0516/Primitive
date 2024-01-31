@@ -44,8 +44,7 @@ const NavBar = () => {
     right: 0;
     top: 2.5rem;
     text-align: right;
-    width: 100px;
-    font-size: 1.25em;
+    width: 50vw;
     box-shadow: 0 1px 3px lightgray;
     padding: 0.625rem;
     z-index: 2;
@@ -53,7 +52,9 @@ const NavBar = () => {
     color: black;
 
     li {
-      padding: 0.25em 0.5em;
+      font-size: 1.75em;
+      padding: 0.35em 0.5em;
+      margin-bottom: 5px;
     }
 
     & li:hover {

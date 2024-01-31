@@ -5,8 +5,9 @@ const MemberCard = ({ emoji, name, number, position, description }) => {
     display: flex;
     flex-direction: column;
     justify-content: between;
-    min-width: 360px;
-    height: 540px;
+
+    max-height: 540px;
+    aspect-ratio: 6/9;
 
     border-radius: 12px;
     border: 1px solid lightgray;

@@ -11,7 +11,7 @@ const MembersPage = () => {
       <NavBar />
       <>
         <div className="w-screen pb-32 flex flex-col items-center">
-          <h1 className="text-5xl mt-24 mb-10">운영진</h1>
+          <h1 className="md:text-5xl text-3xl font-bold mt-24 mb-10">운영진</h1>
           <div className="flex flex-row gap-4">
             <MemberCard
               emoji={emojis[Math.floor(Math.random() * emojis.length)]}
