@@ -50,7 +50,7 @@ const Intro = () => {
       font-size: 1.8rem;
       position: relative;
       color: white;
-      text-shadow: 0 0 3px black;
+      text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
       padding-left: 0.1em;
 
       border-radius: 5px;
@@ -59,7 +59,7 @@ const Intro = () => {
     p {
       font-size: 1.2rem;
       position: relative;
-      text-shadow: 0 0 3px black;
+      text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
       color: white;
       padding-left: 0.1em;
     }

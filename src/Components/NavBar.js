@@ -18,7 +18,7 @@ const NavBar = () => {
       margin: 0 6px;
     }
 
-    &:first:hover {
+    &:first-of-type:hover {
       margin: 0;
     }
 
