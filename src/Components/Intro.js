@@ -92,22 +92,22 @@ const Intro = () => {
           </h2>
         </div>
       </section>
-      <section className="bg-white w-screen">
+      {/* <section className="bg-white w-screen">
         <div class="shuffleBox">
-          <p>Hello 👋 We learn</p>
+          <p>Hello 👋 We're</p>
           <div class="shuffleAnimation">
             <div class="first">
-              <div>Programming</div>
+              <div>개발 동아리</div>
             </div>
             <div class="second">
-              <div>Networking</div>
+              <div>창업 동아리</div>
             </div>
             <div class="third">
-              <div>Communication</div>
+              <div></div>
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       <section className="bg-slate-50">
         <Cover className="bg-slate-50 md:p-20 p-10">
           <div className="top-1/4 mb-10">

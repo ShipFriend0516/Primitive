@@ -73,9 +73,7 @@ const Footer = () => {
         <hr className="my-4 border-gray-600" />
         <p className="text-center relative">
           Copyright© 2024 Primitive. All rights reserved.{" "}
-          <span className="absolute right-0 text-gray-800 md:text-xs hidden md:inline-block">
-            Special Thanks.... Yungang
-          </span>
+          <span className="absolute right-0 text-gray-800 md:text-xs hidden md:block">Special Thanks.... Yungang</span>
         </p>
       </div>
     </footer>
