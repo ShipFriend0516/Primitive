@@ -21,6 +21,7 @@ const Intro = () => {
     max-width: 80rem;
     margin: 0 auto;
     > div {
+      
     }
 
     > div:first-child {
@@ -108,10 +109,20 @@ const Intro = () => {
           </div>
         </div>
       </section> */}
+      {/*<section className="bg-slate-100">
+        <Cover className="bg-slate-100 md:p-20 p-10">
+          <p className="2xl:text-6xl xl:text-6xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold">
+            PRIMITIVE는 공주대학교 코딩 동아리입니다.
+          </p>
+          <p></p>
+          <p>3</p>
+          <p>4</p>
+        </Cover>
+      </section>*/}
       <section className="bg-slate-50">
         <Cover className="bg-slate-50 md:p-20 p-10">
           <div className="top-1/4 mb-10">
-            <p className="2xl:text-6xl xl:text-6xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold">
+            <p className="2xl:text-6xl xl:text-6xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4">
               무슨 활동을 하나요?
             </p>
             <p className="text-xl">
@@ -142,10 +153,10 @@ const Intro = () => {
       <section className="bg-slate-100">
         <Cover className="bg-slate-100">
           <div className="top-1/4 right-10 fade_in">
-            <p className="2xl:text-6xl xl:text-6xl lg:text-5xl md:text-4xl sm:text-3xl text-3xl font-bold">
+            <p className="2xl:text-6xl xl:text-6xl lg:text-5xl md:text-4xl sm:text-3xl text-3xl font-bold mb-4">
               대표 프로젝트
             </p>
-            <p className="text-xl">Primitive의 대표 프로젝트에는 이런 것들이 있어요</p>
+            <p className="text-xl mb-6">Primitive의 대표 프로젝트에는 이런 것들이 있어요</p>
           </div>
           <div className="w-full h-2/4 grid grid-cols-1 grid-rows-1 md:grid-cols-3 gap-5 ">
             <ProjectCard
