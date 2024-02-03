@@ -82,7 +82,6 @@ const Intro = () => {
 
   return (
     <div className="bg-black w-screen min-h-screen">
-      {/* <img src={logoBanner} alt="logoBanner" /> */}
       <section className="bg-gradient-to-b from-black to-indigo-950 bg-black text-white h-screen flex flex-col justify-center items-center">
         <div className="top-1/4 fade_in mb-10">
           <h1 className="text-center primitive">PRIMITIVE</h1>
@@ -92,34 +91,22 @@ const Intro = () => {
           </h2>
         </div>
       </section>
-      {/* <section className="bg-white w-screen">
-    <div className="bg-black w-screen min-h-screen">
-      {/* <img src={logoBanner} alt="logoBanner" /> */}
-      <section className="bg-gradient-to-b from-black to-indigo-950 bg-black text-white h-screen flex flex-col justify-center items-center">
-        <div className="top-1/4 fade_in mb-10">
-          <h1 className="text-center primitive">PRIMITIVE</h1>
-          <h2 className="btn-shine text-center">
-            <span className=" text-blue-500">0</span>과 <span className="text-red-600">1</span> 사이
-            무한한 가능성, KNU 프로그래밍 동아리
-          </h2>
-        </div>
-      </section>
-      {/* <section className="bg-white w-screen">
+      <section className="bg-white w-screen">
         <div class="shuffleBox">
           <p>Hello 👋 We're</p>
           <div class="shuffleAnimation">
             <div class="first">
-              <div>개발 동아리</div>
+              <div>Programming</div>
             </div>
             <div class="second">
-              <div>창업 동아리</div>
+              <div>Networking</div>
             </div>
             <div class="third">
-              <div></div>
+              <div>Communication</div>
             </div>
           </div>
         </div>
-      </section> */}
+      </section>
       <section className="bg-slate-50">
         <Cover className="bg-slate-50 md:p-20 p-10">
           <div className="top-1/4 mb-10">
