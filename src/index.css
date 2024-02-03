@@ -65,7 +65,7 @@ h2 {
 .shuffleBox {
   font-family: "Roboto";
   background-color: #131417;
-  line-height: initial;
+  line-height: 3rem;
 }
 
 .shuffleBox p {
@@ -94,7 +94,6 @@ h2 {
   margin-bottom: 2.81rem;
   display: inline-block;
   padding: 0;
-  /* font-size: 0.95em; */
 }
 
 .shuffleAnimation div:first-child {
@@ -102,20 +101,12 @@ h2 {
 }
 
 .first div {
-  display: inline-flex;
-  align-items: center;
   background-color: #20a7d8;
 }
 .second div {
-  display: inline-flex;
-
-  align-items: center;
   background-color: #cd921e;
 }
 .third div {
-  display: inline-flex;
-
-  align-items: center;
   background-color: #c10528;
 }
 

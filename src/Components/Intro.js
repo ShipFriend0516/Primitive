@@ -92,8 +92,8 @@ const Intro = () => {
         </div>
       </section>
       <section className="bg-white w-screen">
-        <div class="shuffleBox">
-          <p>Hello 👋 We're</p>
+        <div class="shuffleBox bg-gradient-to-b from-indigo-950 to-black">
+          <p>Hello 👋 We Learn</p>
           <div class="shuffleAnimation">
             <div class="first">
               <div>Programming</div>
@@ -124,7 +124,7 @@ const Intro = () => {
       <section className="bg-slate-50">
         <Cover className="bg-slate-50 md:p-20 p-10">
           <div className="top-1/4 mb-10">
-            <p className="2xl:text-6xl xl:text-6xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4">
+            <p className="2xl:text-4xl xl:text-4xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4">
               무슨 활동을 하나요?
             </p>
             <p className="text-xl">
@@ -155,7 +155,7 @@ const Intro = () => {
       <section className="bg-slate-100">
         <Cover className="bg-slate-100">
           <div className="top-1/4 right-10 fade_in">
-            <p className="2xl:text-6xl xl:text-6xl lg:text-5xl md:text-4xl sm:text-3xl text-3xl font-bold mb-4">
+            <p className="2xl:text-4xl xl:text-4xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4">
               대표 프로젝트
             </p>
             <p className="text-xl">Primitive의 대표 프로젝트에는 이런 것들이 있어요</p>
