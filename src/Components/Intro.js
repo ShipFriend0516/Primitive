@@ -124,7 +124,7 @@ const Intro = () => {
       <section className="bg-slate-50">
         <Cover className="bg-slate-50 md:p-20 p-10">
           <div className="top-1/4 mb-10">
-            <p className="2xl:text-6xl xl:text-6xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold">
+            <p className="2xl:text-6xl xl:text-6xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4">
               무슨 활동을 하나요?
             </p>
             <p className="text-xl">
@@ -155,7 +155,7 @@ const Intro = () => {
       <section className="bg-slate-100">
         <Cover className="bg-slate-100">
           <div className="top-1/4 right-10 fade_in">
-            <p className="2xl:text-6xl xl:text-6xl lg:text-5xl md:text-4xl sm:text-3xl text-3xl font-bold">
+            <p className="2xl:text-6xl xl:text-6xl lg:text-5xl md:text-4xl sm:text-3xl text-3xl font-bold mb-4">
               대표 프로젝트
             </p>
             <p className="text-xl">Primitive의 대표 프로젝트에는 이런 것들이 있어요</p>
@@ -163,7 +163,7 @@ const Intro = () => {
           <div className="w-full h-2/4 grid grid-cols-1 grid-rows-1 md:grid-cols-3 gap-5 ">
             <ProjectCard
               projectThumbnail={project1}
-              projectName={"EcoChoice"}
+              projectName={"에코초이스"}
               projectDate={"23/09 ~ 23/12"}
               projectDescription={"친환경 이커머스 서비스"}
               // projectParticipate={["서정우", "윤가은"]}
