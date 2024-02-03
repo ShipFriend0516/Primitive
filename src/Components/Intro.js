@@ -106,8 +106,7 @@ const Intro = () => {
             </div>
           </div>
         </div>
-      </section>{" "}
-      */}
+      </section>
       <section className="bg-slate-100">
         <Cover className="bg-slate-100 md:p-20 p-10">
           <p className="text-2xl mb-4">
