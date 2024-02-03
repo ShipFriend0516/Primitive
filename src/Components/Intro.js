@@ -93,6 +93,18 @@ const Intro = () => {
         </div>
       </section>
       {/* <section className="bg-white w-screen">
+    <div className="bg-black w-screen min-h-screen">
+      {/* <img src={logoBanner} alt="logoBanner" /> */}
+      <section className="bg-gradient-to-b from-black to-indigo-950 bg-black text-white h-screen flex flex-col justify-center items-center">
+        <div className="top-1/4 fade_in mb-10">
+          <h1 className="text-center primitive">PRIMITIVE</h1>
+          <h2 className="btn-shine text-center">
+            <span className=" text-blue-500">0</span>과 <span className="text-red-600">1</span> 사이
+            무한한 가능성, KNU 프로그래밍 동아리
+          </h2>
+        </div>
+      </section>
+      {/* <section className="bg-white w-screen">
         <div class="shuffleBox">
           <p>Hello 👋 We're</p>
           <div class="shuffleAnimation">
@@ -108,20 +120,6 @@ const Intro = () => {
           </div>
         </div>
       </section> */}
-      <section className="bg-slate-100">
-        <Cover className="bg-slate-100 md:p-20 p-10">
-          <p className="text-2xl mb-4">
-            PRIMITIVE는 공주대학교 천안캠퍼스에서 활동하고 있는 프로그래밍 동아리입니다.
-          </p>
-          <p className="text-2xl mb-4">
-            열정적인 동아리 부원들과 함께 프로그래밍을 통해 앱이나 웹사이트를 만들어 실제로 사용할
-            수 있는 멋진 결과물들을 만들어 내고 있습니다.
-          </p>
-          <p className="text-2xl mb-4">
-            프로그래밍으로 즐겁고 의미있는 대학생활을 보내고 싶다면, PRIMITIVE와 함께 하세요!
-          </p>
-        </Cover>
-      </section>
       <section className="bg-slate-50">
         <Cover className="bg-slate-50 md:p-20 p-10">
           <div className="top-1/4 mb-10">
