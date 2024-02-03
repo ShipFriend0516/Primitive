@@ -21,7 +21,6 @@ const Intro = () => {
     max-width: 80rem;
     margin: 0 auto;
     > div {
-      
     }
 
     > div:first-child {
@@ -93,32 +92,22 @@ const Intro = () => {
           </h2>
         </div>
       </section>
-      {/* <section className="bg-white w-screen">
+      <section className="bg-white w-screen">
         <div class="shuffleBox">
-          <p>Hello 👋 We're</p>
+          <p>Hello 👋 We learn</p>
           <div class="shuffleAnimation">
             <div class="first">
-              <div>개발 동아리</div>
+              <div>Programming</div>
             </div>
             <div class="second">
-              <div>창업 동아리</div>
+              <div>Networking</div>
             </div>
             <div class="third">
-              <div></div>
+              <div>Communication</div>
             </div>
           </div>
         </div>
-      </section> */}
-      {/*<section className="bg-slate-100">
-        <Cover className="bg-slate-100 md:p-20 p-10">
-          <p className="2xl:text-6xl xl:text-6xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold">
-            PRIMITIVE는 공주대학교 코딩 동아리입니다.
-          </p>
-          <p></p>
-          <p>3</p>
-          <p>4</p>
-        </Cover>
-      </section>*/}
+      </section>
       <section className="bg-slate-50">
         <Cover className="bg-slate-50 md:p-20 p-10">
           <div className="top-1/4 mb-10">

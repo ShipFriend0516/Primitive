@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "../Components/NavBar";
-import styled from "styled-components";
+
 import MemberCard from "../Components/MemberCard";
 import Footer from "../Components/Footer";
 
