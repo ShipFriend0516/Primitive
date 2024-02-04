@@ -188,6 +188,7 @@ const NavBar = () => {
           <div className="text-2xl font-bold mb-5">{activeTab.toLocaleUpperCase()}</div>
           {activeTab === "login" && (
             <form>
+              아직 미구현입니다.
               <div className="mb-4">
                 <label
                   htmlFor="username"

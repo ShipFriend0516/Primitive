@@ -76,7 +76,7 @@ const Intro = () => {
         </div>
       </section>
       <section className="bg-white">
-        <Cover className="bg-white md:p-20 p-10 overflow-x-hidden" ref={cover1}>
+        <Cover className="bg-white md:p-20 p-10" ref={cover1}>
           <h3 className="2xl:text-4xl xl:text-4xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4">
             Primitive는...
           </h3>
@@ -90,18 +90,20 @@ const Intro = () => {
           <p className="md:text-2xl text-xl mb-2">
             프로그래밍으로 즐겁고 의미있는 대학생활을 보내고 싶다면, PRIMITIVE와 함께 하세요!
           </p>
-          <div className="introCards mt-10 overflow-x-scroll overflow-y-hidden" ref={introCardRef}>
-            <div className="w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100">
-              <h4 className="text-3xl gothic">활동 기간</h4>
-              <span className="font-bold">20년 +</span>
-            </div>
-            <div className="w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100">
-              <h4 className="text-3xl gothic">총 동아리원 수</h4>
-              <span className="font-bold">200명 +</span>
-            </div>
-            <div className="w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100">
-              <h4 className="text-3xl gothic">총 프로젝트 수</h4>
-              <span className="font-bold">??</span>
+          <div className="cardSection">
+            <div className="introCards mt-10" ref={introCardRef}>
+              <div className="w-60 aspect-video md:text-5xl text-3xl py-10 px-8 rounded-xl bg-gray-100">
+                <h4 className="text-2xl md:text-3xl gothic">활동 기간</h4>
+                <span className="font-bold">20년 +</span>
+              </div>
+              <div className="w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100">
+                <h4 className="text-2xl md:text-3xl gothic">총 동아리원 수</h4>
+                <span className="font-bold">200명 +</span>
+              </div>
+              <div className="w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100">
+                <h4 className="text-2xl md:text-3xl gothic">총 프로젝트 수</h4>
+                <span className="font-bold">??</span>
+              </div>
             </div>
           </div>
         </Cover>

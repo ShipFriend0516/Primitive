@@ -78,9 +78,20 @@ h2 {
   }
 }
 
+.cardSection {
+  padding: 0rem 0;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cardSection::-webkit-scrollbar {
+  display: none;
+}
+
 .introCards {
+  padding: 2rem 0;
   transition: 0.6s;
-  width: 1200px;
+  width: 100%;
   display: inline-flex;
   justify-content: space-between;
 }
@@ -351,15 +362,39 @@ h2 {
   }
 }
 
-@media (min-width: 841px) and (max-width: 1200px) {
+@media (min-width: 768px) and (max-width: 1200px) {
+  .cardSection {
+    overflow-x: auto;
+  }
+
   .introCards {
     min-width: 1200px;
     justify-content: space-between;
     display: inline-flex;
     flex: 0 0 auto;
+    overflow-x: auto;
   }
 
   .introCards > div {
-    width: 33%;
+    width: 400px;
+  }
+}
+
+@media (max-width: 767px) {
+  .cardSection {
+    overflow-x: auto;
+  }
+
+  .introCards {
+    min-width: 766px;
+    justify-content: space-between;
+    display: inline-flex;
+    flex: 0 0 auto;
+
+    overflow-x: auto;
+  }
+
+  .introCards > div {
+    width: 250px;
   }
 }
