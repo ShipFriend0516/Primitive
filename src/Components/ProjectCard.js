@@ -36,7 +36,7 @@ const ProjectCard = ({
     <div className="p-2">
       <div
         className={`w-full rounded-lg aspect-video overflow-hidden  ${
-          isEmpty ? `bg-indigo-300` : ""
+          isEmpty ? "bg-lime-100" : ""
         }`}
       >
         <img

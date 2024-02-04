@@ -364,11 +364,11 @@ const NavBar = () => {
               return (
                 <li
                   key={r[1]}
-                  className={
+                  className={`${
                     Object.entries(routes).length === i + 1
                       ? "bg-blue-500 hover:text-black navbarTo"
                       : "navbarTo"
-                  }
+                  } ${pathname === r[1] ? "underline underline-offset-4" : ""}`}
                   onClick={() => {
                     navigate(r[1]);
                   }}
