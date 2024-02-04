@@ -22,3 +22,7 @@
 .modal {
   animation: fade_in 0.9s ease-out 0.1s 1;
 }
+
+section {
+  transition: 1s;
+}

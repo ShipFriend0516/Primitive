@@ -50,7 +50,7 @@ const Footer = () => {
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <g clip-path="url(#clip0_403_243)">
+                  <g clipPath="url(#clip0_403_243)">
                     <path
                       d="M18 20H2C0.9 20 0 19.1 0 18V2C0 0.9 0.9 0 2 0H18C19.1 0 20 0.9 20 2V18C20 19.1 19.1 20 18 20Z"
                       fill="#03C75A"
@@ -73,7 +73,9 @@ const Footer = () => {
         <hr className="my-4 border-gray-600" />
         <p className="text-center relative">
           Copyright© 2024 Primitive. All rights reserved.{" "}
-          <span className="absolute right-0 text-gray-800 md:text-xs hidden md:block">Special Thanks.... Yungang</span>
+          <span className="absolute right-0 text-gray-800 md:text-xs hidden md:block">
+            Special Thanks.... Yungang
+          </span>
         </p>
       </div>
     </footer>

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import logoBanner from "../Images/프미배너.jpg";
 import project1 from "../Images/cover4.jpg";
 import project2 from "../Images/Title-Invisible.png";
 import project3 from "../Images/2.jpg";
@@ -11,7 +10,47 @@ import Introduction4 from "../Images/4.png";
 
 import ProjectCard from "./ProjectCard";
 
+import { useEffect, useState, useRef } from "react";
+
 const Intro = () => {
+  // 스크롤 애니메이션 관련 상태 관리
+  const cover1 = useRef(null);
+  const cover2 = useRef(null);
+  const cover3 = useRef(null);
+  const cover4 = useRef(null);
+
+  const coverRefs = [cover1, cover2, cover3];
+
+  useEffect(() => {
+    const callback = (entries, observer) => {
+      console.log(entries);
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          // 뷰포트에 진입할 때 애니메이션 적용
+          entry.target.style.opacity = "1";
+          entry.target.style.transform = "translateY(0)";
+        } else {
+          // 뷰포트를 벗어날 때 초기 상태로 돌아가기
+          entry.target.style.opacity = "0";
+          entry.target.style.transform = "translateY(50px)";
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(callback, { threshold: 0.1 });
+
+    coverRefs.forEach((ref) => {
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+    });
+
+    // 컴포넌트가 언마운트되면 observer 해제
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   const Cover = styled.div`
     width: 100vw;
     position: relative;
@@ -20,6 +59,8 @@ const Intro = () => {
     padding-bottom: 100px;
     max-width: 80rem;
     margin: 0 auto;
+    transition: 1s;
+
     > div {
     }
 
@@ -85,30 +126,27 @@ const Intro = () => {
       <section className="bg-gradient-to-b from-black to-indigo-950 bg-black text-white h-screen flex flex-col justify-center items-center">
         <div className="top-1/4 fade_in mb-10">
           <h1 className="text-center primitive">PRIMITIVE</h1>
-          <h2 className="btn-shine text-center">
-            <span className=" text-blue-500">0</span>과 <span className="text-red-600">1</span> 사이
-            무한한 가능성, KNU 프로그래밍 동아리
-          </h2>
+          <h2 className="btn-shine text-center">0과 1 사이 무한한 가능성, KNU 프로그래밍 동아리</h2>
         </div>
       </section>
       <section className="bg-white w-screen">
-        <div class="shuffleBox bg-gradient-to-b from-indigo-950 to-black">
+        <div className="shuffleBox bg-gradient-to-b from-indigo-950 to-black">
           <p>Hello 👋 We Learn</p>
-          <div class="shuffleAnimation">
-            <div class="first">
+          <div className="shuffleAnimation">
+            <div className="first">
               <div>Programming</div>
             </div>
-            <div class="second">
+            <div className="second">
               <div>Networking</div>
             </div>
-            <div class="third">
+            <div className="third">
               <div>Communication</div>
             </div>
           </div>
         </div>
       </section>
       <section className="bg-slate-100">
-        <Cover className="bg-slate-100 md:p-20 p-10">
+        <Cover className="bg-slate-100 md:p-20 p-10" ref={cover1}>
           <h3 className="2xl:text-4xl xl:text-4xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4">
             Primitive는...
           </h3>
@@ -125,7 +163,7 @@ const Intro = () => {
         </Cover>
       </section>
       <section className="bg-slate-50">
-        <Cover className="bg-slate-50 md:p-20 p-10">
+        <Cover className="bg-slate-50 md:p-20 p-10" ref={cover2}>
           <div className="top-1/4 mb-10">
             <h3 className="2xl:text-4xl xl:text-4xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4">
               무슨 활동을 하나요?
@@ -156,7 +194,7 @@ const Intro = () => {
         </Cover>
       </section>
       <section className="bg-slate-100">
-        <Cover className="bg-slate-100">
+        <Cover className="bg-slate-100" ref={cover3}>
           <div className="top-1/4 right-10 fade_in">
             <h3 className="2xl:text-4xl xl:text-4xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4">
               대표 프로젝트
@@ -170,7 +208,7 @@ const Intro = () => {
               projectDate={"23/09 ~ 23/12"}
               projectDescription={"친환경 이커머스 서비스"}
               // projectParticipate={["서정우", "윤가은"]}
-              projectTechStacks={["Web", "React", "Redux", "Spring", "AWS"]}
+              projectTechStacks={["Web", "React", "Spring", "MySQL", "AWS"]}
             />
             <ProjectCard
               projectThumbnail={project2}
