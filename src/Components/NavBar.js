@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Modal from "react-modal";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "../Styles/animations.css";
 import { IoMenuOutline } from "react-icons/io5";
@@ -48,6 +48,22 @@ const NavBar = () => {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [error, setError] = useState("");
+
+  // 페이지 항상 위로
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // 페이지 이동 시 스크롤을 맨 위로 이동
+    console.log(pathname);
+  }, [pathname]);
+
+  const routes = {
+    소개: "/",
+    프로젝트: "/project",
+    운영진: "/members",
+    로그인: "/login",
+    "JOIN US!": "/recruit",
+  };
 
   // 모바일 메뉴 관련
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -336,7 +352,7 @@ const NavBar = () => {
       <>
         <To
           onClick={() => {
-            navigate("/");
+            window.scrollTo({ top: 0, behavior: "smooth" }); // 페이지 이동 시 스크롤을 맨 위로 이동
           }}
         >
           PRIMITIVE
@@ -357,42 +373,32 @@ const NavBar = () => {
         </div>
       ) : (
         <ul className="flex flex-row">
-          <To
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            소개
-          </To>
-          <To
-            onClick={() => {
-              navigate("/project");
-            }}
-          >
-            프로젝트
-          </To>
-          <To
-            onClick={() => {
-              navigate("/members");
-            }}
-          >
-            운영진
-          </To>
-          <To
-            onClick={() => {
-              openModal();
-            }}
-          >
-            로그인
-          </To>
-          <To
-            className="bg-blue-500 hover:text-black"
-            onClick={() => {
-              navigate("/recruit");
-            }}
-          >
-            JOIN US!
-          </To>
+          {Object.entries(routes).map((r, i) => {
+            if (r[1] == "/login") {
+              return (
+                <To
+                  onClick={() => {
+                    openModal();
+                  }}
+                >
+                  로그인
+                </To>
+              );
+            } else {
+              return (
+                <To
+                  className={
+                    Object.entries(routes).length === i + 1 ? "bg-blue-500 hover:text-black" : ""
+                  }
+                  onClick={() => {
+                    navigate(r[1]);
+                  }}
+                >
+                  {r[0]}
+                </To>
+              );
+            }
+          })}
         </ul>
       )}
 
