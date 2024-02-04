@@ -10,7 +10,9 @@ import Introduction4 from "../Images/4.png";
 
 import ProjectCard from "./ProjectCard";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
+import Cover from "./Cover";
+import ActivityCard from "./ActivityCard";
 
 const Intro = () => {
   // 스크롤 애니메이션 관련 상태 관리
@@ -24,14 +26,11 @@ const Intro = () => {
 
   useEffect(() => {
     const callback = (entries, observer) => {
-      console.log(entries);
       entries.forEach((entry, i) => {
         if (entry.isIntersecting) {
-          // 뷰포트에 진입할 때 애니메이션 적용
           entry.target.style.opacity = "1";
           entry.target.style.transform = "translateY(0)";
         } else {
-          // 뷰포트를 벗어날 때 초기 상태로 돌아가기
           entry.target.style.opacity = "0";
           entry.target.style.transform = "translateY(50px)";
         }
@@ -52,81 +51,11 @@ const Intro = () => {
     };
   }, []);
 
-  const Cover = styled.div`
-    width: 100vw;
-    position: relative;
-    padding: 5rem;
-    padding-top: 100px;
-    padding-bottom: 100px;
-    max-width: 80rem;
-    margin: 0 auto;
-    transition: 1s;
-
-    > div {
-    }
-
-    > div:first-child {
-      left: 2.5rem;
-    }
-
-    > div:last-child {
-      right: 2.5rem;
-    }
-
-    @media (max-width: 768px) {
-      padding: 3rem;
-    }
-  `;
-
-  const ActivityCard = styled.div`
-    padding: 20px;
-    box-shadow: 0 0 3px gray;
-    border-radius: 20px;
-    min-height: 30%;
-    position: relative;
-    aspect-ratio: 16/9;
-    background-color: white;
-    font-weight: bold;
-
-    h4 {
-      font-size: 1.8rem;
-      position: relative;
-      color: white;
-      text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
-      padding-left: 0.1em;
-
-      border-radius: 5px;
-    }
-
-    p {
-      font-size: 1.2rem;
-      position: relative;
-      text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
-      color: white;
-      padding-left: 0.1em;
-    }
-
-    &:before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 20px;
-    }
-    background-image: ${(props) => `url(${props.backgroundImage})`};
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-  `;
-
   return (
     <div className="bg-black w-screen min-h-screen">
       <section className="bg-gradient-to-b from-black to-indigo-950 bg-black text-white h-screen flex flex-col justify-center items-center">
         <div className="top-1/4 mb-10">
-          <h1 className="text-center primitive ">PRIMITIVE</h1>
+          <h1 className="text-center primitive">PRIMITIVE</h1>
           <h2 className="btn-shine text-center">0과 1 사이 무한한 가능성, KNU 프로그래밍 동아리</h2>
         </div>
       </section>

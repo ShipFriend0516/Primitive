@@ -8,36 +8,10 @@ import { useSpring, animated } from "react-spring";
 import styles from "../Styles/menu.module.css";
 
 const NavBar = () => {
-  const To = styled.li`
-    font-size: 1.1em;
-    padding: 12px 12px;
-    transition: 0.2s;
-    list-style: none;
-    &:hover {
-      cursor: pointer;
-      color: gray;
-      margin: 0 6px;
-    }
-
-    &:first-of-type:hover {
-      margin: 0;
-    }
-
-    &:last-child {
-      margin-left: 6px;
-      margin-right: 0;
-    }
-
-    &:last-child:hover {
-      color: black;
-      margin-left: 8px;
-    }
-  `;
-
-  const ErrorBox = styled.div`
-    color: red;
-    font-size: 0.8em;
-  `;
+  // const ErrorBox = styled.div`
+  //   color: red;
+  //   font-size: 0.8em;
+  // `;
 
   const navigate = useNavigate();
 
@@ -54,7 +28,6 @@ const NavBar = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0); // 페이지 이동 시 스크롤을 맨 위로 이동
-    console.log(pathname);
   }, [pathname]);
 
   const routes = {
@@ -247,7 +220,7 @@ const NavBar = () => {
                   className="border p-2 w-full rounded"
                 />
               </div>
-              <ErrorBox>{error && error}</ErrorBox>
+              <div>{error && error}</div>
               <button
                 type="button"
                 onClick={handleLogin}
@@ -307,7 +280,7 @@ const NavBar = () => {
                   className="border p-2 w-full rounded"
                 />
               </div>
-              <ErrorBox className="mb-2">{error && error}</ErrorBox>
+              <div className="mb-2">{error && error}</div>
               <button
                 type="button"
                 onClick={handleSignup}
@@ -350,13 +323,14 @@ const NavBar = () => {
   return (
     <div className="w-screen md:h-14 h-10 fixed bg-gray-950 z-10 text-white flex flex-row gap-5 justify-between border-b-gray-50 sm:text-lg text-xs hahmlet">
       <>
-        <To
+        <li
+          className="navbarTo"
           onClick={() => {
             window.scrollTo({ top: 0, behavior: "smooth" }); // 페이지 이동 시 스크롤을 맨 위로 이동
           }}
         >
           PRIMITIVE
-        </To>
+        </li>
       </>
       {isMobile ? (
         <div className="flex items-center cursor-pointer">
@@ -374,28 +348,33 @@ const NavBar = () => {
       ) : (
         <ul className="flex flex-row">
           {Object.entries(routes).map((r, i) => {
-            if (r[1] == "/login") {
+            if (r[1] === "/login") {
               return (
-                <To
+                <li
+                  className="navbarTo"
+                  key={r[1]}
                   onClick={() => {
                     openModal();
                   }}
                 >
                   로그인
-                </To>
+                </li>
               );
             } else {
               return (
-                <To
+                <li
+                  key={r[1]}
                   className={
-                    Object.entries(routes).length === i + 1 ? "bg-blue-500 hover:text-black" : ""
+                    Object.entries(routes).length === i + 1
+                      ? "bg-blue-500 hover:text-black navbarTo"
+                      : "navbarTo"
                   }
                   onClick={() => {
                     navigate(r[1]);
                   }}
                 >
                   {r[0]}
-                </To>
+                </li>
               );
             }
           })}

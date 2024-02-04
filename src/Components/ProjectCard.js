@@ -13,24 +13,24 @@ const ProjectCard = ({
     isEmpty = false;
   }
 
-  const Tag = styled.span`
-    padding: 2px 6px;
-    margin-right: 4px;
-    color: black;
-    font-size: 12px;
-    background-color: transparent;
-    border: 1px solid gray;
-    border-radius: 0.25em;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+  // const Tag = styled.span`
+  //   padding: 2px 6px;
+  //   margin-right: 4px;
+  //   color: black;
+  //   font-size: 12px;
+  //   background-color: transparent;
+  //   border: 1px solid gray;
+  //   border-radius: 0.25em;
+  //   background-size: cover;
+  //   background-repeat: no-repeat;
+  //   background-position: center;
 
-    &:hover {
-      background-color: lightgray;
-      // color: white;
-      transition: 0.2s;
-    }
-  `;
+  //   &:hover {
+  //     background-color: lightgray;
+  //     // color: white;
+  //     transition: 0.2s;
+  //   }
+  // `;
 
   return (
     <div className="p-2">
@@ -56,7 +56,9 @@ const ProjectCard = ({
         </p>
         <span className="text-sm">
           {projectTechStacks.map((tag, index) => (
-            <Tag key={index}>{tag}</Tag>
+            <span className="tag" key={index}>
+              {tag}
+            </span>
           ))}
         </span>
       </div>

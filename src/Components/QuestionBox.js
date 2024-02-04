@@ -8,22 +8,6 @@ import { animated, useSpring, config } from "react-spring";
 const QuestionBox = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const Question = styled.div`
-    display: flex;
-    flex-direction: column;
-    color: ${!isOpen ? "black" : "white"};
-    box-shadow: 0px 0px 5px gray;
-    border-radius: 5px;
-    transition: 0.3s;
-    cursor: pointer;
-    margin-bottom: 20px;
-    overflow: hidden;
-
-    > div {
-      padding: 10px;
-    }
-  `;
-
   // for animaitons
   const [springs, api] = useSpring(() => ({
     from: {
@@ -48,8 +32,8 @@ const QuestionBox = ({ question, answer }) => {
   };
 
   return (
-    <Question
-      className="md:text-lg text-sm"
+    <div
+      className="md:text-lg text-sm questionBox"
       style={{ backgroundColor: isOpen ? "#2a2d32" : "white" }}
       onClick={() => {
         handleClick();
@@ -57,9 +41,9 @@ const QuestionBox = ({ question, answer }) => {
       }}
     >
       <div className="flex justify-between items-center">
-        <div className="flex gap-1">
+        <div className={`flex gap-1 ${isOpen ? "text-white" : "text-black"} `}>
           <span>Q : </span>
-          <p className="flex-1">{question}</p>
+          <p className={`flex-1 `}>{question}</p>
         </div>
         <div>{isOpen ? <FaAngleUp /> : <FaAngleDown />}</div>
       </div>
@@ -67,7 +51,7 @@ const QuestionBox = ({ question, answer }) => {
       <animated.div style={{ color: "black", backgroundColor: "white", ...springs }}>
         <p>A : {answer}</p>
       </animated.div>
-    </Question>
+    </div>
   );
 };
 
