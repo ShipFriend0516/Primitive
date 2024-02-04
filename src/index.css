@@ -33,10 +33,14 @@ h2 {
   font-family: "Playfair Display";
 }
 
+.transition-600 {
+  transition: 0.6s;
+}
+
 .primitive {
   font-size: 7em;
   /* opacity: 0; */
-  animation: primitiveAnim 1s linear 0 1;
+  /* animation: primitiveAnim 1s linear 0 1; */
 }
 
 @keyframes primitiveAnim {
@@ -46,6 +50,17 @@ h2 {
   to {
     opacity: 1;
   }
+}
+
+.introCards {
+  transition: 0.6s;
+  width: 1200px;
+  display: inline-flex;
+  justify-content: space-between;
+}
+
+.introCards > div {
+  flex: 0 0 auto;
 }
 
 /* Primitive */
@@ -194,7 +209,8 @@ h2 {
   }
 
   .shuffleAnimation {
-    margin-left: 0.25rem;
+    margin-left: 0.5rem;
+    height: 50px;
   }
 
   .shuffleAnimation > div > div {
@@ -219,5 +235,29 @@ h2 {
     60% {
       margin-top: -4.2rem;
     }
+  }
+}
+
+@media only screen and (min-width: 1201px) {
+  .introCards {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .introCards > div {
+    width: 32%;
+  }
+}
+
+@media (min-width: 841px) and (max-width: 1200px) {
+  .introCards {
+    min-width: 1200px;
+    justify-content: space-between;
+    display: inline-flex;
+    flex: 0 0 auto;
+  }
+
+  .introCards > div {
+    width: 33%;
   }
 }

@@ -17,9 +17,10 @@ const Intro = () => {
   const cover1 = useRef(null);
   const cover2 = useRef(null);
   const cover3 = useRef(null);
-  const cover4 = useRef(null);
+  const introCardRef = useRef(null);
+  const activityCardRef = useRef(null);
 
-  const coverRefs = [cover1, cover2, cover3];
+  const coverRefs = [cover1, cover2, cover3, introCardRef, activityCardRef];
 
   useEffect(() => {
     const callback = (entries, observer) => {
@@ -37,7 +38,7 @@ const Intro = () => {
       });
     };
 
-    const observer = new IntersectionObserver(callback, { threshold: 0.1 });
+    const observer = new IntersectionObserver(callback, { threshold: 0.05 });
 
     coverRefs.forEach((ref) => {
       if (ref.current) {
@@ -124,8 +125,8 @@ const Intro = () => {
   return (
     <div className="bg-black w-screen min-h-screen">
       <section className="bg-gradient-to-b from-black to-indigo-950 bg-black text-white h-screen flex flex-col justify-center items-center">
-        <div className="top-1/4 fade_in mb-10">
-          <h1 className="text-center primitive">PRIMITIVE</h1>
+        <div className="top-1/4 mb-10">
+          <h1 className="text-center primitive ">PRIMITIVE</h1>
           <h2 className="btn-shine text-center">0과 1 사이 무한한 가능성, KNU 프로그래밍 동아리</h2>
         </div>
       </section>
@@ -145,8 +146,8 @@ const Intro = () => {
           </div>
         </div>
       </section>
-      <section className="bg-slate-100">
-        <Cover className="bg-slate-100 md:p-20 p-10" ref={cover1}>
+      <section className="bg-white">
+        <Cover className="bg-white md:p-20 p-10 overflow-x-hidden" ref={cover1}>
           <h3 className="2xl:text-4xl xl:text-4xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4">
             Primitive는...
           </h3>
@@ -160,6 +161,20 @@ const Intro = () => {
           <p className="md:text-2xl text-xl mb-2">
             프로그래밍으로 즐겁고 의미있는 대학생활을 보내고 싶다면, PRIMITIVE와 함께 하세요!
           </p>
+          <div className="introCards mt-10 overflow-x-scroll overflow-y-hidden" ref={introCardRef}>
+            <div className="w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100">
+              <h4 className="text-3xl gothic">활동 기간</h4>
+              <span className="font-bold">20년 +</span>
+            </div>
+            <div className="w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100">
+              <h4 className="text-3xl gothic">총 동아리원 수</h4>
+              <span className="font-bold">200명 +</span>
+            </div>
+            <div className="w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100">
+              <h4 className="text-3xl gothic">총 프로젝트 수</h4>
+              <span className="font-bold">??</span>
+            </div>
+          </div>
         </Cover>
       </section>
       <section className="bg-slate-50">
@@ -173,7 +188,10 @@ const Intro = () => {
               진행합니다.
             </p>
           </div>
-          <div className="max-w-7xl mx-auto w-full h-1/2 grid md:grid-cols-2 md:grid-rows-2 grid-cols-1 gap-5">
+          <div
+            className="max-w-7xl mx-auto w-full h-1/2 grid md:grid-cols-2 md:grid-rows-2 grid-cols-1 gap-5 transition-600"
+            ref={activityCardRef}
+          >
             <ActivityCard backgroundImage={Introduction4}>
               <h4>신입생 교육</h4>
               <p>신입생을 위한 코딩 교육을 진행해요!</p>
