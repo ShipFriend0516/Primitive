@@ -3,8 +3,9 @@ import Modal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import "../Styles/animations.css";
-
 import { IoMenuOutline } from "react-icons/io5";
+import { useSpring, animated } from "react-spring";
+import styles from "../Styles/menu.module.css";
 
 const NavBar = () => {
   const To = styled.li`
@@ -38,32 +39,6 @@ const NavBar = () => {
     font-size: 0.8em;
   `;
 
-  // Menu
-  const Menu = styled.ul`
-    position: fixed;
-    right: 0;
-    top: 2.5rem;
-    text-align: right;
-    width: 50vw;
-    box-shadow: 0 1px 3px lightgray;
-    padding: 0.625rem;
-    z-index: 2;
-    background-color: white;
-    color: black;
-
-    li {
-      font-size: 1.75em;
-      padding: 0.35em 0.5em;
-      margin-bottom: 5px;
-    }
-
-    & li:hover {
-      cursor: pointer;
-      background-color: lightgray;
-      border-radius: 3px;
-    }
-  `;
-
   const navigate = useNavigate();
 
   // 상태관리
@@ -92,6 +67,27 @@ const NavBar = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  // menu for animaitons
+  const [springs, api] = useSpring(() => ({
+    from: {
+      width: 0,
+      opacity: 0,
+    },
+    config: {
+      tension: 280,
+    },
+  }));
+
+  const handleClick = () => {
+    setIsMenuOpen(!isMenuOpen);
+    api.start({
+      to: {
+        opacity: springs.opacity.get() === 0 ? 1 : 0,
+        width: springs.width.get() === 0 ? 200 : 0,
+      },
+    });
+  };
 
   // 로그인 처리
   const validateEmail = (email) => {
@@ -345,19 +341,18 @@ const NavBar = () => {
         >
           PRIMITIVE
         </To>
-        {/* <img src="" alt="logo" /> */}
       </>
       {isMobile ? (
         <div className="flex items-center cursor-pointer">
-          <IoMenuOutline size={35} onClick={() => setIsMenuOpen(!isMenuOpen)} />
-          {isMenuOpen && (
-            <Menu>
+          <IoMenuOutline size={35} onClick={() => handleClick()} />
+          {true && (
+            <animated.ul className={styles.menu} style={{ ...springs }}>
               <li onClick={() => navigate("/")}>소개</li>
               <li onClick={() => navigate("/project")}>프로젝트</li>
               <li onClick={() => navigate("/members")}>운영진</li>
               <li onClick={() => openModal()}>로그인</li>
               <li onClick={() => navigate("/recruit")}>JOIN US</li>
-            </Menu>
+            </animated.ul>
           )}
         </div>
       ) : (

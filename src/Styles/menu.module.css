@@ -1,0 +1,27 @@
+.menu {
+  position: fixed;
+  right: 0;
+  top: 2.5rem;
+  text-align: right;
+  width: 50vw;
+  height: 200px;
+
+  padding: 0.625rem;
+  z-index: 2;
+  background-color: black;
+  color: white;
+  overflow: hidden;
+  text-wrap: nowrap;
+
+  li {
+    font-size: 1.75em;
+    padding: 0.35em 0.5em;
+    margin-bottom: 5px;
+  }
+
+  & li:hover {
+    cursor: pointer;
+    background-color: lightgray;
+    border-radius: 3px;
+  }
+}
