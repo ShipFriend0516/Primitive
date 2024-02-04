@@ -6,7 +6,8 @@ const MemberCard = ({ emoji, name, number, position, description }) => {
     flex-direction: column;
     justify-content: between;
 
-    max-height: 540px;
+    width: 400px;
+    // max-height: 540px;
     aspect-ratio: 6/9;
 
     border-radius: 12px;
@@ -31,6 +32,10 @@ const MemberCard = ({ emoji, name, number, position, description }) => {
       height: 30%;
       color: white;
       font-weight: bold;
+    }
+
+    @media (max-width: 1024px) {
+      width: 300px;
     }
   `;
 

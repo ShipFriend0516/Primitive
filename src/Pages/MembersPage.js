@@ -9,9 +9,9 @@ const MembersPage = () => {
     <div className="flex flex-col min-h-screen justify-between">
       <NavBar />
       <>
-        <div className="w-screen pb-32 flex flex-col items-center">
+        <div className=" max-w-7xl mx-auto w-screen pb-32 flex flex-col items-center">
           <h1 className="md:text-5xl text-3xl font-bold mt-24 mb-10">운영진</h1>
-          <div className="flex flex-row gap-4">
+          <div className="flex  gap-4 md:flex-row flex-col">
             <MemberCard
               emoji={emojis[Math.floor(Math.random() * emojis.length)]}
               name={"심상치 않은 회장"}
