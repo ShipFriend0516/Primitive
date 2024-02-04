@@ -37,7 +37,7 @@ const ActivityCardStyled = styled.div`
     background: rgba(0, 0, 0, 0.2);
     border-radius: 20px;
   }
-  background-image: ${(props) => `url(${props.backgroundImage})`};
+  background-image: ${(props) => `url(${props.$backgroundImage})`};
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -45,7 +45,7 @@ const ActivityCardStyled = styled.div`
 
 const ActivityCard = ({ className, children, backgroundImage }) => {
   return (
-    <ActivityCardStyled className={className} backgroundImage={backgroundImage}>
+    <ActivityCardStyled className={className} $backgroundImage={backgroundImage}>
       {children}
     </ActivityCardStyled>
   );
