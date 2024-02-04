@@ -14,17 +14,17 @@ const MembersPage = () => {
           <div className="flex  gap-4 md:flex-row flex-col">
             <MemberCard
               emoji={emojis[Math.floor(Math.random() * emojis.length)]}
-              name={"심상치 않은 회장"}
+              name={"곽민정"}
               number={22}
               position={"회장"}
               description={"오..."}
             />
             <MemberCard
               emoji={emojis[Math.floor(Math.random() * emojis.length)]}
-              name={"심상치 않은 부회장"}
+              name={"이찬규"}
               number={20}
               position={"부회장"}
-              description={"오....?"}
+              description={"오..."}
             />
           </div>
         </div>
