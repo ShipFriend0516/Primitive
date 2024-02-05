@@ -49,13 +49,14 @@ const NavBar = () => {
       setWindowWidth(window.innerWidth);
       setIsMobile(windowWidth <= 768 ? true : false);
     };
+    console.count();
 
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [windowWidth]);
 
   // menu for animaitons
   const [springs, api] = useSpring(() => ({

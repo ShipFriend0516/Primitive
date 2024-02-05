@@ -5,7 +5,7 @@ const MemberCard = ({ emoji, name, number, position, description }) => {
       <div className="bg-slate-900 w-full">
         <span>{position}</span>
         <span className="text-2xl">
-          {name} {number}기
+          {name} {number}학번
         </span>
         <span className="text-gray-300">{description}</span>
       </div>

@@ -78,7 +78,7 @@ const RecruitPage = () => {
           <p className="text-xl bg-black text-white px-16 py-1 rounded-tr-lg rounded-tl-lg">
             신청서 제출 방법
           </p>
-          <div className="flex md:flex-row flex-col text-white rounded-lg overflow-hidden text-nowrap">
+          <div className="flex sm:flex-row flex-col text-white rounded-lg overflow-hidden text-nowrap">
             <div className="flex flex-col bg-slate-800 p-5 flex-1">
               <span>회장</span>
               <span className="text-2xl font-bold">곽민정</span>

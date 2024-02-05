@@ -23,7 +23,9 @@
 
   & li:hover {
     cursor: pointer;
-    background-color: lightgray;
+    background-color: rgba(148, 148, 148, 0.3);
+
+    color: white;
     border-radius: 3px;
   }
 }
