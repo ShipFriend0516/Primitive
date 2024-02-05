@@ -31,17 +31,17 @@ const ProjectPage = () => {
   `;
 
   return (
-    <>
+    <section className="flex flex-col  min-h-screen justify-between">
       <NavBar />
       <>
-        <div className="w-screen h-screen flex flex-col items-center">
+        <div className="w-screen flex-grow flex flex-col items-center">
           <h1 className="text-5xl mt-24 font-bold">프로젝트</h1>
           <p className="mb-5">프리미티브의 활동들을 모아보세요!</p>
           <div id="filterGroup" className="flex flex-wrap max-w-full gap-1 mb-5">
             <Filter>전체</Filter>
-            <Filter>Mobile</Filter>
+            <Filter>App</Filter>
             <Filter>Web</Filter>
-            <Filter>?</Filter>
+            {/* <Filter></Filter> */}
           </div>
           <div
             id="projectGrid"
@@ -49,16 +49,28 @@ const ProjectPage = () => {
           >
             <ProjectCard
               projectThumbnail={project1}
-              projectName={"EcoChoice"}
+              projectName={"에코초이스"}
               projectDate={"23/09 ~ 23/12"}
               projectDescription={"친환경 이커머스 서비스"}
               // projectParticipate={["서정우", "윤가은"]}
-              projectTechStacks={["Web", "React", "Redux"]}
+              projectTechStacks={["Web", "React", "Spring", "MySQL", "AWS"]}
             />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
+            <ProjectCard
+              projectThumbnail={project2}
+              projectName={"솜뭉치"}
+              projectDate={"24/01 ~ "}
+              projectDescription={"장애인생산품 판매 중개 플랫폼"}
+              // projectParticipate={["이진성", "김유진", "이나경"]}
+              projectTechStacks={["App", "Flutter", "Spring"]}
+            />
+            <ProjectCard
+              projectThumbnail={project3}
+              projectName={"뜨개랑"}
+              projectDate={"24/01 ~ "}
+              projectDescription={"뜨개용품 판매 특화 커뮤니티 서비스"}
+              // projectParticipate={["이찬규", "홍현지", "박시현"]}
+              projectTechStacks={["Web", "React", "Spring"]}
+            />
             <ProjectCard />
             <ProjectCard />
             <ProjectCard />
@@ -67,7 +79,8 @@ const ProjectPage = () => {
           </div>
         </div>
       </>
-    </>
+      <Footer />
+    </section>
   );
 };
 
