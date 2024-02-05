@@ -31,7 +31,21 @@ const ProjectPage = () => {
   `;
 
   return (
-    <>
+    <div className="flex flex-col justify-between w-screen min-h-screen">
+        <NavBar />
+
+        <div className="py-64 flex flex-col justify-center items-center gap-5">
+            <div className="text-3xl flex items-center">
+                <h1 className="text-5xl">아직 개발 중이에요...!</h1>
+                <span className="text-4xl">
+                    <img
+                    src={"https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1603672003/noticon/s3sridqyw5xalrxrnreu.png"}></img>
+                </span>
+            </div>
+        </div>
+        <Footer />
+    </div>
+    /*<>
       <NavBar />
       <>
         <div className="w-screen h-screen flex flex-col items-center">
@@ -67,7 +81,7 @@ const ProjectPage = () => {
           </div>
         </div>
       </>
-    </>
+    </>*/
   );
 };
 
