@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "../Components/NavBar";
 import PrimitiveRecruit24 from "../Images/24PrimitiveRecruit.png";
 import Footer from "../Components/Footer";
@@ -7,11 +7,25 @@ const RecruitPage = () => {
   const [showLast, setShowLast] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isDate, setIsDate] = useState(false);
+
+  useEffect(() => {
+    const now = new Date();
+    const start = new Date(2024, 1, 13); // February is 1 in JavaScript
+    const end = new Date(2024, 2, 11);
+
+    setIsDate(now >= start && now <= end);
+  }, []);
+
   return (
     <>
       <NavBar />
       <div className="bg-slate-50 w-screen min-h-screen flex flex-col items-center justify-center py-20">
-        <h3 className="md:text-4xl text-3xl text-center">지금은 지원기간이 아닙니다!</h3>
+        {isDate ? (
+          <h3 className="md:text-4xl text-3xl text-center">많은 지원 부탁드립니다!</h3>
+        ) : (
+          <h3 className="md:text-4xl text-3xl text-center">지금은 지원기간이 아닙니다!</h3>
+        )}
         <p>2024년 모집 기간: 2월 13일 (화) ~ 3월 11일 (월)</p>
         <a href="/24/2024학년도 PRIMITIVE 신청서.hwp" download>
           <button className="bg-white shadow-xl py-2 px-6 rounded-lg mt-3 mb-3 hover:shadow-lg hover:shadow-indigo-200 w-64">
