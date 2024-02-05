@@ -18,9 +18,9 @@ const RecruitPage = () => {
   }, []);
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <NavBar />
-      <div className="bg-slate-50 w-screen min-h-screen flex flex-col items-center justify-center py-20 gap-1">
+      <div className="flex-grow bg-slate-50 w-screen flex flex-col items-center justify-center py-20 gap-1">
         {isDate ? (
           <h3 className="md:text-4xl text-3xl text-center">많은 지원 부탁드립니다!</h3>
         ) : (
@@ -94,7 +94,8 @@ const RecruitPage = () => {
           </div>
         </div>
       </div>
-    </>
+      <Footer />
+    </div>
   );
 };
 
