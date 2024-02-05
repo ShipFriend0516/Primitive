@@ -327,7 +327,7 @@ const NavBar = () => {
         <li
           className="navbarTo"
           onClick={() => {
-            window.scrollTo({ top: 0, behavior: "smooth" }); // 페이지 이동 시 스크롤을 맨 위로 이동
+            navigate("/");
           }}
         >
           PRIMITIVE

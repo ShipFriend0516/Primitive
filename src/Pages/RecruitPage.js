@@ -1,6 +1,6 @@
 import { useState } from "react";
 import NavBar from "../Components/NavBar";
-import primitive23 from "../Images/primitive23.jpg";
+import PrimitiveRecruit24 from "../Images/24PrimitiveRecruit.png";
 import Footer from "../Components/Footer";
 
 const RecruitPage = () => {
@@ -13,13 +13,23 @@ const RecruitPage = () => {
       <div className="bg-slate-50 w-screen min-h-screen flex flex-col items-center justify-center py-20">
         <h3 className="md:text-4xl text-3xl text-center">지금은 지원기간이 아닙니다!</h3>
         <p>2024년 모집 기간: 2월 13일 (화) ~ 3월 11일 (월)</p>
+        <a href="/24/2024학년도 PRIMITIVE 신청서.hwp" download>
+          <button className="bg-white shadow-xl py-2 px-6 rounded-lg mt-3 mb-3 hover:shadow-lg hover:shadow-indigo-200 w-64">
+            모집 신청서 양식 다운로드
+          </button>
+        </a>
+        <a href="/24/PRIMITIVE 신입생 OT 자료.pdf" download>
+          <button className="bg-white shadow-xl py-2 px-6 rounded-lg mb-3 hover:shadow-lg hover:shadow-indigo-200  w-64">
+            신입생 OT 자료 다운로드
+          </button>
+        </a>
+
         <button
-          className="bg-green-200 py-1 px-4 rounded-lg m-3 hover:bg-green-300"
+          className="bg-green-200 py-2 px-6 rounded-lg m-3 shadow-xl hover:bg-green-300  w-64"
           onClick={() => setShowLast((prev) => !prev)}
         >
-          지난 모집공고 {showLast ? "닫기" : "확인하기"}
+          이번 모집공고 {showLast ? "닫기" : "확인하기"}
         </button>
-
         {showLast ? (
           <div className="flex flex-col justify-center items-center overflow-hidden border-2 p-3 rounded-lg ">
             {loading && (
@@ -35,7 +45,7 @@ const RecruitPage = () => {
               onClick={() => {
                 setIsZoomed((prev) => !prev);
               }}
-              src={primitive23}
+              src={PrimitiveRecruit24}
               alt="23년도 모집공고"
               onLoad={() => {
                 setLoading(false);
@@ -45,8 +55,27 @@ const RecruitPage = () => {
         ) : (
           ""
         )}
+        <div className="flex flex-col items-center mt-20">
+          <p className="text-xl bg-black text-white px-16 py-1 rounded-tr-lg rounded-tl-lg">
+            제출 방법
+          </p>
+          <div className="flex md:flex-row flex-col text-white rounded-lg overflow-hidden text-nowrap">
+            <div className="flex flex-col bg-slate-800 p-5 flex-1">
+              <span>회장</span>
+              <span className="text-2xl font-bold">곽민정</span>
+              <p>kakao ID : 2002kwak</p>
+              <p>Email : kwak2002mj@gmail.com</p>
+            </div>
+            <div className="flex flex-col bg-slate-800 p-5 flex-1">
+              <span>부회장</span>
+              <span className="text-2xl font-bold">이찬규</span>
+
+              <p>kakao ID : LCGPull</p>
+              <p>Email : lay5137@naver.com</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <Footer />
     </>
   );
 };
