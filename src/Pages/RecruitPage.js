@@ -95,6 +95,7 @@ const RecruitPage = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };
