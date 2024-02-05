@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import NavBar from "../Components/NavBar";
-import PrimitiveRecruit24 from "../Images/24PrimitiveRecruit.png";
+import PrimitiveRecruit24 from "../Images/24PrimitiveRecruit.webp";
 import Footer from "../Components/Footer";
 
 const RecruitPage = () => {

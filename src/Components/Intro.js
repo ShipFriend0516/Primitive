@@ -1,12 +1,11 @@
-import styled from "styled-components";
-import project1 from "../Images/cover4.jpg";
-import project2 from "../Images/Title-Invisible.png";
-import project3 from "../Images/2.jpg";
+import project1 from "../Images/에코초이스.webp";
+import project2 from "../Images/솜뭉치.webp";
+import project3 from "../Images/뜨개랑.webp";
 
-import Introduction1 from "../Images/1.png";
-import Introduction2 from "../Images/2.png";
-import Introduction3 from "../Images/3.png";
-import Introduction4 from "../Images/4.png";
+import Introduction1 from "../Images/1.webp";
+import Introduction2 from "../Images/2.webp";
+import Introduction3 from "../Images/3.webp";
+import Introduction4 from "../Images/4.webp";
 
 import ProjectCard from "./ProjectCard";
 

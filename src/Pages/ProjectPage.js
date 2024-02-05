@@ -3,8 +3,10 @@ import NavBar from "../Components/NavBar";
 import ProjectCard from "../Components/ProjectCard";
 import styled from "styled-components";
 
-import project1 from "../Images/cover4.jpg";
-import project2 from "../Images/Title-Invisible.png";
+import project1 from "../Images/에코초이스.webp";
+import project2 from "../Images/솜뭉치.webp";
+import project3 from "../Images/뜨개랑.webp";
+
 import Footer from "../Components/Footer";
 
 const ProjectPage = () => {
