@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { useLocation, useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import { debounce } from "lodash";
 import "../Styles/animations.css";
 import { IoMenuOutline } from "react-icons/io5";
 import { useSpring, animated } from "react-spring";
@@ -45,10 +45,10 @@ const NavBar = () => {
 
   // 모바일 메뉴 관련
   useEffect(() => {
-    const handleResize = () => {
+    const handleResize = debounce(() => {
       setWindowWidth(window.innerWidth);
       setIsMobile(windowWidth <= 768 ? true : false);
-    };
+    }, 100);
     console.count();
 
     window.addEventListener("resize", handleResize);
