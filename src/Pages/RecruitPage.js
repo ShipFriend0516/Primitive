@@ -82,15 +82,14 @@ const RecruitPage = () => {
             <div className="flex flex-col bg-slate-800 p-5 flex-1">
               <span>회장</span>
               <span className="text-2xl font-bold">곽민정</span>
-              <p>Kakao ID : 2002kwak</p>
-              <p>Email : kwak2002mj@gmail.com</p>
+              <p>Kakao ID: 2002kwak</p>
+              <p>Email: kwak2002mj@gmail.com</p>
             </div>
             <div className="flex flex-col bg-slate-800 p-5 flex-1">
               <span>부회장</span>
               <span className="text-2xl font-bold">이찬규</span>
-
-              <p>Kakao ID : LCGPull</p>
-              <p>Email : lay5137@naver.com</p>
+              <p>Kakao ID: LCGPull</p>
+              <p>Email: lay5137@naver.com</p>
             </div>
           </div>
         </div>
