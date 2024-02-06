@@ -14,4 +14,4 @@
 
 ![Netlify](https://img.shields.io/badge/netlify-%23000000.svg?style=for-the-badge&logo=netlify&logoColor=#00C7B7) 
 
-[배포 페이지](https://primitive-knu.netlify.app/)
+Primitive 공식 홈페이지 [배포 페이지](https://primitive-knu.netlify.app/)
