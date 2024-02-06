@@ -32,7 +32,7 @@ const RecruitPage = () => {
             👉 모집 신청서 양식 다운로드
           </button>
         </a>
-        <a href="/24/PRIMITIVE 신입생 OT 자료.pdf" download>
+        <a href="/24/2024 PRIMITIVE 신입생 OT 자료.pdf" download>
           <button className="bg-white shadow-xl py-2 px-6 rounded-lg mb-3 hover:shadow-lg hover:shadow-indigo-200  w-72">
             👉 신입생 OT 자료 다운로드
           </button>
@@ -53,7 +53,7 @@ const RecruitPage = () => {
           <div className="flex flex-col justify-center items-center overflow-hidden border-2 p-3 rounded-lg ">
             {loading && (
               <svg
-                class="animate-pulse h-5 w-5 rounded-full bg-green-950"
+                className="animate-pulse h-5 w-5 rounded-full bg-green-950"
                 viewBox="0 0 24 24"
               ></svg>
             )}

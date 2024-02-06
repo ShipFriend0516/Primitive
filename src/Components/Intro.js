@@ -101,7 +101,7 @@ const Intro = () => {
               </div>
               <div className="w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100">
                 <h4 className="text-2xl md:text-3xl gothic">총 프로젝트 수</h4>
-                <span className="font-bold">??</span>
+                <span className="font-bold">ㅠㅠ😭?</span>
               </div>
             </div>
           </div>
