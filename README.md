@@ -9,6 +9,7 @@
 ![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
 ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
 > Intersection Observer API 사용
+
 > lodash 성능 최적화
 
 ## 🪨 배포
