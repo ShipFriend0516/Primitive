@@ -8,6 +8,8 @@
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
 ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+> Intersection Observer API 사용
+> lodash 성능 최적화
 
 ## 🪨 배포
 ![image](https://github.com/ShipFriend0516/Primitive/assets/98446924/3b2cbf9b-77ee-4421-8323-a7ab40f0e528)
