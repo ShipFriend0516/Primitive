@@ -15,7 +15,6 @@ const Footer = () => {
             </p>
           </div>
           <div className="flex">
-            {/* 소셜 미디어 아이콘 등을 추가하세요 */}
             <a
               href="https://www.instagram.com/primitive_knu/"
               target="_blank"
@@ -27,7 +26,7 @@ const Footer = () => {
               </i>
             </a>
             <a
-              href="https://github.com/ShipFriend0516"
+              href="https://github.com/ShipFriend0516/Primitive"
               target="_blank"
               className="text-gray-300 hover:text-white ml-2"
               rel="noreferrer"
