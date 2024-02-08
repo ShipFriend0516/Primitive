@@ -9,8 +9,33 @@
 ![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
 ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
 > Intersection Observer API 사용
+>
+소개 탭 부드러운 애니메이션을 적용하기 위해 사용
 
 > lodash 성능 최적화
+> 
+모바일 반응성 웹으로 만들기 위해서 사용, 창 사이즈를 변경하면 1px 변경될 때마다 핸들함수가 실행되는데, 너무 비효율적이고 메모리 낭비가 된다.
+lodash 라이브러리의 throttle() 기능과 debounce() 기능을 활용하면 최적화 가능.
+
+debounce()는 시간 내 함수가 여러번 호출되더라도 마지막 한번만 실행하는 함수
+
+```jsx
+ useEffect(() => {
+    const handleResize = debounce(() => {
+      setWindowWidth(window.innerWidth);
+      setIsMobile(windowWidth <= 768 ? true : false);
+    }, 100);
+    console.count();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [windowWidth]);
+
+```
+
 
 ## 🪨 배포
 ![image](https://github.com/ShipFriend0516/Primitive/assets/98446924/3b2cbf9b-77ee-4421-8323-a7ab40f0e528)
