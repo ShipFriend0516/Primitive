@@ -1,7 +1,8 @@
-import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const ProjectCard = ({
   isEmpty = true,
+  projectId,
   projectThumbnail,
   projectName,
   projectDate,
@@ -13,24 +14,11 @@ const ProjectCard = ({
     isEmpty = false;
   }
 
-  // const Tag = styled.span`
-  //   padding: 2px 6px;
-  //   margin-right: 4px;
-  //   color: black;
-  //   font-size: 12px;
-  //   background-color: transparent;
-  //   border: 1px solid gray;
-  //   border-radius: 0.25em;
-  //   background-size: cover;
-  //   background-repeat: no-repeat;
-  //   background-position: center;
+  const navigate = useNavigate();
 
-  //   &:hover {
-  //     background-color: lightgray;
-  //     // color: white;
-  //     transition: 0.2s;
-  //   }
-  // `;
+  const onClickProject = () => {
+    navigate(`/project/${projectId}`);
+  };
 
   return (
     <div className="p-2">
@@ -40,6 +28,7 @@ const ProjectCard = ({
         }`}
       >
         <img
+          onClick={onClickProject}
           className="cursor-pointer object-cover aspect-video"
           src={projectThumbnail}
           alt={projectName}
@@ -47,7 +36,9 @@ const ProjectCard = ({
       </div>
       <div className="w-full aspect-video p-0.5">
         <p className="text-indigo-400 text-sm">{projectDate}</p>
-        <p className=" cursor-pointer text-black text-xl">{projectName}</p>
+        <p className=" cursor-pointer text-black text-xl" onClick={onClickProject}>
+          {projectName}
+        </p>
         <p className="text-sm">{projectDescription}</p>
         <p className="text-sm">
           {projectParticipate.map((m) => {
@@ -56,7 +47,7 @@ const ProjectCard = ({
         </p>
         <span className="text-sm inline-flex flex-wrap">
           {projectTechStacks.map((tag, index) => (
-            <span className="tag" key={index}>
+            <span className="tag px-2" key={index}>
               {tag}
             </span>
           ))}
