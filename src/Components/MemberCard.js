@@ -2,7 +2,7 @@ const MemberCard = ({ emoji, name, number, position, description }) => {
   return (
     <div className="memberCard">
       <div className="w-full bg-white text-9xl flex justify-center items-center">{emoji}</div>
-      <div className="bg-slate-900 w-full">
+      <div className="bg-slate-900 w-full ">
         <span>{position}</span>
         <span className="text-2xl">
           {name} {number}학번
