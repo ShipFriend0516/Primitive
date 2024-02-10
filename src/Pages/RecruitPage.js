@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import NavBar from "../Components/NavBar";
 import PrimitiveRecruit24 from "../Images/24PrimitiveRecruit.webp";
 import Footer from "../Components/Footer";
+import { useSpring, animated } from "react-spring";
 
 const RecruitPage = () => {
-  const [showLast, setShowLast] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isDate, setIsDate] = useState(false);
@@ -16,6 +17,26 @@ const RecruitPage = () => {
 
     setIsDate(now >= start && now <= end);
   }, []);
+
+  const [springs, api] = useSpring(() => ({
+    from: {
+      opacity: 0,
+      maxHeight: 0,
+    },
+    config: {
+      tension: 160,
+    },
+  }));
+
+  const handleClick = () => {
+    setShowInfo(!showInfo);
+    api.start({
+      to: {
+        maxHeight: springs.maxHeight.get() === 0 ? 1440 : 0,
+        opacity: springs.opacity.get() === 0 ? 1 : 0,
+      },
+    });
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -45,35 +66,36 @@ const RecruitPage = () => {
         </a>
         <button
           className="bg-green-200 py-2 px-6 rounded-lg mb-3 shadow-xl hover:bg-green-300  w-72"
-          onClick={() => setShowLast((prev) => !prev)}
+          onClick={() => handleClick()}
         >
-          👀 이번 모집공고 {showLast ? "닫기" : "확인하기"}
+          👀 이번 모집공고 {showInfo ? "닫기" : "확인하기"}
         </button>
-        {showLast ? (
-          <div className="flex flex-col justify-center items-center overflow-hidden border-2 p-3 rounded-lg ">
-            {loading && (
-              <svg
-                className="animate-pulse h-5 w-5 rounded-full bg-green-950"
-                viewBox="0 0 24 24"
-              ></svg>
-            )}
-            <img
-              className={`fade_in w-1/2  ${loading ? "hidden" : ""} ${
-                isZoomed ? "w-full cursor-zoom-out" : "w-1/2 cursor-zoom-in"
-              }`}
-              onClick={() => {
-                setIsZoomed((prev) => !prev);
-              }}
-              src={PrimitiveRecruit24}
-              alt="23년도 모집공고"
-              onLoad={() => {
-                setLoading(false);
-              }}
-            ></img>
-          </div>
-        ) : (
-          ""
-        )}
+        <div
+          className={`flex flex-col justify-center items-center overflow-hidden ${
+            showInfo && "border-2"
+          } p-3 rounded-lg `}
+        >
+          {loading && (
+            <svg
+              className="animate-pulse h-5 w-5 rounded-full bg-green-950"
+              viewBox="0 0 24 24"
+            ></svg>
+          )}
+          <animated.img
+            className={`w-1/2  ${loading ? "hidden" : ""} ${
+              isZoomed ? "w-full cursor-zoom-out" : "w-1/2 cursor-zoom-in"
+            }`}
+            onClick={() => {
+              setIsZoomed(!isZoomed);
+            }}
+            style={{ ...springs }}
+            src={PrimitiveRecruit24}
+            alt="23년도 모집공고"
+            onLoad={() => {
+              setLoading(false);
+            }}
+          ></animated.img>
+        </div>
         <div className="flex flex-col items-center mt-20">
           <p className="text-xl bg-black text-white px-16 py-1 rounded-tr-lg rounded-tl-lg">
             신청서 제출 방법

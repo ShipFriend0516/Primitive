@@ -53,13 +53,13 @@ const Intro = () => {
 
   return (
     <div className="bg-black w-screen min-h-screen">
-      <section className="bg-gradient-to-b from-black to-indigo-950 bg-black text-white h-screen flex flex-col justify-center items-center">
+      <section className="bg-gradient-to-b from-black to-indigo-950 bg-black text-white h-screen flex flex-col justify-center items-center select-none">
         <div className="top-1/4 mb-10">
           <h1 className="text-center primitive">PRIMITIVE</h1>
           <h2 className="btn-shine text-center">0과 1 사이 무한한 가능성, KNU 프로그래밍 동아리</h2>
         </div>
       </section>
-      <section className="bg-white w-screen">
+      <section className="bg-white w-screen select-none">
         <div className="shuffleBox bg-gradient-to-b from-indigo-950 to-black">
           <p>Hello 👋 We Learn</p>
           <div className="shuffleAnimation">

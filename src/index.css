@@ -118,7 +118,7 @@ h2 {
 
 /* ProjectCard */
 .tag {
-  padding: 0px 6px;
+  /* padding: 0px 6px; */
   margin-right: 4px;
   color: black;
   font-size: 12px;
@@ -140,7 +140,7 @@ h2 {
 .memberCard {
   display: flex;
   flex-direction: column;
-  justify-content: between;
+  justify-content: stretch;
 
   width: 400px;
 
@@ -150,27 +150,29 @@ h2 {
   border: 1px solid lightgray;
   overflow: hidden;
   background-color: gray;
+}
 
-  h3 {
-    font-size: 1.5em;
-    margin: 20px 0;
-    text-align: center;
-  }
+.memberCard h3 {
+  font-size: 1.5em;
+  margin: 20px 0;
+  text-align: center;
+}
 
-  div:first-child {
-    height: 70%;
-  }
+.memberCard div:first-child {
+  height: 70%;
+}
 
-  div:last-child {
-    display: flex;
-    flex-direction: column;
-    padding: 24px;
-    height: 30%;
-    color: white;
-    font-weight: bold;
-  }
+.memberCard div:last-child {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  height: 30%;
+  color: white;
+  font-weight: bold;
+}
 
-  @media (max-width: 1024px) {
+@media (max-width: 1024px) {
+  .memberCard {
     width: 300px;
   }
 }
