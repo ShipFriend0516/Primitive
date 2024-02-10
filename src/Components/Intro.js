@@ -29,6 +29,7 @@ const Intro = () => {
         if (entry.isIntersecting) {
           entry.target.style.opacity = "1";
           entry.target.style.transform = "translateY(0)";
+          observer.unobserve(entry.target);
         } else {
           entry.target.style.opacity = "0";
           entry.target.style.transform = "translateY(50px)";
@@ -75,7 +76,7 @@ const Intro = () => {
         </div>
       </section>
       <section className="bg-white">
-        <Cover className="bg-white md:p-20 p-10" ref={cover1}>
+        <Cover className=" md:p-20 p-10" ref={cover1}>
           <h3 className="2xl:text-4xl xl:text-4xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4">
             Primitive는...
           </h3>
@@ -108,7 +109,7 @@ const Intro = () => {
         </Cover>
       </section>
       <section className="bg-slate-50">
-        <Cover className="bg-slate-50 md:p-20 p-10" ref={cover2}>
+        <Cover className=" md:p-20 p-10" ref={cover2}>
           <div className="top-1/4 mb-10">
             <h3 className="2xl:text-4xl xl:text-4xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4">
               무슨 활동을 하나요?
@@ -142,7 +143,7 @@ const Intro = () => {
         </Cover>
       </section>
       <section className="bg-slate-100">
-        <Cover className="bg-slate-100" ref={cover3}>
+        <Cover className="" ref={cover3}>
           <div className="top-1/4 right-10 fade_in">
             <h3 className="2xl:text-4xl xl:text-4xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4">
               대표 프로젝트
