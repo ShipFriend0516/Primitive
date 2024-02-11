@@ -4,7 +4,7 @@
   top: 2.5rem;
   text-align: right;
   width: 50vw;
-  height: 200px;
+  height: fit-content;
 
   padding: 0.625rem;
   z-index: 2;

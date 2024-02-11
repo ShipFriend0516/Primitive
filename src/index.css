@@ -95,6 +95,10 @@ h2 {
   justify-content: space-between;
 }
 
+.introCards::-webkit-scrollbar {
+  display: none;
+}
+
 .introCards > div {
   flex: 0 0 auto;
 }
@@ -374,6 +378,7 @@ h2 {
     display: inline-flex;
     flex: 0 0 auto;
     overflow-x: auto;
+    gap: 1em;
   }
 
   .introCards > div {
