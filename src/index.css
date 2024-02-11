@@ -136,8 +136,8 @@ h2 {
   background-position: center;
 
   &:hover {
-    background-color: lightgray;
-    color: black;
+    background-color: rgb(0, 22, 130);
+    color: white;
     transition: 0.2s;
   }
 }
