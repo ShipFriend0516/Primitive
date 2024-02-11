@@ -26,7 +26,8 @@ body {
 }
 
 h1 {
-  font-family: "Playfair Display", "Hahmlet-Regular", "ChungjuKimSaengTTF", "DNFBitBitv2";
+  font-family: "Playfair Display", "Pretendard-Regular", "Hahmlet-Regular", "ChungjuKimSaengTTF",
+    "DNFBitBitv2";
 }
 
 h2 {
@@ -65,6 +66,7 @@ h2 {
 
 .primitive {
   font-size: 7em;
+  font-family: "Hahmlet-Regular";
   /* opacity: 0; */
   /* animation: primitiveAnim 1s linear 0 1; */
 }
