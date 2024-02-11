@@ -26,9 +26,9 @@ const ProjectDetailPage = () => {
   };
 
   return (
-    <section className="flex flex-col min-h-screen max-w-7xl justify-between bg-white text-black">
+    <section className=" flex flex-col min-h-screen  justify-between bg-white text-black">
       <NavBar />
-      <div className="w-screen flex-grow flex flex-col items-center p-20">
+      <div className=" max-w-7xl mx-auto w-full flex-grow flex flex-col items-center p-20">
         {/* <img
           src={project.thumbnail}
           alt={project.title}
