@@ -6,6 +6,7 @@ import styled from "styled-components";
 import project1 from "../Images/에코초이스.webp";
 import project2 from "../Images/솜뭉치.webp";
 import project3 from "../Images/뜨개랑.webp";
+import project4 from "../Images/인프라운드.webp";
 
 import Footer from "../Components/Footer";
 
@@ -71,7 +72,14 @@ const ProjectPage = () => {
               // projectParticipate={["이찬규", "홍현지", "박시현"]}
               projectTechStacks={["Web", "React", "Spring"]}
             />
-            <ProjectCard />
+            <ProjectCard
+              projectThumbnail={project4}
+              projectName={"인프라운드"}
+              projectDate={"23/03 ~ 23/12"}
+              projectDescription={"내 주변 인프라를 점수로! 인프라운드"}
+              // projectParticipate={["서정우", "윤가은"]}
+              projectTechStacks={["Web", "React"]}
+            />
             <ProjectCard />
             <ProjectCard />
             <ProjectCard />

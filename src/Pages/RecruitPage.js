@@ -41,7 +41,7 @@ const RecruitPage = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <NavBar />
-      <div className="flex-grow bg-slate-50 w-screen flex flex-col items-center justify-center py-20 gap-1">
+      <div className="flex-grow bg-slate-50 w-screen flex flex-col items-center justify-center py-32 gap-1">
         {isDate ? (
           <h3 className="md:text-4xl text-3xl text-center">많은 지원 부탁드립니다!</h3>
         ) : (
