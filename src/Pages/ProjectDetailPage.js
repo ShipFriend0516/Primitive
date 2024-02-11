@@ -5,7 +5,6 @@ import Footer from "../Components/Footer";
 import { useParams } from "react-router-dom";
 
 import thumbnailEx from "../Images/에코초이스.webp";
-import { animated, useSprings, config } from "react-spring";
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
@@ -14,19 +13,6 @@ const ProjectDetailPage = () => {
     console.log(id);
     // 여기에서 projectId를 이용해 API로부터 데이터를 가져오는 로직을 작성하시면 됩니다.
   }, [id]);
-
-  const items = [0, 1, 2];
-  const springs = useSprings(
-    items.length,
-    items.map((item, i) => ({
-      opacity: 1,
-      from: { opacity: 0 },
-      delay: i * 200,
-      config: config.molasses,
-      reset: true,
-      reverse: true,
-    }))
-  );
 
   // 가정: API로부터 가져온 프로젝트 세부 정보
   const project = {
