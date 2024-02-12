@@ -78,7 +78,7 @@ const Intro = () => {
       <section className="bg-white">
         <Cover className=" md:p-20 p-10" ref={cover1}>
           <h3 className="2xl:text-4xl xl:text-4xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4">
-            Primitive는...
+            PRIMITIVE는...
           </h3>
           <p className="md:text-2xl text-xl mb-2">
             PRIMITIVE는 공주대학교 천안캠퍼스에서 활동하고 있는 프로그래밍 동아리입니다.

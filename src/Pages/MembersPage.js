@@ -13,8 +13,18 @@ const MembersPage = () => {
         <div className=" max-w-7xl mx-auto w-screen pb-32 flex flex-col items-center">
           <h1 className="md:text-5xl text-3xl font-bold mt-24 mb-10">운영진</h1>
           <div className="flex  gap-4 md:flex-row flex-col">
-            <MemberCard name={"곽민정"} number={22} position={"회장"} description={"오..."} />
-            <MemberCard name={"이찬규"} number={20} position={"부회장"} description={"오..."} />
+            <MemberCard
+              name={"곽민정"}
+              number={22}
+              position={"회장"}
+              description={"안녕하세요 PRIMITIVE 22대 회장 곽민정입니다."}
+            />
+            <MemberCard
+              name={"이찬규"}
+              number={20}
+              position={"부회장"}
+              description={"안녕하세요 PRIMITIVE 부회장 20학번 이찬규입니다!"}
+            />
           </div>
         </div>
       </>
