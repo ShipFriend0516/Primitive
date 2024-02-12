@@ -24,7 +24,7 @@
 }
 
 section {
-  transition: 1s;
+  transition: 0.4s;
 }
 
 @keyframes dot {
