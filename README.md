@@ -1,4 +1,6 @@
 # 프리미티브
+![프리미티브 인트로](https://github.com/ShipFriend0516/Primitive/assets/98446924/2ba611ba-6238-4dde-915b-3e3eaceffa02)
+
 
 
 ## 🌿 제작 목적
