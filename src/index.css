@@ -175,12 +175,50 @@ h2 {
   height: 30%;
   color: white;
   font-weight: bold;
+  padding-bottom: 30px;
+}
+
+/* 작은 멤버 카드 */
+
+.smallMemberCard {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  border-radius: 12px;
+  border: 1px solid lightgray;
+  overflow: hidden;
+  background-color: gray;
+}
+
+.smallMemberCard h3 {
+  font-size: 1.5em;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.smallMemberCard div:first-child {
+  height: 70%;
+}
+
+.smallMemberCard div:last-child {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  height: 30%;
+  color: white;
+  font-weight: bold;
+  padding-bottom: 30px;
+}
+
+.credit {
+  width: 300px;
 }
 
 .creditMember {
   text-align: center;
   font-size: 1.2rem;
-  width: 100px;
+  width: 120px;
 }
 
 .creditMember p {
@@ -189,7 +227,7 @@ h2 {
 }
 
 .creditMember > img {
-  width: 100px;
+  width: 100%;
 }
 
 .creditMember .special {

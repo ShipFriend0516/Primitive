@@ -28,32 +28,32 @@ const MembersPage = () => {
               description={"안녕하세요 PRIMITIVE 부회장 20학번 이찬규입니다!"}
             />
           </div>
-
-          <div className="bg-white  border shadow-md p-4 rounded-md flex flex-col">
-            <h3 className="text-center text-2xl py-1.5 ">
-              <span className="inline-flex gap-2 leading-6">
-                <GoCheckCircle />
-                만든 사람들
-              </span>
-            </h3>
-            <hr />
-            <div className="flex justify-between gap-3 text-black md:px-4 px-2 py-2">
-              <div className="creditMember flex flex-col bg-white rounded-md p-3 gap-0.5">
-                <img src={jeongwoo} alt="서정우" />
-                <span>서정우</span>
-                <p>프론트엔드</p>
-              </div>
-              <div className="creditMember flex flex-col bg-white rounded-md p-3 gap-0.5">
-                <img src={jinseong} alt="이진성" />
-                <span>이진성</span>
-                <p>백엔드 개발 (예정)</p>
-              </div>
-              <div className="creditMember flex flex-col bg-white rounded-md p-3 gap-0.5">
-                <img src={gaeun} alt="윤가은" />
-                <span>윤가은</span>
-                <p className="special">Special Thanks</p>
-              </div>
-            </div>
+          <h2 className="text-3xl font-bold my-3  ">제작</h2>
+          <div className="flex md:flex-row  flex-col gap-2">
+            <MemberCard
+              image={jeongwoo}
+              name={"서정우"}
+              number={21}
+              position={"프론트엔드"}
+              description={"React"}
+              type={"small"}
+            />
+            <MemberCard
+              image={jinseong}
+              name={"이진성"}
+              number={20}
+              position={"백엔드"}
+              description={"Spring Boot"}
+              type={"small"}
+            />
+            <MemberCard
+              image={gaeun}
+              name={"윤가은"}
+              number={21}
+              position={"Special Thanks"}
+              description={"Design 훈수"}
+              type={"small"}
+            />
           </div>
         </div>
       </>
