@@ -175,7 +175,81 @@ h2 {
   height: 30%;
   color: white;
   font-weight: bold;
+  padding-bottom: 30px;
 }
+
+/* 작은 멤버 카드 */
+
+.smallMemberCard {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  border-radius: 12px;
+  border: 1px solid lightgray;
+  overflow: hidden;
+  background-color: gray;
+}
+
+.smallMemberCard h3 {
+  font-size: 1.5em;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.smallMemberCard div:first-child {
+  height: 70%;
+}
+
+.smallMemberCard div:last-child {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  height: 30%;
+  color: white;
+  font-weight: bold;
+  padding-bottom: 30px;
+}
+
+.credit {
+  width: 300px;
+}
+
+.creditMember {
+  text-align: center;
+  font-size: 1.2rem;
+  width: 120px;
+}
+
+.creditMember p {
+  color: #131417;
+  font-size: 0.9rem;
+}
+
+.creditMember > img {
+  width: 100%;
+}
+
+.creditMember .special {
+  position: relative;
+}
+
+.creditMember .special::after {
+  opacity: 0;
+  transition: 0.5s;
+}
+/* 
+.creditMember .special:hover::after {
+  position: absolute;
+  opacity: 1;
+
+  z-index: 2;
+  top: 0;
+  left: 0;
+  background-color: white;
+  padding: 0 2rem;
+  text-wrap: nowrap;
+} */
 
 @media (max-width: 1024px) {
   .memberCard {
