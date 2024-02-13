@@ -7,6 +7,7 @@ import project1 from "../Images/에코초이스.webp";
 import project2 from "../Images/솜뭉치.webp";
 import project3 from "../Images/뜨개랑.webp";
 import project4 from "../Images/인프라운드.webp";
+import project5 from "../Images/primitive.webp"
 
 import Footer from "../Components/Footer";
 
@@ -80,7 +81,14 @@ const ProjectPage = () => {
               // projectParticipate={["서정우", "윤가은"]}
               projectTechStacks={["Web", "React"]}
             />
-            <ProjectCard />
+            <ProjectCard
+                projectThumbnail={project5}
+                projectName={"프리미티브"}
+                projectDate={"24/01 ~ "}
+                projectDescription={"공주대학교 IT동아리 프리미티브 홍보 웹사이트"}
+                // projectParticipate={["서정우", "윤가은", "이진성"]}
+                projectTechStacks={["Web", "React", "Spring"]}
+            />
             <ProjectCard />
             <ProjectCard />
             <ProjectCard />
