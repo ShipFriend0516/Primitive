@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Modal from "react-modal";
 import { useLocation, useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
 import "../Styles/animations.css";
@@ -9,23 +8,11 @@ import styles from "../Styles/menu.module.css";
 import useStore from "../store";
 
 const NavBar = () => {
-  // const ErrorBox = styled.div`
-  //   color: red;
-  //   font-size: 0.8em;
-  // `;
-
+  // 네비게이트
   const navigate = useNavigate();
 
-  // 상태관리
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("login");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [error, setError] = useState("");
-
   // 전역 상태관리
-  const { isLoggedIn, login, logout } = useStore();
+  const { isLoggedIn, logout } = useStore();
 
   // 페이지 항상 위로
   const { pathname } = useLocation();
@@ -33,14 +20,6 @@ const NavBar = () => {
   useEffect(() => {
     window.scrollTo(0, 0); // 페이지 이동 시 스크롤을 맨 위로 이동
   }, [pathname]);
-
-  const routes = {
-    소개: "/",
-    프로젝트: "/project",
-    운영진: "/members",
-    로그인: "/login",
-    "JOIN US!": "/recruit",
-  };
 
   // 모바일 메뉴 관련
   const [isMenuOpen, setIsMenuOpen] = useState(false);

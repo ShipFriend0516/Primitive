@@ -1,6 +1,12 @@
 import { useState } from "react";
 import NavBar from "../Components/NavBar";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  getRedirectResult,
+  GithubAuthProvider,
+} from "firebase/auth";
 import app from "../firebase";
 import { FaGithub } from "react-icons/fa";
 import { redirect, useNavigate } from "react-router-dom";
@@ -121,8 +127,25 @@ const LoginPage = () => {
     return isValid;
   };
 
+  // github login
+  const githubAuthHandler = async (e) => {
+    try {
+      e.preventDefault();
+
+      const auth = getAuth();
+      const result = await getRedirectResult(auth);
+      const credential = GithubAuthProvider.credentialFromResult(result);
+      if (credential) {
+        const token = credential.accessToken;
+      }
+
+      console.log(result);
+      console.log(credential);
+    } catch (error) {}
+  };
+
   return (
-    <section className="flex flex-col bg-gradient-to-b from-black to-indigo-950  h-screen w-screen">
+    <section className="flex flex-col bg-gradient-to-b from-black to-indigo-950  h-screen w-screen overflow-hidden">
       <NavBar />
       <div className="w-full flex flex-col justify-center items-center h-screen bollock ">
         <form className="authForm flex flex-col justify-center w-full">
@@ -164,8 +187,8 @@ const LoginPage = () => {
               <input
                 type="password"
                 placeholder="프리미티브 인증코드"
-                value={checkPassword}
-                onChange={(e) => setCheckPassword(e.target.value)}
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
                 className="authInput"
               />
             </>
@@ -187,7 +210,10 @@ const LoginPage = () => {
             </button>
           </div>
           <div className="socialWrapper">
-            <button className="text-4xl text-white flex justify-center flex-col items-center">
+            <button
+              onClick={(e) => githubAuthHandler(e)}
+              className="text-4xl text-white flex justify-center flex-col items-center"
+            >
               <FaGithub />
               <span className="text-sm select-none">Github</span>
             </button>
