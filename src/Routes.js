@@ -6,11 +6,16 @@ import ErrorPage from "./Pages/ErrorPage";
 import TestPage from "./Pages/TestPage";
 import AdminPage from "./Pages/AdminPage";
 import ProjectDetailPage from "./Pages/ProjectDetailPage";
+import LoginPage from "./Pages/LoginPage";
 
 const routes = [
   {
     element: <MainPage />,
     path: "/",
+  },
+  {
+    element: <LoginPage />,
+    path: "/login",
   },
   {
     element: <ProjectPage />,

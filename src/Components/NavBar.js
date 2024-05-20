@@ -169,9 +169,6 @@ const NavBar = () => {
     },
   };
 
-  const openModal = () => {
-    setModalIsOpen(true);
-  };
   const closeModal = () => {
     setModalIsOpen(false);
   };
@@ -342,7 +339,7 @@ const NavBar = () => {
               <li onClick={() => navigate("/")}>소개</li>
               <li onClick={() => navigate("/project")}>프로젝트</li>
               <li onClick={() => navigate("/members")}>운영진</li>
-              {/* <li onClick={() => openModal()}>로그인</li> */}
+              <li onClick={() => navigate("/login")}>로그인</li>
               <li onClick={() => navigate("/recruit")}>JOIN US</li>
             </animated.ul>
           )}
@@ -350,35 +347,21 @@ const NavBar = () => {
       ) : (
         <ul className="flex flex-row">
           {Object.entries(routes).map((r, i) => {
-            if (r[1] === "/login") {
-              // return (
-              //   <li
-              //     className="navbarTo"
-              //     key={r[1]}
-              //     onClick={() => {
-              //       openModal();
-              //     }}
-              //   >
-              //     로그인
-              //   </li>
-              // );
-            } else {
-              return (
-                <li
-                  key={r[1]}
-                  className={`${
-                    Object.entries(routes).length === i + 1
-                      ? "bg-blue-500 hover:text-black navbarTo"
-                      : "navbarTo"
-                  } ${pathname === r[1] ? "underline underline-offset-4" : ""}`}
-                  onClick={() => {
-                    navigate(r[1]);
-                  }}
-                >
-                  {r[0]}
-                </li>
-              );
-            }
+            return (
+              <li
+                key={r[1]}
+                className={`${
+                  Object.entries(routes).length === i + 1
+                    ? "bg-blue-500 hover:text-black navbarTo"
+                    : "navbarTo"
+                } ${pathname === r[1] ? "underline underline-offset-4" : ""}`}
+                onClick={() => {
+                  navigate(r[1]);
+                }}
+              >
+                {r[0]}
+              </li>
+            );
           })}
         </ul>
       )}

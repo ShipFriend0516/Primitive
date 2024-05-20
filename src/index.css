@@ -271,6 +271,70 @@ h2 {
 </div>
 */
 
+/* 로그인 페이지 */
+
+.bollock {
+  position: relative;
+  background-color: rgb(30, 27, 75);
+  height: 100%;
+  padding: 2rem;
+  overflow: hidden;
+}
+
+.bollock::after {
+  content: "";
+  position: absolute;
+  top: -90%;
+  left: -25%;
+  overflow: visible;
+  width: 150%;
+  height: 120%;
+  background-color: white;
+  opacity: 0.3;
+  border-radius: 100%;
+}
+
+.authForm {
+  min-width: 300px;
+  max-width: 400px;
+  width: 50%;
+  gap: 6px;
+}
+
+.authInput {
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(13.5px);
+  -webkit-backdrop-filter: blur(13.5px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  color: #fff;
+  font-size: 1rem;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+  }
+}
+.authBtn {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 0.5rem 1rem;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+}
+
 .shuffleBox {
   font-family: "Roboto";
   background-color: #131417;
