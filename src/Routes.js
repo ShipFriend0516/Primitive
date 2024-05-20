@@ -7,6 +7,7 @@ import TestPage from "./Pages/TestPage";
 import AdminPage from "./Pages/AdminPage";
 import ProjectDetailPage from "./Pages/ProjectDetailPage";
 import LoginPage from "./Pages/LoginPage";
+import MyPage from "./Pages/MyPage";
 
 const routes = [
   {
@@ -32,6 +33,10 @@ const routes = [
   {
     element: <RecruitPage />,
     path: "/recruit",
+  },
+  {
+    element: <MyPage />,
+    path: "/mypage",
   },
   {
     element: <AdminPage />,

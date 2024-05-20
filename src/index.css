@@ -298,7 +298,6 @@ h2 {
   min-width: 300px;
   max-width: 400px;
   width: 50%;
-  gap: 6px;
 }
 
 .authInput {
@@ -334,6 +333,14 @@ h2 {
     background: rgba(255, 255, 255, 0.4);
   }
 }
+.socialWrapper {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Animation */
 
 .shuffleBox {
   font-family: "Roboto";
