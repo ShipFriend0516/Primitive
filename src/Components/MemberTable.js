@@ -14,30 +14,36 @@ const MemberTable = ({ members, onApprove, onDelete }) => {
         </tr>
       </thead>
       <tbody>
-        {members.map((member, index) => (
-          <tr key={index}>
-            <td>{index + 1}</td>
-            <td>{member.username}</td>
-            <td>{member.studentId}</td>
-            <td>{member.email}</td>
-            <td>
-              <button
-                className="bg-emerald-300 px-3 py-1.5 rounded-md text-black"
-                onClick={() => onApprove(member.id)}
-              >
-                수락
-              </button>
-            </td>
-            <td>
-              <button
-                className="bg-red-300 px-3 py-1.5 rounded-md"
-                onClick={() => onDelete(member.id)}
-              >
-                회원 삭제
-              </button>
-            </td>
-          </tr>
-        ))}
+        {members.length !== 0 ? (
+          members.map((member, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{member.username}</td>
+              <td>{member.studentId}</td>
+              <td>{member.email}</td>
+              <td>
+                <button
+                  className="bg-emerald-300 px-3 py-1.5 rounded-md text-black"
+                  onClick={() => onApprove(member)}
+                >
+                  수락
+                </button>
+              </td>
+              <td>
+                <button
+                  className="bg-red-300 px-3 py-1.5 rounded-md"
+                  onClick={() => onDelete(member.id)}
+                >
+                  회원 삭제
+                </button>
+              </td>
+            </tr>
+          ))
+        ) : (
+          <td colSpan={6} className="w-full text-center">
+            아무런 회원 가입 요청이 없습니다.. 🥲
+          </td>
+        )}
       </tbody>
     </table>
   );
