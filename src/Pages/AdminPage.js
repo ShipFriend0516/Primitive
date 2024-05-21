@@ -6,6 +6,7 @@ const AdminPage = () => {
     <div>
       <NavBar />
       <div className="h-screen">어드민 페이지</div>
+      <div>모든 회원 리스트</div>
       <Footer />
     </div>
   );
