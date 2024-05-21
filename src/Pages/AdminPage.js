@@ -108,7 +108,7 @@ const AdminPage = () => {
   return (
     <section className="flex flex-col justify-between min-h-screen">
       <NavBar />
-      <div className="max-w-5xl w-full mt-10 mb-20 mx-auto p-5">
+      <div className="max-w-5xl w-full mt-16 mb-20 mx-auto p-5">
         <div className="max-w-5xl mx-auto p-5">
           <h2 className="text-3xl font-bold">어드민 페이지</h2>
           <div className="adminTabWrapper">
