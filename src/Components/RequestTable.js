@@ -1,6 +1,6 @@
 import React from "react";
 
-const MemberTable = ({ members, onApprove, onDelete }) => {
+const RequestTable = ({ members, onApprove, onDelete }) => {
   return (
     <table className="requestTable">
       <thead>
@@ -49,4 +49,4 @@ const MemberTable = ({ members, onApprove, onDelete }) => {
   );
 };
 
-export default MemberTable;
+export default RequestTable;

@@ -3,6 +3,7 @@ import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
 import { db } from "../firebase";
 import { useEffect, useState } from "react";
+import RequestTable from "../Components/RequestTable";
 import MemberTable from "../Components/MemberTable";
 
 const AdminPage = () => {
@@ -12,6 +13,8 @@ const AdminPage = () => {
 
   const [users, setUsers] = useState([]);
   const [usersLoading, setUsersLoading] = useState(true);
+
+  const [selectedTab, setSelectedTab] = useState(0);
   // 메서드
   const getRequests = async () => {
     try {
@@ -70,19 +73,59 @@ const AdminPage = () => {
     });
   };
 
+  const tabRender = () => {
+    if (selectedTab === 0) {
+      return (
+        <>
+          <h3 className="text-xl font-bold p-2">회원가입 요청</h3>
+          {requestLoading ? (
+            <svg
+              className="animate-pulse h-5 w-5 rounded-full bg-green-950"
+              viewBox="0 0 24 24"
+            ></svg>
+          ) : (
+            <RequestTable members={requests} onApprove={onApprove} onDelete={onDelete} />
+          )}
+        </>
+      );
+    } else if (selectedTab === 1) {
+      return (
+        <>
+          <h3 className="text-xl font-bold p-2">유저 권한 관리</h3>
+          {requestLoading ? (
+            <svg
+              className="animate-pulse h-5 w-5 rounded-full bg-green-950"
+              viewBox="0 0 24 24"
+            ></svg>
+          ) : (
+            <MemberTable members={requests} onApprove={onApprove} onDelete={onDelete} />
+          )}
+        </>
+      );
+    }
+  };
+
   return (
     <section className="flex flex-col justify-between min-h-screen">
       <NavBar />
-      <div className="max-w-7xl my-20 p-5 mx-auto ">
-        <h2 className="text-3xl font-bold">어드민 페이지</h2>
-        <h3 className="text-xl">회원가입 요청</h3>
-
-        {requestLoading ? (
-          <div>회원가입 요청이 없습니다..</div>
-        ) : (
-          <MemberTable members={requests} onApprove={onApprove} onDelete={onDelete} />
-        )}
+      <div className="max-w-5xl w-full mt-10 mb-20 mx-auto p-5">
+        <div className="max-w-5xl mx-auto p-5">
+          <h2 className="text-3xl font-bold">어드민 페이지</h2>
+          <div className="adminTabWrapper">
+            <div className={`${selectedTab === 0 && "selected"}`} onClick={() => setSelectedTab(0)}>
+              회원가입 요청
+            </div>
+            <div className={`${selectedTab === 1 && "selected"}`} onClick={() => setSelectedTab(1)}>
+              유저 관리
+            </div>
+            <div className={`${selectedTab === 2 && "selected"}`} onClick={() => setSelectedTab(2)}>
+              몰라
+            </div>
+          </div>
+        </div>
+        <div className="max-w-5xl p-5 mx-auto ">{tabRender()}</div>
       </div>
+
       <Footer />
     </section>
   );
