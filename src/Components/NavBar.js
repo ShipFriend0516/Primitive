@@ -32,7 +32,6 @@ const NavBar = () => {
       setWindowWidth(window.innerWidth);
       setIsMobile(windowWidth <= 768 ? true : false);
     }, 50);
-    console.count();
 
     window.addEventListener("resize", handleResize);
 

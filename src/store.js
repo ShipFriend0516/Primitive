@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 const useStore = create((set) => ({
-  isLoggedIn: false,
+  isLoggedIn: undefined,
   login: () => set({ isLoggedIn: true }),
   logout: () => set({ isLoggedIn: false }),
 }));

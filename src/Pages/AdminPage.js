@@ -246,7 +246,7 @@ const AdminPage = () => {
             <div className="max-w-5xl p-5 mx-auto">{tabRender()}</div>
           </>
         ) : (
-          <div className="flex flex-col mx-auto max-w-2xl items-start">
+          <div className="flex flex-col mx-auto max-w-2xl items-start gap-3">
             <h2 className="text-3xl font-bold">어드민 페이지</h2>
             <p>관리자만 접근할 수 있는 페이지입니다!</p>
             <button
