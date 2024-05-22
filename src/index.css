@@ -351,6 +351,10 @@ h2 {
 .adminTabWrapper > div {
   padding: 0.75em 1.2em;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    padding: 0.35em 0.7em;
+  }
 }
 
 .adminTabWrapper > div.selected {
@@ -372,6 +376,11 @@ h2 {
 td {
   padding: 1em 2.5em;
   text-align: center;
+
+  @media (max-width: 768px) {
+    padding: 0.35em 0.7em;
+    font-size: 0.8em;
+  }
 }
 
 .requestTable tr:first-of-type {
