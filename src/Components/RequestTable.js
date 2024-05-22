@@ -43,9 +43,11 @@ const RequestTable = ({ requests, onApprove, onDelete }) => {
             </tr>
           ))
         ) : (
-          <td colSpan={6} className="w-full text-center py-6">
-            아무런 회원 가입 요청이 없습니다.. 🥲
-          </td>
+          <tr>
+            <td colSpan={6} className="w-full text-center py-6">
+              아무런 회원 가입 요청이 없습니다.. 🥲
+            </td>
+          </tr>
         )}
       </tbody>
       {dialogOpen && <CheckDialog />}
