@@ -220,6 +220,12 @@ const LoginPage = () => {
             placeholder="비밀번호를 입력하세요"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => {
+              e.preventDefault();
+              if (e.key === "Enter") {
+                handleSubmit(e);
+              }
+            }}
             className="authInput"
           />
           {!isLogin && (

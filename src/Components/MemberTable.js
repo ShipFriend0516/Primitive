@@ -19,7 +19,7 @@ const MemberTable = ({ members, getInactiveUsers, onDelete }) => {
   return (
     <table className="requestTable">
       <thead>
-        <tr>
+        <tr className="border-b-2">
           <th>ID</th>
           <th>이름</th>
           <th>학번</th>
@@ -33,8 +33,10 @@ const MemberTable = ({ members, getInactiveUsers, onDelete }) => {
           <>
             {members.map((member, index) =>
               member === "hr" ? (
-                <tr className="w-full text-center py-6" key={index} colSpan={6}>
-                  비활성화된 유저 목록
+                <tr className="w-full text-center py-6" key={index}>
+                  <td className="font-bold border-y-4 border-gray-200" colSpan={6}>
+                    비활성화된 유저 목록
+                  </td>
                 </tr>
               ) : (
                 <tr key={index}>
@@ -54,17 +56,18 @@ const MemberTable = ({ members, getInactiveUsers, onDelete }) => {
                 </tr>
               )
             )}
-
             {isShowInactive && (
-              <button
-                onClick={() => {
-                  getInactiveUsers();
-                  setIsShowInactive(false);
-                }}
-                className="text-center px-2 py-1 bg-blue-950 text-white rounded-xl text-sm"
-              >
-                비활성화된 유저보기
-              </button>
+              <td colSpan={6}>
+                <button
+                  onClick={() => {
+                    getInactiveUsers();
+                    setIsShowInactive(false);
+                  }}
+                  className="text-center px-2 py-1 bg-blue-950 text-white rounded-xl text-sm"
+                >
+                  비활성화된 유저보기
+                </button>
+              </td>
             )}
           </>
         ) : (
