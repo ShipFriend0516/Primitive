@@ -6,10 +6,10 @@ const MemberTable = ({ members, onApprove, onDelete }) => {
       <thead>
         <tr>
           <th>ID</th>
-          <th>Username</th>
+          <th>이름</th>
           <th>학번</th>
-          <th>Email</th>
-          <th>수락</th>
+          <th>이메일</th>
+          <th>권한 등급</th>
           <th>회원 삭제</th>
         </tr>
       </thead>
@@ -19,20 +19,13 @@ const MemberTable = ({ members, onApprove, onDelete }) => {
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{member.username}</td>
-              <td>{member.studentId}</td>
+              <td>{member.studentYear}</td>
               <td>{member.email}</td>
+              <td>{member.authority}</td>
               <td>
                 <button
-                  className="bg-emerald-300 px-3 py-1.5 rounded-md text-black"
-                  onClick={() => onApprove(member)}
-                >
-                  수락
-                </button>
-              </td>
-              <td>
-                <button
-                  className="bg-red-300 px-3 py-1.5 rounded-md"
-                  onClick={() => onDelete(member.id)}
+                  className="bg-red-300 px-2 py-1.5 rounded-md hover:bg-red-400 hover:shadow-lg text-sm text-nowrap"
+                  onClick={() => onDelete(member)}
                 >
                   회원 삭제
                 </button>
@@ -41,7 +34,7 @@ const MemberTable = ({ members, onApprove, onDelete }) => {
           ))
         ) : (
           <td colSpan={6} className="w-full text-center py-6">
-            아무런 회원 가입 요청이 없습니다.. 🥲
+            이럴수가..! 회원이 아무도 없어요.. 🥲
           </td>
         )}
       </tbody>

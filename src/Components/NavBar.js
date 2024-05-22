@@ -12,7 +12,7 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   // 전역 상태관리
-  const { isLoggedIn, logout } = useStore();
+  const { isLoggedIn, login, logout } = useStore();
 
   // 페이지 항상 위로
   const { pathname } = useLocation();
@@ -68,6 +68,13 @@ const NavBar = () => {
     localStorage.removeItem("accessToken");
   };
 
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      login();
+    }
+  }, [isLoggedIn]);
+
   return (
     <div className="w-screen md:h-14 h-10 fixed bg-gray-950 z-10 text-white flex flex-row gap-5 justify-between border-b-gray-50 sm:text-lg text-xs hahmlet select-none">
       <>
@@ -108,12 +115,12 @@ const NavBar = () => {
           >
             소개
           </li>
-          <l
+          <li
             className={`navbarTo ${pathname === "/project" ? "underline underline-offset-4" : ""}`}
             onClick={() => navigate("/project")}
           >
             프로젝트
-          </l>
+          </li>
           <li
             className={`navbarTo ${pathname === "/members" ? "underline underline-offset-4" : ""}`}
             onClick={() => navigate("/members")}

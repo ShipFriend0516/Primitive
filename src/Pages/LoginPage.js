@@ -8,7 +8,7 @@ import {
   GithubAuthProvider,
 } from "firebase/auth";
 
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, where, getDocs, query } from "firebase/firestore";
 import app, { db } from "../firebase";
 import { FaGithub } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -21,6 +21,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
   const [code, setCode] = useState("");
+  const [studentYear, setStudentYear] = useState("");
 
   // 전역 상태관리
   const { isLoggedIn, login } = useStore();
@@ -28,6 +29,7 @@ const LoginPage = () => {
   // UI 상태
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -44,13 +46,37 @@ const LoginPage = () => {
   const registerUser = async () => {
     try {
       if (validateSignup()) {
-        const result = await addDoc(collection(db, "signupRequests"), {
-          email: email,
-          password: password,
-          username: username,
-          status: "pending",
-        });
-        console.log("유저 추가", result);
+        const q = query(
+          collection(db, "signupRequests"),
+          where("email", "==", email),
+          where("username", "==", username),
+          where("studentYear", "==", studentYear),
+          where("status", "==", "pending")
+        );
+
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+          await addDoc(collection(db, "signupRequests"), {
+            email: email,
+            password: password,
+            username: username,
+            studentYear: studentYear,
+            status: "pending",
+          });
+          setMessage(
+            "가입 요청을 성공적으로 기록했습니다. 요청 확인까지 수 일이 소요될 수 있습니다."
+          );
+        }
+
+        setEmail("");
+        setPassword("");
+        setCheckPassword("");
+        setCode("");
+        setStudentYear("");
+        setUsername("");
+        setIsLogin(!isLogin);
+
+        setMessage("이미 신청된 요청입니다.");
       } else {
         console.log("유효성 검사 실패");
       }
@@ -81,6 +107,7 @@ const LoginPage = () => {
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
+    setError("");
   };
 
   // 유효성 검사
@@ -101,9 +128,15 @@ const LoginPage = () => {
 
   const validateSignup = () => {
     let isValid = true;
+    setError("");
 
     if (username.length < 2) {
       setError("유저네임은 2자리 이상이어야 합니다.");
+      isValid = false;
+    }
+
+    if (!/^\d{2}$/.test(studentYear)) {
+      setError("올바르지 않은 학번 형식입니다. (2자리 숫자)");
       isValid = false;
     }
 
@@ -111,7 +144,9 @@ const LoginPage = () => {
       setError("유효한 이메일 주소를 입력해주세요.");
       isValid = false;
     }
-    if (password.length < 8 || !/\W/.test(password)) {
+
+    const pwRegex = /[!@#$%^&*?]/;
+    if (password.length < 8 || !pwRegex.test(password)) {
       setError("비밀번호는 8자리 이상이며, 특수문자를 포함해야 합니다.");
       isValid = false;
     }
@@ -156,13 +191,22 @@ const LoginPage = () => {
             {isLogin ? "로그인" : "회원가입"}
           </h2>
           {!isLogin && (
-            <input
-              type="text"
-              placeholder="이름을 입력하세요"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="authInput"
-            />
+            <div className="flex justify-center gap-3">
+              <input
+                type="text"
+                placeholder="이름을 입력하세요"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="authInput w-1/2"
+              />
+              <input
+                type="text"
+                placeholder="학번"
+                value={studentYear}
+                onChange={(e) => setStudentYear(e.target.value)}
+                className="authInput w-1/2"
+              />
+            </div>
           )}
           <input
             type="email"
@@ -187,19 +231,20 @@ const LoginPage = () => {
                 onChange={(e) => setCheckPassword(e.target.value)}
                 className="authInput"
               />
-              <input
+              {/* <input
                 type="password"
                 placeholder="프리미티브 인증코드"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 className="authInput"
-              />
+              /> */}
             </>
           )}
           <button type="button" onClick={handleSubmit} className="authBtn">
             {isLogin ? "로그인" : "회원가입"}
           </button>
           <div className="p-1 text-left text-red-500 text-sm">{error}</div>
+          <div className="p-1 text-left text-green-500 text-sm">{message}</div>
           <div className="w-full flex justify-end text-white py-2">
             <button type="button" onClick={toggleForm} className="text-right">
               {isLogin ? (

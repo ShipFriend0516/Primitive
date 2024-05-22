@@ -1,40 +1,40 @@
 import React from "react";
 
-const RequestTable = ({ members, onApprove, onDelete }) => {
+const RequestTable = ({ requests, onApprove, onDelete }) => {
   return (
     <table className="requestTable">
       <thead>
         <tr>
           <th>ID</th>
-          <th>Username</th>
+          <th>이름</th>
           <th>학번</th>
-          <th>Email</th>
+          <th>이메일</th>
           <th>수락</th>
-          <th>회원 삭제</th>
+          <th>가입 거절</th>
         </tr>
       </thead>
       <tbody>
-        {members.length !== 0 ? (
-          members.map((member, index) => (
+        {requests.length !== 0 ? (
+          requests.map((request, index) => (
             <tr key={index}>
               <td>{index + 1}</td>
-              <td>{member.username}</td>
-              <td>{member.studentId}</td>
-              <td>{member.email}</td>
+              <td>{request.username}</td>
+              <td>{request.studentYear}</td>
+              <td>{request.email}</td>
               <td>
                 <button
-                  className="bg-emerald-300 px-3 py-1.5 rounded-md text-black"
-                  onClick={() => onApprove(member)}
+                  className="bg-emerald-300 px-2 py-1.5 rounded-md text-black hover:shadow-lg hover:bg-emerald-400 text-sm text-nowrap"
+                  onClick={() => onApprove(request)}
                 >
                   수락
                 </button>
               </td>
               <td>
                 <button
-                  className="bg-red-300 px-3 py-1.5 rounded-md"
-                  onClick={() => onDelete(member.id)}
+                  className="bg-red-300 px-2 py-1.5 rounded-md hover:bg-red-400 hover:shadow-lg text-sm text-nowrap"
+                  onClick={() => onDelete(request)}
                 >
-                  회원 삭제
+                  가입 거절
                 </button>
               </td>
             </tr>
