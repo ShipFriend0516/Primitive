@@ -221,7 +221,6 @@ const LoginPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onKeyDown={(e) => {
-              e.preventDefault();
               if (e.key === "Enter") {
                 handleSubmit(e);
               }
