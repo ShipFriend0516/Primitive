@@ -1,4 +1,13 @@
-import { getDocs, query, collection, doc, setDoc, updateDoc, where } from "firebase/firestore";
+import {
+  getDocs,
+  query,
+  collection,
+  doc,
+  setDoc,
+  updateDoc,
+  where,
+  getDoc,
+} from "firebase/firestore";
 import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
 import { db } from "../firebase";
@@ -19,6 +28,9 @@ const AdminPage = () => {
 
   const [selectedTab, setSelectedTab] = useState(0);
   const [isAdmin, setIsAdmin] = useState(false);
+
+  // UI 상태
+
   // 전역 상태
   const { isLoggedIn, logout } = useStore();
 
@@ -26,6 +38,23 @@ const AdminPage = () => {
   const navigate = useNavigate();
 
   // 메서드
+
+  // 어드민 체크
+  const checkAdmin = async () => {
+    // 어드민 페이지 접근 권한 확인
+    const auth = getAuth();
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const uid = user.uid;
+        const userRef = doc(db, "users", uid);
+        const userDoc = await getDoc(userRef);
+        if (userDoc.data().authority === "관리자") setIsAdmin(true);
+      } else {
+        setIsAdmin(false);
+      }
+    });
+  };
+
   const getRequests = async () => {
     try {
       const signupRequests = await getDocs(
@@ -47,7 +76,7 @@ const AdminPage = () => {
 
   const getUsers = async () => {
     try {
-      const users = await getDocs(query(collection(db, "users")));
+      const users = await getDocs(query(collection(db, "users"), where("status", "==", "Active")));
       setUsers(
         users.docs.map((doc) => ({
           id: doc.id,
@@ -61,29 +90,24 @@ const AdminPage = () => {
     }
   };
 
-  // 어드민 체크
-  const checkAdmin = async () => {
-    // 어드민 페이지 접근 권한 확인
-
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const uid = user.uid;
-        console.log(user);
-        console.log("uid", uid);
-      } else {
-      }
-    });
+  const getInactiveUsers = async () => {
+    try {
+      const users = await getDocs(
+        query(collection(db, "users"), where("status", "==", "Inactive"))
+      );
+      const inactiveUsers = users.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setUsers((prev) => [...prev, "hr", ...inactiveUsers]);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   useEffect(() => {
     console.log("isLoggedIn", isLoggedIn);
-    if (!isLoggedIn) {
-      console.log("잘못된 접근입니다!");
-      setIsAdmin(false);
-    } else {
-      setIsAdmin(true);
-    }
+
     checkAdmin();
   }, [isLoggedIn]);
 
@@ -128,7 +152,6 @@ const AdminPage = () => {
 
   const onDelete = async (member) => {
     try {
-      console.log(member);
       // signupRequests 컬렉션의 상태를 'accepted'로 업데이트
       const requestRef = doc(db, "signupRequests", member.id);
       await updateDoc(requestRef, {
@@ -136,6 +159,19 @@ const AdminPage = () => {
       });
       // 상태 업데이트 (필요한 경우)
       setRequests((prevRequests) => prevRequests.filter((req) => req.id !== member.id));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const deleteUser = async (member) => {
+    try {
+      console.log(member);
+      const userRef = doc(db, "users", member.id);
+      await updateDoc(userRef, {
+        status: "Inactive",
+      });
+      setUsers((prev) => prev.filter((mem) => mem.id !== member.id));
     } catch (error) {
       console.error(error);
     }
@@ -167,7 +203,11 @@ const AdminPage = () => {
               viewBox="0 0 24 24"
             ></svg>
           ) : (
-            <MemberTable members={users} onApprove={onApprove} onDelete={onDelete} />
+            <MemberTable
+              members={users}
+              getInactiveUsers={getInactiveUsers}
+              onDelete={deleteUser}
+            />
           )}
         </>
       );

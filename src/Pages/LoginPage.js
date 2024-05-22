@@ -66,6 +66,8 @@ const LoginPage = () => {
           setMessage(
             "가입 요청을 성공적으로 기록했습니다. 요청 확인까지 수 일이 소요될 수 있습니다."
           );
+        } else {
+          setMessage("이미 신청된 요청입니다.");
         }
 
         setEmail("");
@@ -75,8 +77,6 @@ const LoginPage = () => {
         setStudentYear("");
         setUsername("");
         setIsLogin(!isLogin);
-
-        setMessage("이미 신청된 요청입니다.");
       } else {
         console.log("유효성 검사 실패");
       }

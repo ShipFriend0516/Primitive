@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import CheckDialog from "./CheckDialog";
 
 const RequestTable = ({ requests, onApprove, onDelete }) => {
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   return (
     <table className="requestTable">
       <thead>
@@ -45,6 +48,7 @@ const RequestTable = ({ requests, onApprove, onDelete }) => {
           </td>
         )}
       </tbody>
+      {dialogOpen && <CheckDialog />}
     </table>
   );
 };
