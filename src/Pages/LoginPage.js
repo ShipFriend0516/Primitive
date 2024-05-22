@@ -46,13 +46,7 @@ const LoginPage = () => {
   const registerUser = async () => {
     try {
       if (validateSignup()) {
-        const q = query(
-          collection(db, "signupRequests"),
-          where("email", "==", email),
-          where("username", "==", username),
-          where("studentYear", "==", studentYear),
-          where("status", "==", "pending")
-        );
+        const q = query(collection(db, "signupRequests"), where("email", "==", email));
 
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
