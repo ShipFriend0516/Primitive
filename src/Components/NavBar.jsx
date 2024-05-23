@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
-import "../Styles/animations.css";
 import { IoMenuOutline } from "react-icons/io5";
 import { useSpring, animated } from "react-spring";
 import styles from "../Styles/menu.module.css";

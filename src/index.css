@@ -1,9 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import url("https://fonts.googleapis.com/css?family=Roboto:700");
 @import url("./Styles/fonts.css");
-@import url("./Styles/animations.css");
 
 body {
   margin: 0;
@@ -263,9 +262,6 @@ h2 {
     width: 300px;
   }
 }
-
-/* Primitive */
-@import url("https://fonts.googleapis.com/css?family=Roboto:700");
 
 /* 
 <div class="shuffleBox">
@@ -694,4 +690,55 @@ td {
   .introCards > div {
     width: 250px;
   }
+}
+
+.fade_in {
+  animation: fade_in 0.8s ease-in-out 0.1s 1;
+  /* transition: .5s; */
+}
+
+@keyframes fade_in {
+  from {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+
+  50% {
+    /* transform: translateY(0%); */
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+.modal {
+  animation: fade_in 0.9s ease-out 0.1s 1;
+}
+
+section {
+  transition: 0.4s;
+}
+
+@keyframes dot {
+  from {
+    width: fit-content;
+  }
+
+  to {
+    width: 0;
+  }
+}
+
+.delay-1 {
+  animation-delay: 300ms;
+}
+
+.delay-2 {
+  animation-delay: 600ms;
+}
+
+.delay-3 {
+  animation-delay: 900ms;
 }
