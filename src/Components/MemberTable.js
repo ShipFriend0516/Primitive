@@ -50,7 +50,7 @@ const MemberTable = ({ members, getInactiveUsers, onDelete }) => {
                       className="bg-red-300 px-2 py-1.5 rounded-md hover:bg-red-400 hover:shadow-lg text-sm text-nowrap"
                       onClick={() => openDialog(member)}
                     >
-                      회원 삭제
+                      비활성화
                     </button>
                   </td>
                 </tr>
@@ -63,7 +63,7 @@ const MemberTable = ({ members, getInactiveUsers, onDelete }) => {
                     getInactiveUsers();
                     setIsShowInactive(false);
                   }}
-                  className="text-center px-2 py-1 bg-blue-950 text-white rounded-xl text-sm"
+                  className="text-center px-2 py-1 bg-blue-950 text-white rounded-xl text-sm hover:shadow-lg"
                 >
                   비활성화된 유저보기
                 </button>

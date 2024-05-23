@@ -197,6 +197,7 @@ const AdminPage = () => {
       return (
         <>
           <h3 className="text-xl font-bold p-2">유저 권한 관리</h3>
+          <p className="text-sm px-2 text-gray-600">회원 삭제 - 회원 비활성화</p>
           {usersLoading ? (
             <svg
               className="animate-pulse h-5 w-5 rounded-full bg-green-950"
