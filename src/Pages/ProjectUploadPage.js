@@ -3,9 +3,11 @@ import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import NavBar from "../Components/NavBar";
 import { useNavigate } from "react-router-dom";
+import { db, storage } from "../firebase";
 import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
-import { db } from "../firebase";
 import { getAuth } from "firebase/auth";
+import { ref, uploadBytes } from "firebase/storage";
+import path from "path";
 
 const ProjectUploadPage = () => {
   // 상태관리
@@ -19,6 +21,8 @@ const ProjectUploadPage = () => {
   const [techStacks, setTechStacks] = useState([]);
   const [techStackInput, setTechStackInput] = useState("");
   const editorRef = useRef();
+
+  const inputRef = useRef(null);
 
   // UI 상태
   const [error, setError] = useState("");
@@ -102,6 +106,31 @@ const ProjectUploadPage = () => {
     } catch (error) {
       console.error("프로젝트 저장 중 오류 발생:", error);
     }
+  };
+
+  const handleImageUpload = async (e) => {
+    try {
+      console.log(e.target);
+      const uploadedFile = await uploadBytes(
+        ref(
+          storage,
+          `project-images/${projectName}${getTimeStamp()}${path.extname(e.target.files[0])}`,
+          e.target.files[0]
+        )
+      );
+      console.log(uploadedFile);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getTimeStamp = () => {
+    const now = new Date();
+    const month = now.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줍니다.
+    const monthString = month < 10 ? "0" + month : month; // 한 자리 숫자인 경우 앞에 0을 붙입니다.
+    const day = now.getDate();
+    const dayString = day < 10 ? "0" + day : day; // 한 자리 숫자인 경우 앞에 0을 붙입니다.
+    return `${now.getFullYear()}${monthString}${dayString}`;
   };
 
   // 참여 인원 입력 핸들러
@@ -192,7 +221,6 @@ const ProjectUploadPage = () => {
                     {participant}
                   </span>
                 ))}
-
                 <input
                   onKeyDown={(e) => participantsInputHandler(e)}
                   type="text"
@@ -222,7 +250,6 @@ const ProjectUploadPage = () => {
                     {tech}
                   </span>
                 ))}
-
                 <input
                   onKeyDown={(e) => techStackInputHandler(e)}
                   type="text"
@@ -234,8 +261,18 @@ const ProjectUploadPage = () => {
             </div>
           </div>
           <div className="flex flex-col col2 w-1/2">
-            <div className="rounded-sm overflow-hidden w-full image h-full bg-gray-200 flex justify-center items-center object-cover aspect-video cursor-pointer hover:bg-gray-300">
+            <div
+              className="rounded-sm overflow-hidden w-full image h-full bg-gray-200 flex justify-center items-center object-cover aspect-video cursor-pointer hover:bg-gray-300"
+              onClick={() => inputRef.current.click()}
+            >
               <div className="text-lg">이미지 추가</div>
+              <input
+                ref={inputRef}
+                className="hidden"
+                type={"file"}
+                onChange={(e) => handleImageUpload(e)}
+                alt={projectName}
+              />
             </div>
           </div>
         </div>

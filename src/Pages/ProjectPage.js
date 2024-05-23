@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "../Components/NavBar";
 import ProjectCard from "../Components/ProjectCard";
 import styled from "styled-components";
@@ -7,9 +7,11 @@ import project1 from "../Images/에코초이스.webp";
 import project2 from "../Images/솜뭉치.webp";
 import project3 from "../Images/뜨개랑.webp";
 import project4 from "../Images/인프라운드.webp";
-import project5 from "../Images/primitive.webp"
+import project5 from "../Images/primitive.webp";
 
 import Footer from "../Components/Footer";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../firebase";
 
 const ProjectPage = () => {
   const Filter = styled.span`
@@ -18,7 +20,9 @@ const ProjectPage = () => {
 
     background-color: #2a2d32;
     height: 54px !important;
-    padding-left: 24px;
+    padding-left: import { getDocs } from 'firebase/firestore';
+24px;import { query } from 'firebase/firestore';
+
     padding-right: 24px;
     color: white;
     line-height: 54px;
@@ -31,6 +35,32 @@ const ProjectPage = () => {
       outline: 3px solid #9ba1df;
     }
   `;
+
+  // 상태 관리
+  const [projects, setProjects] = useState([]);
+  const [projectsLoading, setProjectsLoading] = useState(true);
+
+  // Effect
+  useEffect(() => {
+    getProjects();
+  }, []);
+
+  // 메서드
+
+  const getProjects = async () => {
+    try {
+      const response = await getDocs(query(collection(db, "projects")));
+      setProjects(
+        response.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }))
+      );
+      setProjectsLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <section className="flex flex-col  min-h-screen justify-between">
@@ -49,6 +79,17 @@ const ProjectPage = () => {
             id="projectGrid"
             className="w-4/5 mx-20 grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3"
           >
+            {projects.map((project, index) => (
+              <ProjectCard
+                key={project.id}
+                projectThumbnail={project.thumbnail}
+                projectId={project.id}
+                projectName={project.name}
+                projectDescription={project.intro}
+                projectTechStacks={project.techStack}
+                projectParticipate={project.participants}
+              />
+            ))}
             <ProjectCard
               projectThumbnail={project1}
               projectName={"에코초이스"}
@@ -82,12 +123,12 @@ const ProjectPage = () => {
               projectTechStacks={["Web", "React"]}
             />
             <ProjectCard
-                projectThumbnail={project5}
-                projectName={"프리미티브"}
-                projectDate={"24/01 ~ "}
-                projectDescription={"공주대학교 IT동아리 프리미티브 홍보 웹사이트"}
-                // projectParticipate={["서정우", "윤가은", "이진성"]}
-                projectTechStacks={["Web", "React", "Spring"]}
+              projectThumbnail={project5}
+              projectName={"프리미티브"}
+              projectDate={"24/01 ~ "}
+              projectDescription={"공주대학교 IT동아리 프리미티브 홍보 웹사이트"}
+              // projectParticipate={["서정우", "윤가은", "이진성"]}
+              projectTechStacks={["Web", "React", "Spring"]}
             />
             <ProjectCard />
             <ProjectCard />
