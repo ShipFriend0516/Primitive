@@ -6,9 +6,9 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@toast-ui/editor": "^3.2.2",
+    "@toast-ui/react-editor": "^3.2.3",
     "firebase": "^10.12.0",
-    "formik": "^2.4.5",
-    "gh-pages": "^6.1.1",
     "json-server": "^1.0.0-alpha.22",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
@@ -26,10 +26,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "db": "json-server --watch db.json --port 3001"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

@@ -8,6 +8,7 @@ import AdminPage from "./Pages/AdminPage";
 import ProjectDetailPage from "./Pages/ProjectDetailPage";
 import LoginPage from "./Pages/LoginPage";
 import MyPage from "./Pages/MyPage";
+import ProjectUploadPage from "./Pages/ProjectUploadPage";
 
 const routes = [
   {
@@ -21,6 +22,10 @@ const routes = [
   {
     element: <ProjectPage />,
     path: "/project",
+  },
+  {
+    element: <ProjectUploadPage />,
+    path: "/project/edit",
   },
   {
     element: <ProjectDetailPage />,
