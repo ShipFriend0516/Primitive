@@ -1,12 +1,16 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import NavBar from "../Components/NavBar";
 import { useNavigate } from "react-router-dom";
-import { addDoc, collection, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import { getAuth } from "firebase/auth";
 
 const ProjectUploadPage = () => {
+  // 상태관리
+  const [author, setAuthor] = useState("");
+  const [authorLoading, setAuthorLoading] = useState("");
   const [projectName, setProjectName] = useState("");
   const [projectIntro, setProjectIntro] = useState("");
   const [thumbnailUrl, setThumbnailUrl] = useState("");
@@ -16,9 +20,58 @@ const ProjectUploadPage = () => {
   const [techStackInput, setTechStackInput] = useState("");
   const editorRef = useRef();
 
+  // UI 상태
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
   const navigate = useNavigate();
 
+  // 이펙트
+  useEffect(() => {
+    // 현재 로그인한 사용자 정보를 가져옵니다.
+    const unsubscribe = getAuth().onAuthStateChanged((user) => {
+      if (user) {
+        setAuthor(user);
+      } else {
+        setAuthor(null);
+        alert("로그인이 필요한 서비스입니다.");
+        navigate("/login");
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const validateForm = () => {
+    if (!projectName.trim()) {
+      setError("프로젝트 이름을 입력해주세요");
+      return false;
+    }
+    if (!projectIntro.trim()) {
+      setError("프로젝트 소개를 입력해주세요");
+      return false;
+    }
+    if (participants.length === 0) {
+      setError("프로젝트 참여자를 1명 이상 입력해주세요");
+      return false;
+    }
+    if (techStacks.length === 0) {
+      setError("프로젝트 테크 스택을 1개 이상 입력해주세요");
+      return false;
+    }
+    return true;
+  };
+
   const handleSave = async () => {
+    if (!author) {
+      alert("로그인이 필요한 서비스입니다.");
+      navigate("/login");
+      return;
+    }
+    if (!validateForm()) {
+      console.error("유효성 검사 통과 실패");
+      return;
+    }
+
     const markdownContent = editorRef.current.getInstance().getMarkdown();
 
     const projectData = {
@@ -28,6 +81,7 @@ const ProjectUploadPage = () => {
       participants: participants,
       techStack: techStacks,
       description: markdownContent,
+      authorId: author.uid,
       createdAt: new Date(),
     };
 
@@ -44,6 +98,7 @@ const ProjectUploadPage = () => {
       setTechStacks([]);
       setTechStackInput("");
       editorRef.current.getInstance().setMarkdown("");
+      setSuccess("프로젝트 업로드 완료");
     } catch (error) {
       console.error("프로젝트 저장 중 오류 발생:", error);
     }
@@ -92,12 +147,12 @@ const ProjectUploadPage = () => {
       <div className="max-w-5xl w-full mt-16 mb-20 mx-auto p-1 md:p-5 project-upload">
         <h1 className="text-3xl font-bold">프로젝트 업로드</h1>
         <p className="text-xl ">🎉 프로젝트를 마치셨나요? 업로드해 모두에게 공개해봅시다!</p>
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-2 items-center">
           <div className="flex flex-col col1 w-1/2">
             <div>
               <label>
                 <input
-                  className="w-full"
+                  className="w-full font-bold"
                   type="text"
                   value={projectName}
                   placeholder="프로젝트 제목"
@@ -111,6 +166,7 @@ const ProjectUploadPage = () => {
                   className="w-full"
                   type="text"
                   value={projectIntro}
+                  maxLength={150}
                   placeholder="프로젝트 한 줄 요약"
                   onChange={(e) => setProjectIntro(e.target.value)}
                 />
@@ -130,6 +186,7 @@ const ProjectUploadPage = () => {
                     className={`cursor-pointer px-2 py-1.5 bg-indigo-100 rounded-md gap-2 tagAnimation text-nowrap
                       ${index % 4 === 0 && "bg-indigo-50"}
                       ${index % 4 === 1 && "bg-indigo-100"}
+                      hover:bg-indigo-200
                       `}
                   >
                     {participant}
@@ -159,6 +216,7 @@ const ProjectUploadPage = () => {
                     className={`cursor-pointer px-2 py-1.5 bg-emerald-100 rounded-md gap-2 tagAnimation text-nowrap
                       ${index % 4 === 0 && "bg-emerald-50"}
                       ${index % 4 === 1 && "bg-emerald-100"}
+                      hover:bg-emerald-200
                       `}
                   >
                     {tech}
@@ -176,12 +234,13 @@ const ProjectUploadPage = () => {
             </div>
           </div>
           <div className="flex flex-col col2 w-1/2">
-            <div className="w-full image h-full bg-gray-200 flex justify-center items-center object-cover aspect-video cursor-pointer hover:bg-gray-300">
-              <div>이미지 추가</div>
+            <div className="rounded-sm overflow-hidden w-full image h-full bg-gray-200 flex justify-center items-center object-cover aspect-video cursor-pointer hover:bg-gray-300">
+              <div className="text-lg">이미지 추가</div>
             </div>
           </div>
         </div>
         {/*  */}
+        <hr className="my-2" />
         <div>
           <h3 className="text-xl mb-3">프로젝트 세부 설명</h3>
           <Editor
@@ -193,6 +252,16 @@ const ProjectUploadPage = () => {
             ref={editorRef}
           />
         </div>
+        {error && (
+          <div className="w-full text-center text-red-500 text-lg p-2">
+            잘못된 형식: <span className="font-bold">{error}</span>
+          </div>
+        )}
+        {success && (
+          <div className="w-full text-center text-green-500 text-lg p-2">
+            성공: <span className="font-bold">{success}</span>
+          </div>
+        )}
         <div className="flex justify-center gap-4 p-3">
           <button
             className="px-5 py-2 bg-white text-black border "

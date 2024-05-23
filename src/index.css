@@ -358,7 +358,7 @@ h2 {
 }
 .project-upload input {
   padding: 0.5em 0.5em;
-  border-bottom: 1.5px solid gray;
+  border-bottom: 1.5px solid lightgray;
   margin: 2px;
   outline-color: indigo;
 }
@@ -462,6 +462,26 @@ td {
   }
 
   100% {
+    transform: scale(1);
+  }
+}
+
+/* 흔들리는 애니메이션 */
+.animation-earthquakes:hover {
+  animation-name: earthquakes;
+  animation-iteration-count: infinite;
+  animation-duration: 0.2s;
+  animation-direction: alternate;
+}
+
+@keyframes earthquakes {
+  0% {
+    transform: scale(1);
+    transform: rotate(3deg);
+  }
+
+  100% {
+    transform: rotate(-3deg);
     transform: scale(1);
   }
 }
