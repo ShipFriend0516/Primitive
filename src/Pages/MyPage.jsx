@@ -108,7 +108,7 @@ const MyPage = () => {
   return (
     <section className="min-h-screen flex flex-col justify-between">
       <NavBar />
-      <div className="max-w-5xl mx-auto w-full flex flex-col ">
+      <div className="px-5 md:p-8 max-w-5xl mx-auto w-full flex flex-col ">
         <div className="w-full mt-16 mb-12 mx-auto p-5 border-b">{profileRender()}</div>
         <div className=" w-full flex flex-col gap-2">
           <h3 className="text-2xl font-bold ">내 정보</h3>
