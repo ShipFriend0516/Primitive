@@ -9,6 +9,7 @@ import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import DOMPurify from "dompurify";
 import { getAuth } from "firebase/auth";
+import CheckDialog from "../Components/CheckDialog";
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
@@ -23,6 +24,9 @@ const ProjectDetailPage = () => {
   // 상태관리
   const [project, setProject] = useState();
   const [projectLoading, setProjectLoading] = useState(true);
+
+  // UI 상태 관리
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   // Method
   const getProjectDetail = async () => {
@@ -153,14 +157,14 @@ const ProjectDetailPage = () => {
             <span className="animate-bounce delay-3">.</span>
           </div>
         )}
-        <h1 className="text-4xl text-center md:text-5xl font-bold">{project.name}</h1>
+        <h1 className="text-3xl text-center md:text-5xl font-bold">{project.name}</h1>
         <p className=" md:text-xl mb-2 text-center">{project.intro}</p>
         <div className="flex justify-between">
           <span className="text-left w-full mb-2 text-sm">
             {formatTimeDifference(project.createdAt)}
           </span>
           <span className="text-right w-full mb-2 text-sm text-gray-500">
-            <button onClick={deleteProject}>삭제</button>
+            <button onClick={() => setIsDialogOpen(true)}>삭제</button>
           </span>
         </div>
         <div className="w-full inline-flex flex-wrap items-center gap-2 mt-2 text-xs md:text-sm">
@@ -197,6 +201,14 @@ const ProjectDetailPage = () => {
           className="mt-6 projectDescription flex flex-col items-start"
           dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project.description) }}
         ></article>
+        {isDialogOpen && (
+          <CheckDialog
+            message={"프로젝트는 삭제하면 복구가 불가능합니다! \n그래도 삭제하시겠습니까?"}
+            btnColor={"red"}
+            onConfirm={() => deleteProject()}
+            setDialogOpen={setIsDialogOpen}
+          ></CheckDialog>
+        )}
       </div>
     );
   };
