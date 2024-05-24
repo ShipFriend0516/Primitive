@@ -85,7 +85,7 @@ const MyPage = () => {
     ) : (
       <div className="profileWrapper flex justify-between items-center gap-4">
         <div className="flex items-center gap-4">
-          <div className="rounded-full w-32 h-32 overflow-hidden bg-gray-300">
+          <div className="rounded-full w-20 h-20  md:w-32 md:h-32 overflow-hidden bg-gray-300">
             <img src={logo} alt="프로필사진" />
           </div>
           <div>
