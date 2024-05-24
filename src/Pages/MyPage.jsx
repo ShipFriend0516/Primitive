@@ -88,6 +88,7 @@ const MyPage = () => {
           <div className="rounded-full w-20 h-20  md:w-32 md:h-32 overflow-hidden bg-gray-300">
             <img src={logo} alt="프로필사진" />
           </div>
+          <div className="text-sm"></div>
           <div>
             <div className="text-2xl">{user.username}</div>
             <div>{user.studentYear} 학번</div>

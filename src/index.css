@@ -374,6 +374,27 @@ section article.projectDescription {
   flex-direction: column;
   justify-content: start;
   align-items: start;
+  padding-bottom: 80px;
+}
+
+article.projectDescription h1 {
+  font-size: 1.875rem;
+}
+
+article.projectDescription h2 {
+  font-size: 1.5rem;
+}
+article.projectDescription h3 {
+  font-size: 1.25rem;
+}
+article.projectDescription h4 {
+  font-size: 1.125rem;
+}
+article.projectDescription h5 {
+  font-size: 1rem;
+}
+article.projectDescription h6 {
+  font-size: 0.875rem;
 }
 
 .aspect-project {
