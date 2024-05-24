@@ -44,11 +44,11 @@ const ProjectCard = ({
           {projectName}
         </p>
         <p className="text-sm">{projectDescription}</p>
-        <p className="text-sm">
+        {/* <p className="text-sm">
           {projectParticipate.map((m) => {
             return <small>{m} </small>;
           })}
-        </p>
+        </p> */}
         <span className="text-sm inline-flex flex-wrap">
           {projectTechStacks.map((tag, index) => (
             <span className="tag px-2" key={index}>
