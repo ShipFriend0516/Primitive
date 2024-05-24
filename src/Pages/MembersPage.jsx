@@ -35,7 +35,7 @@ const MembersPage = () => {
               name={"서정우"}
               number={21}
               position={"프론트엔드"}
-              description={"React"}
+              description={"React | Firebase"}
               type={"small"}
             />
             <MemberCard
@@ -43,7 +43,7 @@ const MembersPage = () => {
               name={"이진성"}
               number={20}
               position={"백엔드"}
-              description={"Spring Boot"}
+              description={"React"}
               type={"small"}
             />
             <MemberCard
