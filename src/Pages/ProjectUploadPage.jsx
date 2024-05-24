@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Editor } from "@toast-ui/react-editor";
-import "@toast-ui/editor/dist/toastui-editor.css";
 import NavBar from "../Components/NavBar";
 import { useNavigate } from "react-router-dom";
 import { db, storage } from "../firebase";
-import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { ref, uploadBytes } from "firebase/storage";
+import ReactQuill from "react-quill";
 import path from "path";
 
 const ProjectUploadPage = () => {
@@ -20,7 +19,7 @@ const ProjectUploadPage = () => {
   const [participantsInput, setParticipantsInput] = useState("");
   const [techStacks, setTechStacks] = useState([]);
   const [techStackInput, setTechStackInput] = useState("");
-  const editorRef = useRef();
+  const editorRef = useRef(null);
 
   const inputRef = useRef(null);
 
@@ -76,15 +75,13 @@ const ProjectUploadPage = () => {
       return;
     }
 
-    const markdownContent = editorRef.current.getInstance().getMarkdown();
-
     const projectData = {
       name: projectName,
       intro: projectIntro,
       thumbnail: thumbnailUrl,
       participants: participants,
       techStack: techStacks,
-      description: markdownContent,
+      description: "markdownContent",
       authorId: author.uid,
       createdAt: new Date(),
     };
@@ -101,7 +98,7 @@ const ProjectUploadPage = () => {
       setParticipantsInput("");
       setTechStacks([]);
       setTechStackInput("");
-      editorRef.current.getInstance().setMarkdown("");
+
       setSuccess("프로젝트 업로드 완료");
     } catch (error) {
       console.error("프로젝트 저장 중 오류 발생:", error);
@@ -280,14 +277,15 @@ const ProjectUploadPage = () => {
         <hr className="my-2" />
         <div>
           <h3 className="text-xl mb-3">프로젝트 세부 설명</h3>
-          <Editor
+          {/* <Editor
             initialValue="프로젝트 세부 설명을 마크다운으로 작성하세요!"
             previewStyle="vertical"
             height="600px"
             initialEditType="markdown"
             useCommandShortcut={true}
             ref={editorRef}
-          />
+          /> */}
+          <ReactQuill style={{ height: "600px" }} />
         </div>
         {error && (
           <div className="w-full text-center text-red-500 text-lg p-2">
