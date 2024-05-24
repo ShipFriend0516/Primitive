@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
 import useStore from "../store";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import logo from "../Images/logo.webp";
 
 const MyPage = () => {
   // 전역 상태 관리
@@ -49,6 +50,7 @@ const MyPage = () => {
           // 사용자의 세부 정보를 가져와서 setUser로 설정
           setUser(userDocSnapshot.data());
           setUserLoading(false);
+          console.log(userDocSnapshot.data());
         } else {
           console.log("해당 사용자의 문서가 존재하지 않습니다.");
         }
@@ -72,9 +74,7 @@ const MyPage = () => {
   const profileRender = () => {
     return userLoading ? (
       <div className="profileWrapper flex items-center gap-4 animate-pulse">
-        <div className="rounded-full w-32 h-32 overflow-hidden bg-gray-300">
-          <div width={200} height={200} />
-        </div>
+        <div className="rounded-full w-32 h-32 overflow-hidden bg-gray-300"></div>
         <div>
           <div className="text-2xl rounded-md bg-gray-300 text-gray-300 mb-2">
             {"user.username"}
@@ -86,7 +86,7 @@ const MyPage = () => {
       <div className="profileWrapper flex justify-between items-center gap-4">
         <div className="flex items-center gap-4">
           <div className="rounded-full w-32 h-32 overflow-hidden bg-gray-300">
-            <div width={200} height={200} />
+            <img src={logo} alt="프로필사진" />
           </div>
           <div>
             <div className="text-2xl">{user.username}</div>
@@ -108,8 +108,48 @@ const MyPage = () => {
   return (
     <section className="min-h-screen flex flex-col justify-between">
       <NavBar />
-      <div className="max-w-5xl w-full mt-16 mb-20 mx-auto p-5 border-b">{profileRender()}</div>
-
+      <div className="max-w-5xl mx-auto w-full flex flex-col ">
+        <div className="w-full mt-16 mb-12 mx-auto p-5 border-b">{profileRender()}</div>
+        <div className=" w-full flex flex-col gap-2">
+          <h3 className="text-2xl font-bold ">내 정보</h3>
+          {userLoading ? (
+            <div>유저 정보 로딩중</div>
+          ) : (
+            <div className="userdataTable">
+              <div>
+                <span>이메일</span>
+                <span>{user.email}</span>
+              </div>
+              <div>
+                <span>권한 등급</span>
+                <span>{user.authority}</span>
+              </div>
+              <div>
+                <span>학번</span>
+                <span>{user.studentYear}</span>
+              </div>
+              <div>
+                <span>이름</span>
+                <span>{user.username}</span>
+              </div>
+            </div>
+          )}
+        </div>
+        {!userLoading &&
+        (user.authority === "관리자" ||
+          user.authority === "회장" ||
+          user.authority === "부회장") ? (
+          <div className="mt-8 flex flex-col gap-2 items-start">
+            <h3 className="text-2xl font-bold ">관리자 전용 탭</h3>
+            <p>관리자 권한이 감지되었습니다.</p>
+            <Link to={"/admin"} className="px-4 py-2 bg-indigo-700 text-white rounded-md">
+              어드민 페이지로 이동
+            </Link>
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </div>
       <Footer />
     </section>
   );

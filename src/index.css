@@ -454,6 +454,28 @@ td {
 
 /* MyPage Style */
 
+.userdataTable {
+  border: 1px solid gray;
+  border-radius: 6px;
+}
+
+.userdataTable > div {
+  display: flex;
+}
+
+.userdataTable > div > span {
+  width: 100px;
+  padding: 1em;
+}
+
+.userdataTable > div > span:first-of-type {
+  font-weight: bold;
+}
+
+.userdataTable > div > span:last-of-type {
+  flex: 1 1 0;
+  border-left: 1px solid gray;
+}
 /* Animation */
 
 .tagAnimation {

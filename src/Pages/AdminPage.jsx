@@ -48,7 +48,9 @@ const AdminPage = () => {
         const uid = user.uid;
         const userRef = doc(db, "users", uid);
         const userDoc = await getDoc(userRef);
-        if (userDoc.data().authority === "관리자") setIsAdmin(true);
+        const authority = userDoc.data().authority;
+        if (authority === "관리자" || authority === "회장" || authority === "부회장")
+          setIsAdmin(true);
       } else {
         setIsAdmin(false);
       }

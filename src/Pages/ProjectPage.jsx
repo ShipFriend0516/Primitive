@@ -97,17 +97,6 @@ const ProjectPage = () => {
                 projectParticipate={project.participants}
               />
             ))}
-            {/* <ProjectCard
-              projectThumbnail={project5}
-              projectName={"프리미티브"}
-              projectDate={"24/01 ~ "}
-              projectDescription={"공주대학교 IT동아리 프리미티브 홍보 웹사이트"}
-              // projectParticipate={["서정우", "윤가은", "이진성"]}
-              projectTechStacks={["Web", "React", "Spring"]} */}
-            {/* /> */}
-            <ProjectCard />
-            <ProjectCard />
-            <ProjectCard />
           </div>
           <Link
             to={"/project/edit"}
