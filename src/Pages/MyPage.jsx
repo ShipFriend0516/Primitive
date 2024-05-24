@@ -139,7 +139,7 @@ const MyPage = () => {
         (user.authority === "관리자" ||
           user.authority === "회장" ||
           user.authority === "부회장") ? (
-          <div className="mt-8 flex flex-col gap-2 items-start">
+          <div className="mt-8 flex flex-col gap-2 items-start mb-20">
             <h3 className="text-2xl font-bold ">관리자 전용 탭</h3>
             <p>관리자 권한을 갖고 있는 계정입니다.</p>
             <Link to={"/admin"} className="px-4 py-2 bg-indigo-700 text-white rounded-md">
