@@ -24,15 +24,19 @@ const ProjectCard = ({
     <div className="p-2">
       <div
         className={`w-full rounded-lg aspect-video overflow-hidden  ${
-          isEmpty ? "bg-lime-100" : ""
+          isEmpty ? "bg-emerald-100" : ""
         }`}
       >
-        <img
-          onClick={onClickProject}
-          className="cursor-pointer object-cover aspect-video"
-          src={projectThumbnail}
-          alt={projectName}
-        />
+        {projectThumbnail ? (
+          <img
+            onClick={onClickProject}
+            className="cursor-pointer object-cover aspect-video"
+            src={projectThumbnail}
+            alt={projectName}
+          />
+        ) : (
+          <div onClick={onClickProject} className="cursor-pointer aspect-video"></div>
+        )}
       </div>
       <div className="w-full aspect-video p-0.5">
         <p className="text-indigo-400 text-sm">{projectDate}</p>

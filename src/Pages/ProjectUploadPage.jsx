@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { db, storage } from "../firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import ReactQuill from "react-quill";
-import path from "path";
 
 const ProjectUploadPage = () => {
   // 상태관리
@@ -107,15 +106,17 @@ const ProjectUploadPage = () => {
 
   const handleImageUpload = async (e) => {
     try {
-      console.log(e.target);
-      const uploadedFile = await uploadBytes(
-        ref(
-          storage,
-          `project-images/${projectName}${getTimeStamp()}${path.extname(e.target.files[0])}`,
-          e.target.files[0]
-        )
-      );
+      const file = e.target.files[0];
+      const lastDotIndex = file.name.lastIndexOf(".");
+      if (lastDotIndex === -1) return;
+      const savedFile = `project-images/${projectName}${getTimeStamp()}${file.name.slice(
+        lastDotIndex
+      )}`;
+
+      const uploadedFile = await uploadBytes(ref(storage, savedFile), e.target.files[0]);
       console.log(uploadedFile);
+      const image_url = await getDownloadURL(ref(storage, savedFile));
+      setThumbnailUrl(image_url);
     } catch (err) {
       console.error(err);
     }
@@ -127,7 +128,10 @@ const ProjectUploadPage = () => {
     const monthString = month < 10 ? "0" + month : month; // 한 자리 숫자인 경우 앞에 0을 붙입니다.
     const day = now.getDate();
     const dayString = day < 10 ? "0" + day : day; // 한 자리 숫자인 경우 앞에 0을 붙입니다.
-    return `${now.getFullYear()}${monthString}${dayString}`;
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+    const second = now.getSeconds();
+    return `${now.getFullYear()}${monthString}${dayString}${hour}${minute}${second}`;
   };
 
   // 참여 인원 입력 핸들러
@@ -262,14 +266,20 @@ const ProjectUploadPage = () => {
               className="rounded-sm overflow-hidden w-full image h-full bg-gray-200 flex justify-center items-center object-cover aspect-video cursor-pointer hover:bg-gray-300"
               onClick={() => inputRef.current.click()}
             >
-              <div className="text-lg">이미지 추가</div>
-              <input
-                ref={inputRef}
-                className="hidden"
-                type={"file"}
-                onChange={(e) => handleImageUpload(e)}
-                alt={projectName}
-              />
+              {thumbnailUrl ? (
+                <img src={thumbnailUrl} className="object-cover" />
+              ) : (
+                <>
+                  <div className="text-lg">이미지 추가</div>
+                  <input
+                    ref={inputRef}
+                    className="hidden"
+                    type={"file"}
+                    onChange={(e) => handleImageUpload(e)}
+                    alt={projectName}
+                  />
+                </>
+              )}
             </div>
           </div>
         </div>

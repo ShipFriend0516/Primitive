@@ -8,10 +8,11 @@ import project2 from "../Images/솜뭉치.webp";
 import project3 from "../Images/뜨개랑.webp";
 import project4 from "../Images/인프라운드.webp";
 import project5 from "../Images/primitive.webp";
-
+import { IoIosAdd } from "react-icons/io";
 import Footer from "../Components/Footer";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebase";
+import { Link } from "react-router-dom";
 
 const ProjectPage = () => {
   const Filter = styled.span`
@@ -96,50 +97,24 @@ const ProjectPage = () => {
                 projectParticipate={project.participants}
               />
             ))}
-            <ProjectCard
-              projectThumbnail={project1}
-              projectName={"에코초이스"}
-              projectDate={"23/09 ~ 23/12"}
-              projectDescription={"친환경 이커머스 서비스"}
-              // projectParticipate={["서정우", "윤가은"]}
-              projectTechStacks={["Web", "React", "Spring", "MySQL", "AWS"]}
-            />
-            <ProjectCard
-              projectThumbnail={project2}
-              projectName={"솜뭉치"}
-              projectDate={"24/01 ~ "}
-              projectDescription={"장애인생산품 판매 중개 플랫폼"}
-              // projectParticipate={["이진성", "김유진", "이나경"]}
-              projectTechStacks={["App", "Flutter", "Spring"]}
-            />
-            <ProjectCard
-              projectThumbnail={project3}
-              projectName={"뜨개랑"}
-              projectDate={"24/01 ~ "}
-              projectDescription={"뜨개용품 판매 특화 커뮤니티 서비스"}
-              // projectParticipate={["이찬규", "홍현지", "박시현"]}
-              projectTechStacks={["Web", "React", "Spring"]}
-            />
-            <ProjectCard
-              projectThumbnail={project4}
-              projectName={"인프라운드"}
-              projectDate={"23/03 ~ 23/12"}
-              projectDescription={"내 주변 인프라를 점수로! 인프라운드"}
-              // projectParticipate={["서정우", "윤가은"]}
-              projectTechStacks={["Web", "React"]}
-            />
-            <ProjectCard
+            {/* <ProjectCard
               projectThumbnail={project5}
               projectName={"프리미티브"}
               projectDate={"24/01 ~ "}
               projectDescription={"공주대학교 IT동아리 프리미티브 홍보 웹사이트"}
               // projectParticipate={["서정우", "윤가은", "이진성"]}
-              projectTechStacks={["Web", "React", "Spring"]}
-            />
+              projectTechStacks={["Web", "React", "Spring"]} */}
+            {/* /> */}
             <ProjectCard />
             <ProjectCard />
             <ProjectCard />
           </div>
+          <Link
+            to={"/project/edit"}
+            className="fixed bg-white bottom-10 right-10 border shadow-xl hover:shadow-lg rounded-full w-12 h-12 flex justify-center items-center text-3xl cursor-pointer"
+          >
+            <IoIosAdd />
+          </Link>
         </div>
       </>
       <Footer />
