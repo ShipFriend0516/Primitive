@@ -5,6 +5,7 @@ import { IoMenuOutline } from "react-icons/io5";
 import { useSpring, animated } from "react-spring";
 import styles from "../Styles/menu.module.css";
 import useStore from "../store";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const NavBar = () => {
   // 네비게이트
@@ -67,10 +68,14 @@ const NavBar = () => {
   };
 
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
-      login();
-    }
+    const auth = getAuth();
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        login();
+      } else {
+        logout();
+      }
+    });
   }, [isLoggedIn]);
 
   return (

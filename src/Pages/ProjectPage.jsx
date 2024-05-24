@@ -70,9 +70,15 @@ const ProjectPage = () => {
           <h1 className="text-5xl mt-24 font-bold">프로젝트</h1>
           <p className="mb-5">프리미티브의 활동들을 모아보세요!</p>
           <div id="filterGroup" className="flex flex-wrap max-w-full gap-1 mb-5">
-            <Filter>전체</Filter>
-            <Filter>App</Filter>
-            <Filter>Web</Filter>
+            <div className="rounded-3xl text-white flex justify-center items-center hover:bg-gray-700 cursor-pointer bg-black w-16 h-12 ">
+              전체
+            </div>
+            <div className="rounded-3xl text-white flex justify-center items-center hover:bg-gray-700 cursor-pointer bg-black w-16 h-12 ">
+              App
+            </div>
+            <div className="rounded-3xl text-white flex justify-center items-center hover:bg-gray-700 cursor-pointer bg-black w-16 h-12 ">
+              Web
+            </div>
             {/* <Filter></Filter> */}
           </div>
           <div
