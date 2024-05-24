@@ -49,12 +49,18 @@ const RecruitPage = () => {
         )}
         <p>2024년 모집 기간: 2월 13일 (화) ~ 3월 11일 (월)</p>
         <a href="/24/2024학년도 PRIMITIVE 신청서.hwp" download>
-          <button className="bg-white shadow-xl py-2 px-6 rounded-lg mt-3 mb-3 hover:shadow-lg hover:shadow-indigo-200 w-72">
+          <button
+            disabled
+            className="bg-gray-200 shadow-xl py-2 px-6 rounded-lg mt-3 mb-3 hover:shadow-lg hover:shadow-indigo-200 w-72"
+          >
             👉 모집 신청서 양식 다운로드
           </button>
         </a>
         <a href="/24/2024 PRIMITIVE 신입생 OT 자료.pdf" download>
-          <button className="bg-white shadow-xl py-2 px-6 rounded-lg mb-3 hover:shadow-lg hover:shadow-indigo-200  w-72">
+          <button
+            disabled
+            className="bg-gray-200 shadow-xl py-2 px-6 rounded-lg mb-3 hover:shadow-lg hover:shadow-indigo-200  w-72"
+          >
             👉 신입생 OT 자료 다운로드
           </button>
         </a>
