@@ -122,9 +122,7 @@ const ProjectDetailPage = () => {
         )}
         <h1 className="text-3xl text-center md:text-5xl font-bold mb-4">{project.name}</h1>
         <p className="text-lg mb-4 text-center">{project.intro}</p>
-        <p className="text-right w-full mb-4">
-          {new Date(project.createdAt.nanoseconds).toLocaleString()}
-        </p>
+        <p className="text-right w-full mb-4">{new Date(project.createdAt).toLocaleString()}</p>
         <div className="w-full inline-flex items-center gap-2 mt-4">
           <h3 className="px-2 py-1 bg-indigo-800 text-white rounded-md">프로젝트 참여자</h3>
 

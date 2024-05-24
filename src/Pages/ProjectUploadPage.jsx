@@ -10,7 +10,6 @@ import ReactQuill from "react-quill";
 const ProjectUploadPage = () => {
   // 상태관리
   const [author, setAuthor] = useState("");
-  const [authorLoading, setAuthorLoading] = useState("");
   const [projectName, setProjectName] = useState("");
   const [projectIntro, setProjectIntro] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
@@ -85,7 +84,7 @@ const ProjectUploadPage = () => {
       techStack: techStacks,
       description: projectDescription,
       authorId: author.uid,
-      createdAt: new Date(),
+      createdAt: new Date().getTime(),
     };
 
     try {

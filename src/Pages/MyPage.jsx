@@ -60,6 +60,14 @@ const MyPage = () => {
     }
   };
 
+  const logoutHandler = () => {
+    localStorage.removeItem("accessToken");
+    logout();
+    const auth = getAuth();
+    auth.signOut();
+    navigate("/");
+  };
+
   // 렌더링
   const profileRender = () => {
     return userLoading ? (
@@ -75,13 +83,23 @@ const MyPage = () => {
         </div>
       </div>
     ) : (
-      <div className="profileWrapper flex items-center gap-4">
-        <div className="rounded-full w-32 h-32 overflow-hidden bg-gray-300">
-          <div width={200} height={200} />
+      <div className="profileWrapper flex justify-between items-center gap-4">
+        <div className="flex items-center gap-4">
+          <div className="rounded-full w-32 h-32 overflow-hidden bg-gray-300">
+            <div width={200} height={200} />
+          </div>
+          <div>
+            <div className="text-2xl">{user.username}</div>
+            <div>{user.studentYear} 학번</div>
+          </div>
         </div>
         <div>
-          <div className="text-2xl">{user.username}</div>
-          <div>{user.studentYear} 학번</div>
+          <button
+            onClick={() => logoutHandler()}
+            className="px-3 py-1 bg-gray-500 text-white rounded-md"
+          >
+            로그아웃
+          </button>
         </div>
       </div>
     );

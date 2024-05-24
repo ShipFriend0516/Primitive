@@ -5,7 +5,7 @@ import { IoMenuOutline } from "react-icons/io5";
 import { useSpring, animated } from "react-spring";
 import styles from "../Styles/menu.module.css";
 import useStore from "../store";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 const NavBar = () => {
   // 네비게이트
@@ -62,9 +62,11 @@ const NavBar = () => {
   };
 
   const logoutHandler = () => {
-    navigate("/");
-    logout();
     localStorage.removeItem("accessToken");
+    logout();
+    const auth = getAuth();
+    auth.signOut();
+    navigate("/");
   };
 
   useEffect(() => {
@@ -139,9 +141,6 @@ const NavBar = () => {
                 onClick={() => navigate("/mypage")}
               >
                 마이페이지
-              </li>
-              <li className={`navbarTo`} onClick={logoutHandler}>
-                로그아웃
               </li>
             </>
           ) : (
