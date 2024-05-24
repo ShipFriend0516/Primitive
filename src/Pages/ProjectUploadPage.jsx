@@ -224,11 +224,11 @@ const ProjectUploadPage = () => {
   return (
     <section className="page">
       <NavBar />
-      <div className="max-w-5xl w-full mt-16 mb-20 mx-auto p-1 md:p-5 project-upload">
-        <h1 className="text-3xl font-bold">프로젝트 업로드</h1>
-        <p className="text-xl ">🎉 프로젝트를 마치셨나요? 업로드해 모두에게 공개해봅시다!</p>
-        <div className="flex flex-row gap-2 items-center">
-          <div className="flex flex-col col1 w-1/2">
+      <div className="max-w-5xl w-full mt-16 mb-20 mx-auto p-5 md:p-5 project-upload">
+        <h1 className="text-2xl md:text-3xl font-bold">프로젝트 업로드</h1>
+        <p className="md:text-xl">프로젝트를 마치셨나요? 🎉 업로드해 모두에게 공개해봅시다! </p>
+        <div className="flex flex-col md:flex-row gap-2 items-stretch md:items-center">
+          <div className="flex flex-col col1 w-full md:w-1/2">
             <div>
               <label>
                 <input
@@ -311,16 +311,16 @@ const ProjectUploadPage = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col col2 w-1/2">
+          <div className="flex flex-col col2 w-full md:w-1/2">
             <div
-              className="rounded-sm overflow-hidden w-full image h-full bg-gray-200 flex justify-center items-center object-cover aspect-video cursor-pointer hover:bg-gray-300"
+              className="rounded-sm overflow-hidden w-full image h-full bg-gray-100 flex justify-center items-center object-cover aspect-video cursor-pointer hover:bg-gray-200"
               onClick={() => inputRef.current.click()}
             >
               {thumbnailUrl ? (
                 <img src={thumbnailUrl} className="object-cover" />
               ) : (
                 <>
-                  <div className="text-lg">이미지 추가</div>
+                  <div className="text-lg">썸네일 추가</div>
                 </>
               )}
               <input
@@ -365,7 +365,7 @@ const ProjectUploadPage = () => {
             성공: <span className="font-bold">{success}</span>
           </div>
         )}
-        <div className="flex justify-center gap-4 p-3">
+        <div className="flex justify-center gap-4 py-10 md:py-3">
           <button
             className="px-5 py-2 bg-white text-black border "
             onClick={() => navigate("/mypage")}
