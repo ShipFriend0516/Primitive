@@ -5,9 +5,10 @@ import Footer from "../Components/Footer";
 import { useParams } from "react-router-dom";
 
 import thumbnailEx from "../Images/에코초이스.webp";
-import { doc, getDoc } from "firebase/firestore";
+import { deleteDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import DOMPurify from "dompurify";
+import { getAuth } from "firebase/auth";
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
@@ -34,6 +35,16 @@ const ProjectDetailPage = () => {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const deleteProject = async () => {
+    try {
+      const auth = getAuth();
+      if (auth.currentUser.uid === project.authorId) {
+        // 글 주인이라면
+        await deleteDoc(doc(db, "projects", project.id));
+      }
+    } catch (err) {}
   };
 
   // 가정: API로부터 가져온 프로젝트 세부 정보
@@ -144,7 +155,14 @@ const ProjectDetailPage = () => {
         )}
         <h1 className="text-4xl text-center md:text-5xl font-bold">{project.name}</h1>
         <p className=" md:text-xl mb-2 text-center">{project.intro}</p>
-        <p className="text-right w-full mb-2 text-sm">{formatTimeDifference(project.createdAt)}</p>
+        <div className="flex justify-between">
+          <span className="text-left w-full mb-2 text-sm">
+            {formatTimeDifference(project.createdAt)}
+          </span>
+          <span className="text-right w-full mb-2 text-sm text-gray-500">
+            <button onClick={deleteProject}>삭제</button>
+          </span>
+        </div>
         <div className="w-full inline-flex flex-wrap items-center gap-2 mt-2 text-xs md:text-sm">
           <h3 className="px-2 py-1 bg-indigo-800 text-white rounded-md">프로젝트 참여자</h3>
           {project.participants.map((participant, index) => (
