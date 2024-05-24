@@ -67,7 +67,7 @@ const ProjectPage = () => {
     <section className="flex flex-col  min-h-screen justify-between">
       <NavBar />
       <>
-        <div className="max-w-7xl mx-auto w-full flex-grow flex flex-col items-center">
+        <div className="max-w-7xl mx-auto w-full flex-grow flex flex-col items-center relative">
           <h1 className="text-5xl mt-24 font-bold">프로젝트</h1>
           <p className="mb-5">프리미티브의 활동들을 모아보세요!</p>
           <div id="filterGroup" className="flex flex-wrap max-w-full gap-1 mb-5">
@@ -100,7 +100,7 @@ const ProjectPage = () => {
           </div>
           <Link
             to={"/project/edit"}
-            className="fixed bg-white bottom-10 right-10 border shadow-xl hover:shadow-lg rounded-full w-12 h-12 flex justify-center items-center text-3xl cursor-pointer"
+            className="projectAddBtn absolute bg-white bottom-10 right-10 border shadow-xl hover:shadow-lg rounded-full w-12 h-12 flex justify-center items-center text-3xl cursor-pointer hover:bg-indigo-950 hover:text-white"
           >
             <IoIosAdd />
           </Link>

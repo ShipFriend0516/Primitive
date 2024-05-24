@@ -343,6 +343,31 @@ h2 {
   text-align: center;
 }
 
+/* Project List Page */
+.projectAddBtn::after {
+  content: "새 프로젝트 만들기";
+  opacity: 0;
+  font-size: 1rem;
+  width: 0;
+}
+.projectAddBtn:hover::after {
+  content: "새 프로젝트 만들기";
+  display: flex;
+  align-items: center;
+  position: absolute;
+  padding: 0.01rem 0.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  right: 3.5rem;
+  width: fit-content;
+  transition: 0.3s;
+  transition-timing-function: ease;
+  text-wrap: nowrap;
+  color: white;
+  opacity: 1;
+  background-color: rgb(30, 27, 75);
+}
+
 /* Project Detail Page */
 section article.projectDescription {
   display: flex;
