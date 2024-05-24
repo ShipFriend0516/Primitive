@@ -126,7 +126,7 @@ const MyPage = () => {
               </div>
               <div>
                 <span>학번</span>
-                <span>{user.studentYear}</span>
+                <span>{user.studentYear}학번</span>
               </div>
               <div>
                 <span>이름</span>
@@ -141,7 +141,7 @@ const MyPage = () => {
           user.authority === "부회장") ? (
           <div className="mt-8 flex flex-col gap-2 items-start">
             <h3 className="text-2xl font-bold ">관리자 전용 탭</h3>
-            <p>관리자 권한이 감지되었습니다.</p>
+            <p>관리자 권한을 갖고 있는 계정입니다.</p>
             <Link to={"/admin"} className="px-4 py-2 bg-indigo-700 text-white rounded-md">
               어드민 페이지로 이동
             </Link>

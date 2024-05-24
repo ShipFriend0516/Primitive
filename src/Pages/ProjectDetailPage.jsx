@@ -48,10 +48,33 @@ const ProjectDetailPage = () => {
     // 추가적이거나 특정한 정보를 더 표시하고 싶다면 여기에 추가하세요.
   };
 
+  function formatTimeDifference(uploadedTime) {
+    const now = new Date();
+    const uploadedDate = new Date(uploadedTime);
+
+    const diffInMs = now - uploadedDate;
+    const diffInMinutes = Math.floor(diffInMs / 60000);
+    const diffInHours = Math.floor(diffInMs / 3600000);
+    const diffInDays = Math.floor(diffInMs / 86400000);
+
+    if (diffInMinutes < 1) {
+      return "방금 전";
+    } else if (diffInMinutes < 60) {
+      return `${diffInMinutes}분 전`;
+    } else if (diffInHours < 24) {
+      return `${diffInHours}시간 전`;
+    } else {
+      const year = uploadedDate.getFullYear();
+      const month = String(uploadedDate.getMonth() + 1).padStart(2, "0");
+      const day = String(uploadedDate.getDate()).padStart(2, "0");
+      return `${year}년 ${month}월 ${day}일`;
+    }
+  }
+
   const preRender = () => {
     return (
-      <div className="mt-20 max-w-6xl mx-auto w-full flex-grow flex flex-col items-stretch p-10 gap-2">
-        <div className="gothic gap-10 flex justify-center items-center text-white w-full h-96 object-cover mb-8  bg-gradient-to-br rounded-md bg-gray-200 animate-pulse text-7xl">
+      <div className="mt-10 md:mt-20 max-w-6xl mx-auto w-full flex-grow flex flex-col items-stretch p-5 md:p-10 gap-2">
+        <div className="aspect-project gothic gap-10 flex justify-center items-center text-white w-full object-cover mb-8  bg-gradient-to-br rounded-md bg-gray-200 animate-pulse text-7xl">
           <span className="text-indigo-950 animate-bounce delay-1">.</span>
           <span className="text-indigo-950 animate-bounce delay-2">.</span>
           <span className="text-indigo-950 animate-bounce delay-3">.</span>
@@ -86,8 +109,7 @@ const ProjectDetailPage = () => {
           {projectEx.techStacks.map((tech, index) => (
             <span
               key={index}
-              className={`px-2 rounded-md bg-gray-200 animate-pulse text-gray-200 gap-2  text-nowrap
-`}
+              className={`px-2 rounded-md bg-gray-200 animate-pulse text-gray-200 gap-2  text-nowrap`}
             >
               {tech}
             </span>
@@ -106,26 +128,25 @@ const ProjectDetailPage = () => {
 
   const projectRender = () => {
     return (
-      <div className="mt-20 max-w-6xl mx-auto w-full flex-grow flex flex-col items-stretch p-10 gap-2">
+      <div className="mt-10 md:mt-20 max-w-6xl mx-auto w-full flex-grow flex flex-col items-stretch p-5 md:p-10 gap-2">
         {project.thumbnail ? (
           <img
             src={project.thumbnail}
             alt={project.title}
-            className="w-full h-96 object-cover mb-8 rounded"
+            className="w-full aspect-project object-cover mb-4 md:mb-6 rounded"
           />
         ) : (
-          <div className="gothic gap-10 flex justify-center items-center text-white w-full h-96 object-cover mb-8 rounded bg-gradient-to-br from-indigo-950 to-black text-8xl ">
+          <div className="gothic gap-10 flex justify-center items-center text-white w-full h-96 object-cover mb-4 rounded bg-gradient-to-br from-indigo-950 to-black text-8xl ">
             <span className="animate-bounce delay-1">.</span>
             <span className="animate-bounce delay-2">.</span>
             <span className="animate-bounce delay-3">.</span>
           </div>
         )}
-        <h1 className="text-3xl text-center md:text-5xl font-bold mb-4">{project.name}</h1>
-        <p className="text-lg mb-4 text-center">{project.intro}</p>
-        <p className="text-right w-full mb-4">{new Date(project.createdAt).toLocaleString()}</p>
-        <div className="w-full inline-flex items-center gap-2 mt-4">
+        <h1 className="text-4xl text-center md:text-5xl font-bold">{project.name}</h1>
+        <p className=" md:text-xl mb-2 text-center">{project.intro}</p>
+        <p className="text-right w-full mb-2 text-sm">{formatTimeDifference(project.createdAt)}</p>
+        <div className="w-full inline-flex flex-wrap items-center gap-2 mt-2 text-xs md:text-sm">
           <h3 className="px-2 py-1 bg-indigo-800 text-white rounded-md">프로젝트 참여자</h3>
-
           {project.participants.map((participant, index) => (
             <span
               key={index}
@@ -139,8 +160,8 @@ const ProjectDetailPage = () => {
             </span>
           ))}
         </div>
-        <div className="w-full inline-flex items-center gap-2">
-          <h3 className="w-fit px-2 py-1 bg-emerald-900 text-white rounded-md">사용한 기술스택</h3>
+        <div className="w-full inline-flex flex-wrap items-center gap-2 text-xs md:text-sm">
+          <h3 className="w-fit px-2 py-1 bg-emerald-900 text-white rounded-md ">사용한 기술스택</h3>
           {project.techStack.map((tech, index) => (
             <span
               key={index}

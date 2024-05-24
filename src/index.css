@@ -351,6 +351,10 @@ section article.projectDescription {
   align-items: start;
 }
 
+.aspect-project {
+  aspect-ratio: 16/6;
+}
+
 .ql-size-huge {
   font-size: xx-large;
 }

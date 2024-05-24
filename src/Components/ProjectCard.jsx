@@ -51,7 +51,7 @@ const ProjectCard = ({
         </p> */}
         <span className="text-sm inline-flex flex-wrap">
           {projectTechStacks.map((tag, index) => (
-            <span className="tag px-2" key={index}>
+            <span className="mb-1 tag px-2" key={index}>
               {tag}
             </span>
           ))}
