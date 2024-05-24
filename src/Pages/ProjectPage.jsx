@@ -15,28 +15,6 @@ import { db } from "../firebase";
 import { Link } from "react-router-dom";
 
 const ProjectPage = () => {
-  const Filter = styled.span`
-    border-radius: 32px;
-    cursor: pointer;
-
-    background-color: #2a2d32;
-    height: 54px !important;
-    padding-left: import { getDocs } from 'firebase/firestore';
-24px;import { query } from 'firebase/firestore';
-
-    padding-right: 24px;
-    color: white;
-    line-height: 54px;
-
-    &:hover {
-      background-color: #555555;
-    }
-
-    &:focus {
-      outline: 3px solid #9ba1df;
-    }
-  `;
-
   // 상태 관리
   const [projects, setProjects] = useState([]);
   const [projectsLoading, setProjectsLoading] = useState(true);
@@ -67,7 +45,7 @@ const ProjectPage = () => {
     <section className="flex flex-col  min-h-screen justify-between">
       <NavBar />
       <>
-        <div className="max-w-7xl mx-auto w-full flex-grow flex flex-col items-center relative">
+        <div className="max-w-7xl mx-auto w-full flex-grow flex flex-col items-center relative ">
           <h1 className="text-5xl mt-24 font-bold">프로젝트</h1>
           <p className="mb-5">프리미티브의 활동들을 모아보세요!</p>
           <div id="filterGroup" className="flex flex-wrap max-w-full gap-1 mb-5">
@@ -80,7 +58,6 @@ const ProjectPage = () => {
             <div className="rounded-3xl text-white flex justify-center items-center hover:bg-gray-700 cursor-pointer bg-black w-16 h-12 ">
               Web
             </div>
-            {/* <Filter></Filter> */}
           </div>
           <div
             id="projectGrid"
