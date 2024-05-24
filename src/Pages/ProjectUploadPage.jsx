@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import NavBar from "../Components/NavBar";
 import { useNavigate } from "react-router-dom";
 import { db, storage } from "../firebase";
@@ -13,6 +13,7 @@ const ProjectUploadPage = () => {
   const [authorLoading, setAuthorLoading] = useState("");
   const [projectName, setProjectName] = useState("");
   const [projectIntro, setProjectIntro] = useState("");
+  const [projectDescription, setProjectDescription] = useState("");
   const [thumbnailUrl, setThumbnailUrl] = useState("");
   const [participants, setParticipants] = useState([]);
   const [participantsInput, setParticipantsInput] = useState("");
@@ -69,6 +70,8 @@ const ProjectUploadPage = () => {
       navigate("/login");
       return;
     }
+    setError("");
+    setSuccess("");
     if (!validateForm()) {
       console.error("유효성 검사 통과 실패");
       return;
@@ -80,18 +83,18 @@ const ProjectUploadPage = () => {
       thumbnail: thumbnailUrl,
       participants: participants,
       techStack: techStacks,
-      description: "markdownContent",
+      description: projectDescription,
       authorId: author.uid,
       createdAt: new Date(),
     };
 
     try {
-      // await firestore.collection("projects").add(projectData);
       await addDoc(collection(db, "projects"), projectData);
       console.log("프로젝트가 성공적으로 저장되었습니다.");
       // 폼 초기화
       setProjectName("");
       setProjectIntro("");
+      setProjectDescription("");
       setThumbnailUrl("");
       setParticipants([]);
       setParticipantsInput("");
@@ -107,8 +110,18 @@ const ProjectUploadPage = () => {
   const handleImageUpload = async (e) => {
     try {
       const file = e.target.files[0];
+      const maxSize = import.meta.VITE_FB_UPLOAD_SIZE_LIMIT * 1024 * 1024 || 5 * 1024 * 1024;
+
+      if (file.size > maxSize) {
+        setError("파일크기는 5MB 이하여야합니다.");
+        e.preventDefault();
+        return;
+      }
       const lastDotIndex = file.name.lastIndexOf(".");
-      if (lastDotIndex === -1) return;
+      if (lastDotIndex === -1) {
+        setError("잘못된 이미지입니다.");
+        return;
+      }
       const savedFile = `project-images/${projectName}${getTimeStamp()}${file.name.slice(
         lastDotIndex
       )}`;
@@ -171,6 +184,44 @@ const ProjectUploadPage = () => {
     }
   };
 
+  const modules = useMemo(() => {
+    return {
+      toolbar: {
+        container: [
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          [{ align: [] }],
+          ["bold", "italic", "underline", "strike"],
+          [{ list: "ordered" }, { list: "bullet" }],
+          [
+            {
+              color: [],
+            },
+            { background: [] },
+          ],
+        ],
+      },
+    };
+  }, []);
+
+  const formats = [
+    "font",
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "align",
+    "color",
+    "background",
+    "size",
+    "h1",
+  ];
+
   return (
     <section className="page">
       <NavBar />
@@ -214,8 +265,8 @@ const ProjectUploadPage = () => {
                       setParticipants(participants.filter((_, idx) => index !== idx));
                     }}
                     className={`cursor-pointer px-2 py-1.5 bg-indigo-100 rounded-md gap-2 tagAnimation text-nowrap
-                      ${index % 4 === 0 && "bg-indigo-50"}
-                      ${index % 4 === 1 && "bg-indigo-100"}
+                      ${index % 2 === 0 && "bg-indigo-50"}
+                      ${index % 2 === 1 && "bg-indigo-100"}
                       hover:bg-indigo-200
                       `}
                   >
@@ -243,8 +294,8 @@ const ProjectUploadPage = () => {
                       setTechStacks(techStacks.filter((_, idx) => index !== idx));
                     }}
                     className={`cursor-pointer px-2 py-1.5 bg-emerald-100 rounded-md gap-2 tagAnimation text-nowrap
-                      ${index % 4 === 0 && "bg-emerald-50"}
-                      ${index % 4 === 1 && "bg-emerald-100"}
+                      ${index % 2 === 0 && "bg-emerald-50"}
+                      ${index % 2 === 1 && "bg-emerald-100"}
                       hover:bg-emerald-200
                       `}
                   >
@@ -271,21 +322,22 @@ const ProjectUploadPage = () => {
               ) : (
                 <>
                   <div className="text-lg">이미지 추가</div>
-                  <input
-                    ref={inputRef}
-                    className="hidden"
-                    type={"file"}
-                    onChange={(e) => handleImageUpload(e)}
-                    alt={projectName}
-                  />
                 </>
               )}
+              <input
+                ref={inputRef}
+                className="hidden"
+                type={"file"}
+                accept="image/*"
+                onChange={(e) => handleImageUpload(e)}
+                alt={projectName}
+              />
             </div>
           </div>
         </div>
         {/*  */}
         <hr className="my-2" />
-        <div>
+        <div className="mb-10">
           <h3 className="text-xl mb-3">프로젝트 세부 설명</h3>
           {/* <Editor
             initialValue="프로젝트 세부 설명을 마크다운으로 작성하세요!"
@@ -295,7 +347,14 @@ const ProjectUploadPage = () => {
             useCommandShortcut={true}
             ref={editorRef}
           /> */}
-          <ReactQuill style={{ height: "600px" }} />
+          <ReactQuill
+            forwardedRef={editorRef}
+            formats={formats}
+            modules={modules}
+            theme="snow"
+            style={{ height: "600px" }}
+            onChange={setProjectDescription}
+          />
         </div>
         {error && (
           <div className="w-full text-center text-red-500 text-lg p-2">

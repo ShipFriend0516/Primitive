@@ -343,6 +343,21 @@ h2 {
   text-align: center;
 }
 
+/* Project Detail Page */
+section article.projectDescription {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+}
+
+.ql-size-huge {
+  font-size: xx-large;
+}
+
+.ql-size-huge {
+  font-size: xx-large;
+}
 /* Project Upload Page */
 
 .project-upload form {
