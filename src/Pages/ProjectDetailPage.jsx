@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import NavBar from "../Components/NavBar";
 
 import Footer from "../Components/Footer";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import thumbnailEx from "../Images/에코초이스.webp";
 import { deleteDoc, doc, getDoc } from "firebase/firestore";
@@ -13,6 +13,7 @@ import CheckDialog from "../Components/CheckDialog";
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   // Effect
   useEffect(() => {
@@ -47,8 +48,11 @@ const ProjectDetailPage = () => {
       if (auth.currentUser.uid === project.authorId) {
         // 글 주인이라면
         await deleteDoc(doc(db, "projects", project.id));
+        navigate("/project");
       }
-    } catch (err) {}
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   // 가정: API로부터 가져온 프로젝트 세부 정보
