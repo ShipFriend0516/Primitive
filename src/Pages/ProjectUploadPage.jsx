@@ -187,13 +187,13 @@ const ProjectUploadPage = () => {
     return {
       toolbar: {
         container: [
-          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          [{ header: [1, 2, 3, 4, false] }],
           [{ align: [] }],
           ["bold", "italic", "underline", "strike"],
           [{ list: "ordered" }, { list: "bullet" }],
           [
             {
-              color: [],
+              color: ["red"],
             },
             { background: [] },
           ],
@@ -351,7 +351,7 @@ const ProjectUploadPage = () => {
             formats={formats}
             modules={modules}
             theme="snow"
-            style={{ height: "600px" }}
+            style={{ height: "600px", fontSize: "1.15em" }}
             onChange={setProjectDescription}
           />
         </div>

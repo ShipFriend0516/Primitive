@@ -428,6 +428,10 @@ article.projectDescription h6 {
   gap: 6px;
 }
 
+.ql-container {
+  font-size: 1.1em;
+}
+
 /* Admin Page */
 .adminTabWrapper {
   display: flex;
