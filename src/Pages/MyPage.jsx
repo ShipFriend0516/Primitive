@@ -10,7 +10,7 @@ import logo from "../Images/logo.webp";
 
 const MyPage = () => {
   // 전역 상태 관리
-  const { isLoggedIn, login, logout } = useStore();
+  const { isLoggedIn, logout } = useStore();
 
   // 상태 관리
   const [user, setUser] = useState();

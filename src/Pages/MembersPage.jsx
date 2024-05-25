@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
 import NavBar from "../Components/NavBar";
 import MemberCard from "../Components/MemberCard";
 import Footer from "../Components/Footer";
 import jeongwoo from "../Images/jeongwoo.webp";
 import gaeun from "../Images/gaeun.webp";
 import jinseong from "../Images/jinseong.webp";
-import { GoCheckCircle } from "react-icons/go";
 
 const MembersPage = () => {
   return (
