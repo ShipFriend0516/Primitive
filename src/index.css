@@ -292,8 +292,8 @@ h2 {
   overflow: visible;
   width: 150%;
   height: 120%;
-  background-color: white;
-  opacity: 0.3;
+  background-color: rgb(16, 3, 3);
+  opacity: 0;
   border-radius: 100%;
 }
 

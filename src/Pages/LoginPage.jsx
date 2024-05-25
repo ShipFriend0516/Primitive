@@ -176,9 +176,9 @@ const LoginPage = () => {
   }, [isLoggedIn]);
 
   return (
-    <section className="flex flex-col bg-gradient-to-b from-black to-indigo-950  h-screen w-screen overflow-hidden">
+    <section className="flex flex-col   h-screen w-screen overflow-hidden">
       <NavBar />
-      <div className="w-full flex flex-col justify-center items-center h-screen bollock ">
+      <div className="bg-gradient-to-t from-emerald-950 to-indigo-950 w-full flex flex-col justify-center items-center h-screen bollock ">
         <form className="authForm flex flex-col justify-center w-full">
           <h2 className="text-2xl font-bold text-center p-5 text-white">
             {isLogin ? "로그인" : "회원가입"}
