@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore";
 import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
-import { db } from "../firebase";
+import { adminApp, db } from "../firebase";
 import { useEffect, useState } from "react";
 import RequestTable from "../Components/RequestTable";
 import MemberTable from "../Components/MemberTable";
@@ -94,8 +94,6 @@ const AdminPage = () => {
   };
 
   useEffect(() => {
-    console.log("isLoggedIn", isLoggedIn);
-
     checkAdmin();
   }, [isLoggedIn]);
 
@@ -109,9 +107,8 @@ const AdminPage = () => {
     try {
       try {
         // 회원가입 진행 절차
-        const auth = getAuth();
+        const auth = getAuth(adminApp);
         const result = await createUserWithEmailAndPassword(auth, member.email, member.password);
-
         const userRef = doc(db, "users", result.user.uid);
 
         await setDoc(userRef, {
@@ -165,7 +162,7 @@ const AdminPage = () => {
   const tabRender = () => {
     if (selectedTab === 0) {
       return (
-        <>
+        <div className="overflow-x-scroll">
           <h3 className="text-xl font-bold p-2">회원가입 요청</h3>
           <p className="text-sm px-2 text-gray-600">수락 - 회원등록 | 거절 - 요청 거절</p>
           {requestLoading ? (
@@ -176,11 +173,11 @@ const AdminPage = () => {
           ) : (
             <RequestTable requests={requests} onApprove={onApprove} onDelete={onDelete} />
           )}
-        </>
+        </div>
       );
     } else if (selectedTab === 1) {
       return (
-        <>
+        <div className="overflow-x-scroll">
           <h3 className="text-xl font-bold p-2">유저 권한 관리</h3>
           <p className="text-sm px-2 text-gray-600">회원 삭제 - 회원 비활성화</p>
           {usersLoading ? (
@@ -191,13 +188,13 @@ const AdminPage = () => {
           ) : (
             <MemberTable members={users} onDelete={deleteUser} />
           )}
-        </>
+        </div>
       );
     }
   };
 
   return (
-    <section className="flex flex-col justify-between min-h-screen">
+    <section className="flex flex-col justify-between min-h-screen overflow-x-hidden">
       <NavBar />
       <div className="max-w-5xl w-full mt-16 mb-20 mx-auto p-1 md:p-5">
         {isAdmin ? (
