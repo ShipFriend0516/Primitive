@@ -256,7 +256,7 @@ const LoginPage = () => {
               )}
             </button>
           </div>
-          <div className="socialWrapper">
+          {/* <div className="socialWrapper">
             <button
               onClick={(e) => githubAuthHandler(e)}
               className="text-4xl text-white flex justify-center flex-col items-center"
@@ -264,7 +264,7 @@ const LoginPage = () => {
               <FaGithub />
               <span className="text-sm select-none">Github</span>
             </button>
-          </div>
+          </div> */}
         </form>
       </div>
     </section>
