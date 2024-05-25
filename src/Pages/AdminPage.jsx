@@ -93,21 +93,6 @@ const AdminPage = () => {
     }
   };
 
-  const getInactiveUsers = async () => {
-    try {
-      const users = await getDocs(
-        query(collection(db, "users"), where("status", "==", "Inactive"))
-      );
-      const inactiveUsers = users.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setUsers((prev) => [...prev, "hr", ...inactiveUsers]);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
   useEffect(() => {
     console.log("isLoggedIn", isLoggedIn);
 
@@ -167,7 +152,6 @@ const AdminPage = () => {
 
   const deleteUser = async (member) => {
     try {
-      console.log(member);
       const userRef = doc(db, "users", member.id);
       await updateDoc(userRef, {
         status: "Inactive",
@@ -205,11 +189,7 @@ const AdminPage = () => {
               viewBox="0 0 24 24"
             ></svg>
           ) : (
-            <MemberTable
-              members={users}
-              getInactiveUsers={getInactiveUsers}
-              onDelete={deleteUser}
-            />
+            <MemberTable members={users} onDelete={deleteUser} />
           )}
         </>
       );

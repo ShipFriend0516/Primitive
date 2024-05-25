@@ -338,14 +338,6 @@ const ProjectUploadPage = () => {
         <hr className="my-2" />
         <div className="mb-10">
           <h3 className="text-xl mb-3">프로젝트 세부 설명</h3>
-          {/* <Editor
-            initialValue="프로젝트 세부 설명을 마크다운으로 작성하세요!"
-            previewStyle="vertical"
-            height="600px"
-            initialEditType="markdown"
-            useCommandShortcut={true}
-            ref={editorRef}
-          /> */}
           <ReactQuill
             forwardedRef={editorRef}
             formats={formats}
