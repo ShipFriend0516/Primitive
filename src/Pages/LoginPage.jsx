@@ -88,7 +88,6 @@ const LoginPage = () => {
         if (result.user.accessToken) {
           console.log("로그인 성공");
           login();
-          localStorage.setItem("accessToken", result.user.accessToken);
           navigate("/");
         } else {
         }

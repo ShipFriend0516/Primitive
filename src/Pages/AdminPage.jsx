@@ -7,6 +7,7 @@ import {
   updateDoc,
   where,
   getDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
@@ -156,9 +157,7 @@ const AdminPage = () => {
     try {
       // signupRequests 컬렉션의 상태를 'accepted'로 업데이트
       const requestRef = doc(db, "signupRequests", member.id);
-      await updateDoc(requestRef, {
-        status: "rejected",
-      });
+      await deleteDoc(requestRef);
       // 상태 업데이트 (필요한 경우)
       setRequests((prevRequests) => prevRequests.filter((req) => req.id !== member.id));
     } catch (error) {
