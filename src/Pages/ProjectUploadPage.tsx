@@ -110,11 +110,17 @@ const ProjectUploadPage = () => {
 
     try {
       await addDoc(collection(db, "projects"), projectData);
-      console.log("프로젝트가 성공적으로 저장되었습니다.");
+      console.log("프로젝트가 성공적으로 업로드되었습니다.");
       // 폼 초기화
       setProjectName("");
       setProjectIntro("");
       setProjectDescription("");
+
+      if (editorRef.current) {
+        const quillInstance = editorRef.current.getEditor();
+        quillInstance.setText(""); // 빈 문자열로 설정하여 내용 초기화
+      }
+
       setThumbnailUrl("");
       setParticipants([]);
       setParticipantsInput("");
@@ -371,6 +377,7 @@ const ProjectUploadPage = () => {
             modules={modules}
             theme="snow"
             style={{ height: "600px", fontSize: "1.15em" }}
+            value={projectDescription}
             onChange={setProjectDescription}
           />
         </div>
