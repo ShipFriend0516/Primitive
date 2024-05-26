@@ -387,7 +387,7 @@ const ProjectUploadPage = () => {
         <div className="flex justify-center gap-4 py-10 md:py-3">
           <button
             className="px-5 py-2 bg-white text-black border "
-            onClick={() => navigate("/mypage")}
+            onClick={() => navigate("/project")}
           >
             돌아가기
           </button>
