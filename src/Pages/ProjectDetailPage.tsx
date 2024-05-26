@@ -174,7 +174,9 @@ const ProjectDetailPage = () => {
             {formatTimeDifference(project!.createdAt as number)}
           </span>
           <span className="text-right w-full mb-2 text-sm text-gray-500">
-            <button onClick={() => alert("미지원 지송")}>수정</button>
+            <button className="mr-1" onClick={() => alert("미지원입니다 지송 ㅎㅎ")}>
+              수정
+            </button>
             <button onClick={() => setIsDialogOpen(true)}>삭제</button>
           </span>
         </div>

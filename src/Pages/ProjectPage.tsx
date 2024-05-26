@@ -10,7 +10,7 @@ import project4 from "../Images/인프라운드.webp";
 import project5 from "../Images/primitive.webp";
 import { IoIosAdd } from "react-icons/io";
 import Footer from "../Components/Footer";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { Link } from "react-router-dom";
 import ProjectType, { ProjectDetail } from "../Types/ProjectType";
@@ -29,7 +29,9 @@ const ProjectPage = () => {
 
   const getProjects = async () => {
     try {
-      const response = await getDocs(query(collection(db, "projects")));
+      const response = await getDocs(
+        query(collection(db, "projects"), orderBy("createdAt", "desc"))
+      );
       setProjects(
         response.docs.map((doc) => ({
           id: doc.id,
