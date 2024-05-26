@@ -34,7 +34,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   // 회원가입 로직
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.KeyboardEvent | React.MouseEvent) => {
     e.preventDefault();
     if (isLogin) {
       loginUser();
@@ -85,7 +85,7 @@ const LoginPage = () => {
         const auth = getAuth(app);
         const result = await signInWithEmailAndPassword(auth, email, password);
         console.log(result);
-        if (result.user.accessToken) {
+        if (result) {
           console.log("로그인 성공");
           login();
           navigate("/");
@@ -152,29 +152,6 @@ const LoginPage = () => {
     return isValid;
   };
 
-  // github login
-  const githubAuthHandler = async (e) => {
-    try {
-      e.preventDefault();
-
-      const auth = getAuth();
-      const result = await getRedirectResult(auth);
-      const credential = GithubAuthProvider.credentialFromResult(result);
-      if (credential) {
-        const token = credential.accessToken;
-      }
-
-      console.log(result);
-      console.log(credential);
-    } catch (error) {}
-  };
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate("/");
-    }
-  }, [isLoggedIn]);
-
   return (
     <section className="flex flex-col   h-screen w-screen overflow-hidden">
       <NavBar />
@@ -238,7 +215,7 @@ const LoginPage = () => {
               /> */}
             </>
           )}
-          <button type="button" onClick={handleSubmit} className="authBtn">
+          <button type="button" onClick={(e) => handleSubmit(e)} className="authBtn">
             {isLogin ? "로그인" : "회원가입"}
           </button>
           <div className="p-1 text-left text-red-500 text-sm">{error}</div>
