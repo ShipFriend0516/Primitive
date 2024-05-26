@@ -5,12 +5,23 @@ import Footer from "../Components/Footer";
 import { useNavigate, useParams } from "react-router-dom";
 
 import thumbnailEx from "../Images/에코초이스.webp";
-import { deleteDoc, doc, getDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "../firebase";
 import DOMPurify from "dompurify";
-import { getAuth } from "firebase/auth";
+import { User, getAuth } from "firebase/auth";
 import CheckDialog from "../Components/CheckDialog";
 import ProjectType, { ProjectDetail } from "../Types/ProjectType";
+import Comment from "../Components/Comment";
+import CommentType from "../Types/CommentType";
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
@@ -18,17 +29,35 @@ const ProjectDetailPage = () => {
 
   // Effect
   useEffect(() => {
-    console.log(id);
-    // 여기에서 projectId를 이용해 API로부터 데이터를 가져오는 로직을 작성하시면 됩니다.
     getProjectDetail();
   }, [id]);
 
   // 상태관리
   const [project, setProject] = useState<ProjectDetail>();
   const [projectLoading, setProjectLoading] = useState(true);
+  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState<CommentType[]>();
+  const [commentLoading, setCommentLoading] = useState(true);
 
   // UI 상태 관리
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isProjectOwner, setIsProjectOwner] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [userLoading, setUserLoading] = useState(true);
+  // Effect
+  useEffect(() => {
+    const auth = getAuth();
+    if (auth.currentUser && project) {
+      if (auth.currentUser.uid === project!.authorId) {
+        // 글 주인이라면
+        setIsProjectOwner(true);
+      } else {
+        setIsProjectOwner(false);
+      }
+      setUserId(auth.currentUser.uid);
+    }
+    setUserLoading(false);
+  }, [id, project]);
 
   // Method
   const getProjectDetail = async () => {
@@ -47,16 +76,102 @@ const ProjectDetailPage = () => {
 
   const deleteProject = async () => {
     try {
-      const auth = getAuth();
-      if (auth.currentUser && project) {
-        if (auth.currentUser.uid === project!.authorId) {
-          // 글 주인이라면
-          await deleteDoc(doc(db, "projects", project.id));
-          navigate("/project");
-        }
+      if (isProjectOwner) {
+        // 글 주인이라면
+        await deleteDoc(doc(db, "projects", project!.id));
+        navigate("/project");
       }
     } catch (err) {
       console.error(err);
+    }
+  };
+
+  // 댓글 메서드
+
+  const checkIsUser = () => {
+    try {
+      const auth = getAuth();
+      if (auth.currentUser) {
+        return auth.currentUser.uid;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getComments = async () => {
+    try {
+      const response = await getDocs(
+        query(collection(db, "comments"), where("projectId", "==", id))
+      );
+
+      const usernames = await Promise.all(
+        response.docs.map(async (document) => {
+          const userId = document.data().authorId;
+          const userRef = doc(db, "users", userId);
+          const userDoc = await getDoc(userRef);
+          return userDoc.data()?.username || "Unknown User";
+        })
+      );
+
+      const data = response.docs.map((doc, index) => ({
+        id: doc.id,
+        ...(doc.data() as Omit<CommentType, "id">),
+        username: usernames[index],
+      }));
+
+      setComments(data);
+      setCommentLoading(false);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  const postComment = async () => {
+    try {
+      const isUser = checkIsUser();
+      if (isUser) {
+        const commentData = {
+          projectId: id,
+          authorId: isUser,
+          comment: comment,
+          createdAt: new Date().getTime(),
+        };
+        await addDoc(collection(db, "comments"), commentData);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const deleteComment = async (commentId: string) => {
+    try {
+      const commentRef = doc(db, "comments", commentId);
+      await deleteDoc(commentRef);
+      setComments((prev) => prev?.filter((comment) => comment.id !== commentId));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    getComments();
+  }, []);
+
+  const renderComments = () => {
+    if (comments) {
+      return comments.map((comment) => (
+        <Comment
+          key={comment.id}
+          _id={comment.id}
+          username={comment.username}
+          comment={comment.comment}
+          createdAt={new Date(comment.createdAt).getTime()}
+          isOwner={userId === comment.authorId}
+          deleteComment={deleteComment}
+        />
+      ));
     }
   };
 
@@ -214,6 +329,27 @@ const ProjectDetailPage = () => {
           className="mt-6 projectDescription flex flex-col items-start"
           dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project!.description!) }}
         ></article>
+        <div className="commentsWrapper flex flex-col gap-3">
+          <div>{comments?.length || 0}개의 댓글</div>
+          <div>
+            <textarea
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              className="border p-4 w-full"
+              placeholder="댓글을 작성하세요."
+            />
+          </div>
+          <div className="flex justify-end">
+            <button className="px-3 py-1 bg-indigo-600 text-white rounded-md" onClick={postComment}>
+              댓글 작성
+            </button>
+          </div>
+        </div>
+        <div className="">
+          {/* 댓글 */}
+          {commentLoading || userLoading ? <div>댓글 로딩 중....</div> : renderComments()}
+        </div>
+
         {isDialogOpen && (
           <CheckDialog
             message={"프로젝트는 삭제하면 복구가 불가능합니다! \n그래도 삭제하시겠습니까?"}
