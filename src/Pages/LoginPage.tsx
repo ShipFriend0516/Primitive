@@ -60,22 +60,22 @@ const LoginPage = () => {
           setMessage(
             "가입 요청을 성공적으로 기록했습니다. 요청 확인까지 수 일이 소요될 수 있습니다."
           );
+          setIsLogin(!isLogin);
+          setEmail("");
+          setPassword("");
+          setCheckPassword("");
+          setCode("");
+          setStudentYear("");
+          setUsername("");
         } else {
           setMessage("이미 신청된 요청입니다.");
         }
-
-        setEmail("");
-        setPassword("");
-        setCheckPassword("");
-        setCode("");
-        setStudentYear("");
-        setUsername("");
-        setIsLogin(!isLogin);
       } else {
         console.log("유효성 검사 실패");
       }
     } catch (error) {
       console.error(error);
+      setError("회원가입 과정 중 오류가 발생했습니다.");
     }
   };
 
@@ -101,6 +101,7 @@ const LoginPage = () => {
   const toggleForm = () => {
     setIsLogin(!isLogin);
     setError("");
+    setMessage("");
   };
 
   // 유효성 검사
