@@ -13,10 +13,11 @@ import Footer from "../Components/Footer";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { Link } from "react-router-dom";
+import ProjectType, { ProjectDetail } from "../Types/ProjectType";
 
 const ProjectPage = () => {
   // 상태 관리
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState<ProjectDetail[]>([]);
   const [projectsLoading, setProjectsLoading] = useState(true);
 
   // Effect
@@ -32,7 +33,7 @@ const ProjectPage = () => {
       setProjects(
         response.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data(),
+          ...(doc.data() as Omit<ProjectDetail, "id">),
         }))
       );
       setProjectsLoading(false);
@@ -66,11 +67,11 @@ const ProjectPage = () => {
             {projects.map((project, index) => (
               <ProjectCard
                 key={project.id}
-                projectThumbnail={project.thumbnail}
+                projectThumbnail={project.thumbnail!}
                 projectId={project.id}
-                projectName={project.name}
-                projectDescription={project.intro}
-                projectTechStacks={project.techStack}
+                projectName={project.name!}
+                projectDescription={project.intro!}
+                projectTechStacks={project.techStack!}
                 projectParticipate={project.participants}
               />
             ))}

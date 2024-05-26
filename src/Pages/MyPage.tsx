@@ -7,13 +7,14 @@ import { getAuth } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import logo from "../Images/logo.webp";
+import User from "../Types/User.d";
 
 const MyPage = () => {
   // 전역 상태 관리
   const { isLoggedIn, logout } = useStore();
 
   // 상태 관리
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<User>();
   const [userLoading, setUserLoading] = useState(true);
   // 라우터
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ const MyPage = () => {
         // 문서가 존재하는지 확인
         if (userDocSnapshot.exists()) {
           // 사용자의 세부 정보를 가져와서 setUser로 설정
-          setUser(userDocSnapshot.data());
+          setUser(userDocSnapshot.data() as User);
           setUserLoading(false);
           console.log(userDocSnapshot.data());
         } else {
@@ -90,8 +91,8 @@ const MyPage = () => {
           </div>
           <div className="text-sm"></div>
           <div>
-            <div className="text-2xl">{user.username}</div>
-            <div>{user.studentYear} 학번</div>
+            <div className="text-2xl">{user!.username}</div>
+            <div>{user!.studentYear} 학번</div>
           </div>
         </div>
         <div>
@@ -119,27 +120,27 @@ const MyPage = () => {
             <div className="userdataTable">
               <div>
                 <span>이메일</span>
-                <span>{user.email}</span>
+                <span>{user!.email}</span>
               </div>
               <div>
                 <span>권한 등급</span>
-                <span>{user.authority}</span>
+                <span>{user!.authority}</span>
               </div>
               <div>
                 <span>학번</span>
-                <span>{user.studentYear}학번</span>
+                <span>{user!.studentYear}학번</span>
               </div>
               <div>
                 <span>이름</span>
-                <span>{user.username}</span>
+                <span>{user!.username}</span>
               </div>
             </div>
           )}
         </div>
         {!userLoading &&
-        (user.authority === "관리자" ||
-          user.authority === "회장" ||
-          user.authority === "부회장") ? (
+        (user!.authority === "관리자" ||
+          user!.authority === "회장" ||
+          user!.authority === "부회장") ? (
           <div className="mt-8 flex flex-col gap-2 items-start mb-20">
             <h3 className="text-2xl font-bold ">관리자 전용 탭</h3>
             <p>관리자 권한을 갖고 있는 계정입니다.</p>

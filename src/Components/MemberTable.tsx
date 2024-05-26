@@ -1,21 +1,35 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import CheckDialog from "./CheckDialog";
 import { doc, updateDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebase";
+import { MemberDataType } from "../Types/MemberType";
 
-const MemberTable = ({ members, onDelete }) => {
+interface MemberTableProps {
+  members: MemberDataType[];
+  onDelete: (member: MemberDataType) => Promise<void>;
+}
+
+interface Member {
+  id: string;
+  username?: string;
+  studentYear?: string;
+  email?: string;
+  authority?: string;
+}
+
+const MemberTable = ({ members, onDelete }: MemberTableProps) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [toActiveDialogOpen, setToActiveDialogOpen] = useState(false);
-  const [selectedMember, setSelectedMember] = useState(null);
+  const [selectedMember, setSelectedMember] = useState<MemberDataType | null>();
   const [isShowInactive, setIsShowInactive] = useState(true);
-  const [inactiveUsers, setInactiveUsers] = useState([]);
+  const [inactiveUsers, setInactiveUsers] = useState<MemberDataType[]>([]);
   const closeDialog = () => {
     setDialogOpen(false);
     setSelectedMember(null);
     setToActiveDialogOpen(false);
   };
 
-  const openDialog = (member) => {
+  const openDialog = (member: MemberDataType) => {
     setSelectedMember(member);
     setDialogOpen(true);
   };
@@ -25,9 +39,9 @@ const MemberTable = ({ members, onDelete }) => {
       const users = await getDocs(
         query(collection(db, "users"), where("status", "==", "Inactive"))
       );
-      const inactiveUsers = users.docs.map((doc) => ({
+      const inactiveUsers: MemberDataType[] = users.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data(),
+        ...(doc.data() as Omit<MemberDataType, "id">),
       }));
       setInactiveUsers(inactiveUsers);
       console.log(inactiveUsers);
@@ -36,7 +50,7 @@ const MemberTable = ({ members, onDelete }) => {
     }
   };
 
-  const onActive = async (member) => {
+  const onActive = async (member: MemberDataType) => {
     try {
       const userRef = doc(db, "users", member.id);
       await updateDoc(userRef, {
@@ -137,7 +151,7 @@ const MemberTable = ({ members, onDelete }) => {
           btnColor={"red"}
           setDialogOpen={closeDialog}
           onConfirm={() => {
-            onDelete(selectedMember);
+            onDelete(selectedMember!);
             closeDialog();
             setSelectedMember(null);
           }}
@@ -149,7 +163,7 @@ const MemberTable = ({ members, onDelete }) => {
           btnColor={"green"}
           setDialogOpen={closeDialog}
           onConfirm={() => {
-            onActive(selectedMember);
+            onActive(selectedMember!);
             closeDialog();
           }}
         />

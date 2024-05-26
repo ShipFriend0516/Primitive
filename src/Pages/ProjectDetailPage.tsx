@@ -10,6 +10,7 @@ import { db } from "../firebase";
 import DOMPurify from "dompurify";
 import { getAuth } from "firebase/auth";
 import CheckDialog from "../Components/CheckDialog";
+import ProjectType, { ProjectDetail } from "../Types/ProjectType";
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
@@ -23,7 +24,7 @@ const ProjectDetailPage = () => {
   }, [id]);
 
   // 상태관리
-  const [project, setProject] = useState();
+  const [project, setProject] = useState<ProjectDetail>();
   const [projectLoading, setProjectLoading] = useState(true);
 
   // UI 상태 관리
@@ -32,11 +33,13 @@ const ProjectDetailPage = () => {
   // Method
   const getProjectDetail = async () => {
     try {
-      const projectRef = doc(db, "projects", id);
-      const response = await getDoc(projectRef);
-      console.log(response.data());
-      setProject({ id: response.id, ...response.data() });
-      setProjectLoading(false);
+      if (id) {
+        const projectRef = doc(db, "projects", id);
+        const response = await getDoc(projectRef);
+        console.log(response.data());
+        setProject({ id: response.id, ...(response.data() as Omit<ProjectDetail, "id">) });
+        setProjectLoading(false);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -45,10 +48,12 @@ const ProjectDetailPage = () => {
   const deleteProject = async () => {
     try {
       const auth = getAuth();
-      if (auth.currentUser.uid === project.authorId) {
-        // 글 주인이라면
-        await deleteDoc(doc(db, "projects", project.id));
-        navigate("/project");
+      if (auth.currentUser && project) {
+        if (auth.currentUser.uid === project!.authorId) {
+          // 글 주인이라면
+          await deleteDoc(doc(db, "projects", project.id));
+          navigate("/project");
+        }
       }
     } catch (err) {
       console.error(err);
@@ -67,11 +72,12 @@ const ProjectDetailPage = () => {
     // 추가적이거나 특정한 정보를 더 표시하고 싶다면 여기에 추가하세요.
   };
 
-  function formatTimeDifference(uploadedTime) {
-    const now = new Date();
+  function formatTimeDifference(uploadedTime: number) {
+    const now = new Date().getTime();
     const uploadedDate = new Date(uploadedTime);
+    const past = new Date(uploadedTime).getTime();
 
-    const diffInMs = now - uploadedDate;
+    const diffInMs = now - past;
     const diffInMinutes = Math.floor(diffInMs / 60000);
     const diffInHours = Math.floor(diffInMs / 3600000);
     const diffInDays = Math.floor(diffInMs / 86400000);
@@ -148,10 +154,10 @@ const ProjectDetailPage = () => {
   const projectRender = () => {
     return (
       <div className="mt-10 md:mt-20 max-w-6xl mx-auto w-full flex-grow flex flex-col items-stretch p-5 md:p-10 gap-2">
-        {project.thumbnail ? (
+        {project!.thumbnail ? (
           <img
-            src={project.thumbnail}
-            alt={project.title}
+            src={project!.thumbnail}
+            alt={project!.name}
             className="w-full aspect-project object-cover mb-4 md:mb-6 rounded"
           />
         ) : (
@@ -161,11 +167,11 @@ const ProjectDetailPage = () => {
             <span className="animate-bounce delay-3">.</span>
           </div>
         )}
-        <h1 className="text-3xl text-center md:text-5xl font-bold">{project.name}</h1>
-        <p className=" md:text-xl mb-2 text-center">{project.intro}</p>
+        <h1 className="text-3xl text-center md:text-5xl font-bold">{project!.name}</h1>
+        <p className=" md:text-xl mb-2 text-center">{project!.intro}</p>
         <div className="flex justify-between">
           <span className="text-left w-full mb-2 text-sm">
-            {formatTimeDifference(project.createdAt)}
+            {formatTimeDifference(project!.createdAt as number)}
           </span>
           <span className="text-right w-full mb-2 text-sm text-gray-500">
             <button onClick={() => setIsDialogOpen(true)}>삭제</button>
@@ -173,7 +179,7 @@ const ProjectDetailPage = () => {
         </div>
         <div className="w-full inline-flex flex-wrap items-center gap-2 mt-2 text-xs md:text-sm">
           <h3 className="px-2 py-1 bg-indigo-800 text-white rounded-md">프로젝트 참여자</h3>
-          {project.participants.map((participant, index) => (
+          {project!.participants!.map((participant, index) => (
             <span
               key={index}
               className={`px-2 py-1 bg-indigo-100 rounded-md gap-2 tagAnimation text-nowrap
@@ -188,7 +194,7 @@ const ProjectDetailPage = () => {
         </div>
         <div className="w-full inline-flex flex-wrap items-center gap-2 text-xs md:text-sm">
           <h3 className="w-fit px-2 py-1 bg-emerald-900 text-white rounded-md ">사용한 기술스택</h3>
-          {project.techStack.map((tech, index) => (
+          {project!.techStack!.map((tech, index) => (
             <span
               key={index}
               className={`px-2 py-1 bg-emerald-100 rounded-md gap-2 tagAnimation text-nowrap
@@ -203,7 +209,7 @@ const ProjectDetailPage = () => {
         </div>
         <article
           className="mt-6 projectDescription flex flex-col items-start"
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project.description) }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project!.description!) }}
         ></article>
         {isDialogOpen && (
           <CheckDialog

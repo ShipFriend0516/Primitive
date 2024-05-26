@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { MemberCardType } from "../Types/MemberType";
 
-const MemberCard = ({ image, name, number, position, description, type }) => {
+const MemberCard = ({ image, name, number, position, description, type }: MemberCardType) => {
   const emojis = ["🔥", "🌿", "🌱", "😁", "😎", "👍", "🚀", "👀", "🎉"];
 
   const [emoji, setEmoji] = useState(emojis[Math.floor(Math.random() * emojis.length)]);

@@ -5,7 +5,7 @@ import { IoMenuOutline } from "react-icons/io5";
 import { useSpring, animated } from "react-spring";
 import styles from "../Styles/menu.module.css";
 import useStore from "../store";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const NavBar = () => {
   // 네비게이트

@@ -38,7 +38,7 @@
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-var-requires": 0,
     "no-shadow": "off",
-    "react/prop-types": 0,
+    "react/prop-types": "off",
     "no-empty-pattern": 0,
     "no-alert": 0,
     "react-hooks/exhaustive-deps": 0
@@ -48,7 +48,10 @@
       "@typescript-eslint/parser": [".ts", ".tsx"]
     },
     "import/resolver": {
-      "typescript": "./tsconfig.json"
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "./tsconfig.json"
+      }
     }
   }
 }

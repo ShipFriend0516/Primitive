@@ -8,6 +8,7 @@ import {
   where,
   getDoc,
   deleteDoc,
+  DocumentData,
 } from "firebase/firestore";
 import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
@@ -18,13 +19,15 @@ import MemberTable from "../Components/MemberTable";
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged } from "firebase/auth";
 import useStore from "../store";
 import { useNavigate } from "react-router-dom";
+import Member, { MemberDataType } from "../Types/MemberType";
+import User from "../Types/User";
 
 const AdminPage = () => {
   // 상태 관리
-  const [requests, setRequests] = useState();
+  const [requests, setRequests] = useState<SignupRequest[]>();
   const [requestLoading, setRequestLoading] = useState(true);
 
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<MemberDataType[]>([]);
   const [usersLoading, setUsersLoading] = useState(true);
 
   const [selectedTab, setSelectedTab] = useState(0);
@@ -49,7 +52,7 @@ const AdminPage = () => {
         const uid = user.uid;
         const userRef = doc(db, "users", uid);
         const userDoc = await getDoc(userRef);
-        const authority = userDoc.data().authority;
+        const authority = userDoc.data()!.authority;
         if (authority === "관리자" || authority === "회장" || authority === "부회장")
           setIsAdmin(true);
       } else {
@@ -83,7 +86,7 @@ const AdminPage = () => {
       setUsers(
         users.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data(),
+          ...(doc.data() as Omit<MemberDataType, "id">),
         }))
       );
     } catch (e) {
@@ -103,12 +106,12 @@ const AdminPage = () => {
   }, [selectedTab]);
 
   // 수락 핸들러
-  const onApprove = async (member) => {
+  const onApprove = async (member: MemberDataType) => {
     try {
       try {
         // 회원가입 진행 절차
         const auth = getAuth(adminApp);
-        const result = await createUserWithEmailAndPassword(auth, member.email, member.password);
+        const result = await createUserWithEmailAndPassword(auth, member.email, member.password!);
         const userRef = doc(db, "users", result.user.uid);
 
         await setDoc(userRef, {
@@ -129,25 +132,25 @@ const AdminPage = () => {
       });
 
       // 상태 업데이트 (필요한 경우)
-      setRequests((prevRequests) => prevRequests.filter((req) => req.id !== member.id));
+      setRequests((prevRequests) => prevRequests!.filter((req) => req.id !== member.id));
     } catch (error) {
       console.error(error);
     }
   };
 
-  const onDelete = async (member) => {
+  const onDelete = async (member: MemberDataType) => {
     try {
       // signupRequests 컬렉션의 상태를 'accepted'로 업데이트
       const requestRef = doc(db, "signupRequests", member.id);
       await deleteDoc(requestRef);
       // 상태 업데이트 (필요한 경우)
-      setRequests((prevRequests) => prevRequests.filter((req) => req.id !== member.id));
+      setRequests((prevRequests) => prevRequests!.filter((req) => req.id !== member.id));
     } catch (error) {
       console.error(error);
     }
   };
 
-  const deleteUser = async (member) => {
+  const deleteUser = async (member: MemberDataType) => {
     try {
       const userRef = doc(db, "users", member.id);
       await updateDoc(userRef, {

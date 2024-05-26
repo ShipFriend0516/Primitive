@@ -1,6 +1,13 @@
 import React from "react";
 
-const CheckDialog = ({ message, btnColor, setDialogOpen, onConfirm }) => {
+interface Dialog {
+  message: string;
+  btnColor: string;
+  setDialogOpen: (arg: boolean) => void;
+  onConfirm: () => void;
+}
+
+const CheckDialog = ({ message, btnColor, setDialogOpen, onConfirm }: Dialog) => {
   const lines = message.split("\n").length;
 
   return (

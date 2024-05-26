@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import ProjectType from "../Types/ProjectType.d";
 
 const ProjectCard = ({
   isEmpty = true,
@@ -9,7 +10,7 @@ const ProjectCard = ({
   projectDescription,
   projectParticipate = [],
   projectTechStacks = [],
-}) => {
+}: ProjectType) => {
   if (projectThumbnail) {
     isEmpty = false;
   }

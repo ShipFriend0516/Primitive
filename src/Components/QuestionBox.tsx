@@ -5,7 +5,12 @@ import { FaAngleUp } from "react-icons/fa";
 import { keyframes } from "styled-components";
 import { animated, useSpring, config } from "react-spring";
 
-const QuestionBox = ({ question, answer }) => {
+interface Question {
+  question: string;
+  answer: string;
+}
+
+const QuestionBox = ({ question, answer }: Question) => {
   const [isOpen, setIsOpen] = useState(false);
 
   // for animaitons

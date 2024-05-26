@@ -24,15 +24,15 @@ const Intro = () => {
   const coverRefs = [cover1, cover2, cover3, introCardRef, activityCardRef];
 
   useEffect(() => {
-    const callback = (entries, observer) => {
+    const callback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
       entries.forEach((entry, i) => {
         if (entry.isIntersecting) {
-          entry.target.style.opacity = "1";
-          entry.target.style.transform = "translateY(0)";
-          observer.unobserve(entry.target);
+          (entry.target as HTMLElement).style.opacity = "1";
+          (entry.target as HTMLElement).style.transform = "translateY(0)";
+          observer.unobserve(entry.target as HTMLElement);
         } else {
-          entry.target.style.opacity = "0";
-          entry.target.style.transform = "translateY(50px)";
+          (entry.target as HTMLElement).style.opacity = "0";
+          (entry.target as HTMLElement).style.transform = "translateY(50px)";
         }
       });
     };
@@ -154,25 +154,28 @@ const Intro = () => {
           </div>
           <div className="w-full h-2/4 grid grid-cols-1 grid-rows-1 md:grid-cols-3 gap-5 ">
             <ProjectCard
+              projectId="1"
               projectThumbnail={project1}
               projectName={"에코초이스"}
-              projectDate={"23/09 ~ 23/12"}
+              projectDate={1698764400000}
               projectDescription={"친환경 이커머스 서비스"}
               // projectParticipate={["서정우", "윤가은"]}
               projectTechStacks={["Web", "React", "Spring", "MySQL", "AWS"]}
             />
             <ProjectCard
+              projectId="1"
               projectThumbnail={project2}
               projectName={"솜뭉치"}
-              projectDate={"24/01 ~ "}
+              projectDate={1704034800000}
               projectDescription={"장애인생산품 판매 중개 플랫폼"}
               // projectParticipate={["이진성", "김유진", "이나경"]}
               projectTechStacks={["App", "Flutter", "Spring"]}
             />
             <ProjectCard
+              projectId="1"
               projectThumbnail={project3}
               projectName={"뜨개랑"}
-              projectDate={"24/01 ~ "}
+              projectDate={1704034800000}
               projectDescription={"뜨개용품 판매 특화 커뮤니티 서비스"}
               // projectParticipate={["이찬규", "홍현지", "박시현"]}
               projectTechStacks={["Web", "React", "Spring"]}

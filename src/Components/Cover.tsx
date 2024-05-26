@@ -1,6 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
+interface CoverProps {
+  className?: string;
+  children?: React.ReactNode;
+}
 const CoverStyledComponent = styled.div`
   width: 100vw;
   position: relative;
@@ -27,7 +31,7 @@ const CoverStyledComponent = styled.div`
   }
 `;
 
-const Cover = React.forwardRef((props, ref) => {
+const Cover = React.forwardRef<HTMLDivElement, CoverProps>((props, ref) => {
   return (
     <CoverStyledComponent className={props.className} ref={ref}>
       {props.children}

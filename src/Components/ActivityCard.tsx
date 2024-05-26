@@ -1,5 +1,10 @@
-import { styled } from "styled-components";
-const ActivityCardStyled = styled.div`
+import styled from "styled-components";
+
+interface ActivityCardStyledProps {
+  $backgroundImage?: string;
+}
+
+const ActivityCardStyled = styled.div<ActivityCardStyledProps>`
   padding: 20px;
   box-shadow: 0 0 3px gray;
   border-radius: 20px;
@@ -15,7 +20,6 @@ const ActivityCardStyled = styled.div`
     color: white;
     text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
     padding-left: 0.1em;
-
     border-radius: 5px;
   }
 
@@ -37,13 +41,21 @@ const ActivityCardStyled = styled.div`
     background: rgba(0, 0, 0, 0.2);
     border-radius: 20px;
   }
-  background-image: ${(props) => `url(${props.$backgroundImage})`};
+
+  background-image: ${(props) =>
+    props.$backgroundImage ? `url(${props.$backgroundImage})` : "none"};
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
 `;
 
-const ActivityCard = ({ className, children, backgroundImage }) => {
+interface ActivityCardProps {
+  className?: string;
+  children?: React.ReactNode;
+  backgroundImage?: string;
+}
+
+const ActivityCard = ({ className, children, backgroundImage }: ActivityCardProps) => {
   return (
     <ActivityCardStyled className={className} $backgroundImage={backgroundImage}>
       {children}

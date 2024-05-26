@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import CheckDialog from "./CheckDialog";
 
-const RequestTable = ({ requests, onApprove, onDelete }) => {
+interface RequestTableProps {
+  requests: SignupRequest[];
+  onApprove: (request: SignupRequest) => void;
+  onDelete: (request: SignupRequest) => void;
+}
+const RequestTable = ({ requests, onApprove, onDelete }: RequestTableProps) => {
   const [dialogOpen, setDialogOpen] = useState(false);
-
+  const [selectedRequest, setSelectedRequest] = useState<SignupRequest | null>();
   return (
     <table className="requestTable">
       <thead>
@@ -35,7 +40,10 @@ const RequestTable = ({ requests, onApprove, onDelete }) => {
               <td>
                 <button
                   className="bg-red-300 px-2 py-1.5 rounded-md hover:bg-red-400 hover:shadow-lg text-sm text-nowrap"
-                  onClick={() => onDelete(request)}
+                  onClick={() => {
+                    setSelectedRequest(request);
+                    setDialogOpen(true);
+                  }}
                 >
                   가입 거절
                 </button>
@@ -50,7 +58,19 @@ const RequestTable = ({ requests, onApprove, onDelete }) => {
           </tr>
         )}
       </tbody>
-      {dialogOpen && <CheckDialog />}
+      {dialogOpen && (
+        <CheckDialog
+          message="가입 요청을 거절하시겠습니까?"
+          btnColor="red"
+          onConfirm={() => {
+            if (selectedRequest) {
+              onDelete(selectedRequest);
+              setSelectedRequest(null);
+            }
+          }}
+          setDialogOpen={setDialogOpen}
+        />
+      )}
     </table>
   );
 };

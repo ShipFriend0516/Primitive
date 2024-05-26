@@ -1,26 +1,47 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  ChangeEvent,
+  RefObject,
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import NavBar from "../Components/NavBar";
 import { useNavigate } from "react-router-dom";
 import { db, storage } from "../firebase";
 import { addDoc, collection } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { User, getAuth } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import ReactQuill from "react-quill";
+import ReactQuill, { ReactQuillProps } from "react-quill";
+
+type ReactQuillWithRefProps = ReactQuillProps & {
+  forwardedRef: RefObject<ReactQuill>;
+};
+
+const ReactQuillWithRef = forwardRef<ReactQuill, ReactQuillWithRefProps>((props, ref) => {
+  const { forwardedRef, ...rest } = props;
+
+  useImperativeHandle(ref, () => forwardedRef.current!);
+
+  return <ReactQuill ref={forwardedRef} {...rest} />;
+});
 
 const ProjectUploadPage = () => {
   // 상태관리
-  const [author, setAuthor] = useState("");
+  const [author, setAuthor] = useState<User | null>();
   const [projectName, setProjectName] = useState("");
   const [projectIntro, setProjectIntro] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
   const [thumbnailUrl, setThumbnailUrl] = useState("");
-  const [participants, setParticipants] = useState([]);
+  const [participants, setParticipants] = useState<string[]>([]);
   const [participantsInput, setParticipantsInput] = useState("");
-  const [techStacks, setTechStacks] = useState([]);
+  const [techStacks, setTechStacks] = useState<string[]>([]);
   const [techStackInput, setTechStackInput] = useState("");
-  const editorRef = useRef(null);
+  const editorRef = useRef<ReactQuill>(null);
 
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // UI 상태
   const [error, setError] = useState("");
@@ -106,10 +127,14 @@ const ProjectUploadPage = () => {
     }
   };
 
-  const handleImageUpload = async (e) => {
+  const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     try {
-      const file = e.target.files[0];
+      const file = e.target.files?.[0];
       const maxSize = import.meta.VITE_FB_UPLOAD_SIZE_LIMIT * 1024 * 1024 || 5 * 1024 * 1024;
+
+      if (!file) {
+        return;
+      }
 
       if (file.size > maxSize) {
         setError("파일크기는 5MB 이하여야합니다.");
@@ -125,7 +150,7 @@ const ProjectUploadPage = () => {
         lastDotIndex
       )}`;
 
-      const uploadedFile = await uploadBytes(ref(storage, savedFile), e.target.files[0]);
+      const uploadedFile = await uploadBytes(ref(storage, savedFile), file);
       console.log(uploadedFile);
       const image_url = await getDownloadURL(ref(storage, savedFile));
       setThumbnailUrl(image_url);
@@ -148,7 +173,7 @@ const ProjectUploadPage = () => {
 
   // 참여 인원 입력 핸들러
 
-  const participantsInputHandler = (e) => {
+  const participantsInputHandler = (e: React.KeyboardEvent) => {
     if ((e.code === "Comma" || e.code === "Enter") && participantsInput) {
       e.preventDefault();
       if (participants.includes(participantsInput.trim())) {
@@ -166,7 +191,7 @@ const ProjectUploadPage = () => {
   };
 
   // 테크 스택 입력 핸들러
-  const techStackInputHandler = (e) => {
+  const techStackInputHandler = (e: React.KeyboardEvent) => {
     if ((e.code === "Comma" || e.code === "Enter") && techStackInput) {
       e.preventDefault();
       if (techStacks.includes(techStackInput.trim())) {
@@ -314,7 +339,9 @@ const ProjectUploadPage = () => {
           <div className="flex flex-col col2 w-full md:w-1/2">
             <div
               className="rounded-sm overflow-hidden w-full image h-full bg-gray-100 flex justify-center items-center object-cover aspect-video cursor-pointer hover:bg-gray-200"
-              onClick={() => inputRef.current.click()}
+              onClick={() => {
+                if (inputRef.current) inputRef.current.click();
+              }}
             >
               {thumbnailUrl ? (
                 <img src={thumbnailUrl} className="object-cover" />
@@ -338,7 +365,7 @@ const ProjectUploadPage = () => {
         <hr className="my-2" />
         <div className="mb-10">
           <h3 className="text-xl mb-3">프로젝트 세부 설명</h3>
-          <ReactQuill
+          <ReactQuillWithRef
             forwardedRef={editorRef}
             formats={formats}
             modules={modules}
