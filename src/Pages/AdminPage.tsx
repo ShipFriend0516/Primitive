@@ -106,18 +106,22 @@ const AdminPage = () => {
   }, [selectedTab]);
 
   // 수락 핸들러
-  const onApprove = async (member: MemberDataType) => {
+  const onApprove = async (request: SignupRequest) => {
     try {
       try {
         // 회원가입 진행 절차
         const auth = getAuth(adminApp);
-        const result = await createUserWithEmailAndPassword(auth, member.email, member.password!);
+        const result = await createUserWithEmailAndPassword(
+          auth,
+          request.email!,
+          request.password!
+        );
         const userRef = doc(db, "users", result.user.uid);
 
         await setDoc(userRef, {
-          email: member.email,
-          username: member.username,
-          studentYear: member.studentYear,
+          email: request.email,
+          username: request.username,
+          studentYear: request.studentYear,
           authority: "동아리원",
           status: "Active",
         });
@@ -126,25 +130,25 @@ const AdminPage = () => {
       }
 
       // signupRequests 컬렉션의 상태를 'accepted'로 업데이트
-      const requestRef = doc(db, "signupRequests", member.id);
+      const requestRef = doc(db, "signupRequests", request.id);
       await updateDoc(requestRef, {
         status: "approved",
       });
 
       // 상태 업데이트 (필요한 경우)
-      setRequests((prevRequests) => prevRequests!.filter((req) => req.id !== member.id));
+      setRequests((prevRequests) => prevRequests!.filter((req) => req.id !== request.id));
     } catch (error) {
       console.error(error);
     }
   };
 
-  const onDelete = async (member: MemberDataType) => {
+  const onDelete = async (request: SignupRequest) => {
     try {
       // signupRequests 컬렉션의 상태를 'accepted'로 업데이트
-      const requestRef = doc(db, "signupRequests", member.id);
+      const requestRef = doc(db, "signupRequests", request.id);
       await deleteDoc(requestRef);
       // 상태 업데이트 (필요한 경우)
-      setRequests((prevRequests) => prevRequests!.filter((req) => req.id !== member.id));
+      setRequests((prevRequests) => prevRequests!.filter((req) => req.id !== request.id));
     } catch (error) {
       console.error(error);
     }
@@ -174,7 +178,7 @@ const AdminPage = () => {
               viewBox="0 0 24 24"
             ></svg>
           ) : (
-            <RequestTable requests={requests} onApprove={onApprove} onDelete={onDelete} />
+            <RequestTable requests={requests!} onApprove={onApprove} onDelete={onDelete} />
           )}
         </div>
       );

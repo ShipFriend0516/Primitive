@@ -3,8 +3,8 @@ import CheckDialog from "./CheckDialog";
 
 interface RequestTableProps {
   requests: SignupRequest[];
-  onApprove: (request: SignupRequest) => void;
-  onDelete: (request: SignupRequest) => void;
+  onApprove: (request: SignupRequest) => Promise<void>;
+  onDelete: (request: SignupRequest) => Promise<void>;
 }
 const RequestTable = ({ requests, onApprove, onDelete }: RequestTableProps) => {
   const [dialogOpen, setDialogOpen] = useState(false);
