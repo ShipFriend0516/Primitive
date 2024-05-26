@@ -9,6 +9,7 @@ import {
   getDoc,
   deleteDoc,
   DocumentData,
+  orderBy,
 } from "firebase/firestore";
 import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
@@ -82,7 +83,13 @@ const AdminPage = () => {
 
   const getUsers = async () => {
     try {
-      const users = await getDocs(query(collection(db, "users"), where("status", "==", "Active")));
+      const users = await getDocs(
+        query(
+          collection(db, "users"),
+          where("status", "==", "Active"),
+          orderBy("authorityLevel", "desc")
+        )
+      );
       setUsers(
         users.docs.map((doc) => ({
           id: doc.id,
@@ -123,6 +130,7 @@ const AdminPage = () => {
           username: request.username,
           studentYear: request.studentYear,
           authority: "동아리원",
+          authorityLevel: 0,
           status: "Active",
         });
       } catch (e) {
