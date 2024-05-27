@@ -13,8 +13,9 @@ import { useNavigate } from "react-router-dom";
 import { db, storage } from "../firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { User, getAuth } from "firebase/auth";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import ReactQuill, { ReactQuillProps } from "react-quill";
+import { CiImageOn } from "react-icons/ci";
 
 type ReactQuillWithRefProps = ReactQuillProps & {
   forwardedRef: RefObject<ReactQuill>;
@@ -46,7 +47,8 @@ const ProjectUploadPage = () => {
   // UI 상태
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
+  const [isUploading, setIsUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
   const navigate = useNavigate();
 
   // 이펙트
@@ -140,6 +142,8 @@ const ProjectUploadPage = () => {
 
       if (!file) {
         return;
+      } else {
+        setThumbnailUrl("");
       }
 
       if (file.size > maxSize) {
@@ -156,10 +160,28 @@ const ProjectUploadPage = () => {
         lastDotIndex
       )}`;
 
-      const uploadedFile = await uploadBytes(ref(storage, savedFile), file);
+      setIsUploading(true);
+      const uploadedFile = uploadBytesResumable(ref(storage, savedFile), file);
       console.log(uploadedFile);
-      const image_url = await getDownloadURL(ref(storage, savedFile));
-      setThumbnailUrl(image_url);
+
+      uploadedFile.on(
+        "state_changed",
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setProgress(progress);
+
+          switch (snapshot.state) {
+            case "paused":
+              setError("업로드가 중단되었습니다.");
+              break;
+          }
+        },
+        (error) => console.error(error),
+        async () => {
+          const image_url = await getDownloadURL(ref(storage, savedFile));
+          setThumbnailUrl(image_url);
+        }
+      );
     } catch (err) {
       console.error(err);
     }
@@ -344,7 +366,7 @@ const ProjectUploadPage = () => {
           </div>
           <div className="flex flex-col col2 w-full md:w-1/2">
             <div
-              className="rounded-sm overflow-hidden w-full image h-full bg-gray-100 flex justify-center items-center object-cover aspect-video cursor-pointer hover:bg-gray-200"
+              className="rounded-sm overflow-hidden w-full image h-full bg-gray-100 flex justify-center items-center object-cover aspect-video cursor-pointer hover:bg-gray-200 border-dotted border-4"
               onClick={() => {
                 if (inputRef.current) inputRef.current.click();
               }}
@@ -353,7 +375,17 @@ const ProjectUploadPage = () => {
                 <img src={thumbnailUrl} className="object-cover" />
               ) : (
                 <>
-                  <div className="text-lg">썸네일 추가</div>
+                  <div className="text-3xl w-full flex flex-col justify-center items-center gap-3">
+                    <CiImageOn />
+                    {isUploading && (
+                      <>
+                        <div className="progress">
+                          <span className="bar" style={{ width: `${progress}%` }}></span>
+                        </div>
+                        <div className="text-sm mt-0.5 font-bold">Upload in Progress..</div>
+                      </>
+                    )}
+                  </div>
                 </>
               )}
               <input
