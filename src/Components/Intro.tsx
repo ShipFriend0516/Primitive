@@ -9,9 +9,12 @@ import Introduction4 from "../Images/4.webp";
 
 import ProjectCard from "./ProjectCard";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Cover from "./Cover";
 import ActivityCard from "./ActivityCard";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
+import { query } from "firebase/firestore";
 
 const Intro = () => {
   // 스크롤 애니메이션 관련 상태 관리
@@ -20,13 +23,31 @@ const Intro = () => {
   const cover3 = useRef(null);
   const introCardRef = useRef(null);
   const activityCardRef = useRef(null);
-
   const coverRefs = [cover1, cover2, cover3, introCardRef, activityCardRef];
+
+  // UI 상태관리
+  const [projectCount, setProjectCount] = useState(0);
+  const memberCount = 120;
+  const activityYears = 20;
+  const [animatedProjectCount, setAnimatedProjectCount] = useState(0);
+  const [animatedMemberCount, setAnimatedMemberCount] = useState(0);
+  const [animatedActivityYears, setAnimatedActivityYears] = useState(0);
+
+  useEffect(() => {
+    try {
+      getDocs(query(collection(db, "projects"))).then((projects) => {
+        setProjectCount(projects.docs.length);
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
 
   useEffect(() => {
     const callback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
       entries.forEach((entry, i) => {
         if (entry.isIntersecting) {
+          projectCount && startAnimation();
           (entry.target as HTMLElement).style.opacity = "1";
           (entry.target as HTMLElement).style.transform = "translateY(0)";
           observer.unobserve(entry.target as HTMLElement);
@@ -49,7 +70,47 @@ const Intro = () => {
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [projectCount]);
+
+  const startAnimation = () => {
+    let currentCount1 = 0;
+    let currentCount2 = 0;
+    let currentCount3 = 0;
+    let delay1 = 50;
+    let delay2 = 50;
+    let delay3 = 50;
+
+    const animateCount1 = () => {
+      if (currentCount1 < activityYears) {
+        currentCount1++;
+        setAnimatedActivityYears(currentCount1);
+        delay1 = Math.max(5, delay1 * 0.95); // 최소 지연 시간을 설정하여 무한히 빨라지지 않도록 함
+        setTimeout(animateCount1, delay1);
+      }
+    };
+
+    const animateCount2 = () => {
+      if (currentCount2 < memberCount) {
+        currentCount2++;
+        setAnimatedMemberCount(currentCount2);
+        delay2 = Math.max(5, delay2 * 0.95); // 최소 지연 시간을 설정하여 무한히 빨라지지 않도록 함
+        setTimeout(animateCount2, delay2);
+      }
+    };
+
+    const animateCount3 = () => {
+      if (currentCount3 < projectCount) {
+        currentCount3++;
+        setAnimatedProjectCount(currentCount3);
+        delay3 = Math.max(5, delay3 * 0.95); // 최소 지연 시간을 설정하여 무한히 빨라지지 않도록 함
+        setTimeout(animateCount3, delay3);
+      }
+    };
+
+    animateCount1();
+    animateCount2();
+    animateCount3();
+  };
 
   return (
     <div className="bg-black w-screen min-h-screen">
@@ -94,16 +155,16 @@ const Intro = () => {
             <div className="introCards mt-10" ref={introCardRef}>
               <div className="w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100">
                 <h4 className="text-2xl md:text-3xl gothic">활동 기간</h4>
-                <span className="font-bold">20년+</span>
+                <span className="font-bold">{animatedActivityYears}년+</span>
               </div>
               <div className="w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100">
                 <h4 className="text-2xl md:text-3xl gothic">총 동아리원 수</h4>
-                <span className="font-bold">120명+</span>
+                <span className="font-bold">{animatedMemberCount}명+</span>
               </div>
               <div className="w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100">
                 <h4 className="text-2xl md:text-3xl gothic">등록된 프로젝트 수</h4>
                 <span className="font-bold">
-                  <span>5</span>개
+                  <span>{animatedProjectCount}</span>개
                 </span>
               </div>
             </div>
