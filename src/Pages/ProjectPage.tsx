@@ -44,6 +44,36 @@ const ProjectPage = () => {
     }
   };
 
+  const renderProjects = () => {
+    return projects.map((project, index) => (
+      <ProjectCard
+        key={project.id}
+        projectThumbnail={project.thumbnail!}
+        projectId={project.id}
+        projectName={project.name!}
+        projectDescription={project.intro!}
+        projectTechStacks={project.techStack!}
+        projectParticipate={project.participants}
+      />
+    ));
+  };
+
+  const preRender = () => {
+    return Array(8)
+      .fill(0)
+      .map((project, index) => (
+        <ProjectCard
+          isEmpty={true}
+          key={project.id}
+          projectThumbnail={project.thumbnail!}
+          projectId={project.id}
+          projectName={project.name!}
+          projectDescription={project.intro!}
+          projectTechStacks={project.techStack!}
+          projectParticipate={project.participants}
+        />
+      ));
+  };
   return (
     <section className="flex flex-col  min-h-screen justify-between">
       <NavBar />
@@ -66,17 +96,7 @@ const ProjectPage = () => {
             id="projectGrid"
             className="w-4/5 mx-20 grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3"
           >
-            {projects.map((project, index) => (
-              <ProjectCard
-                key={project.id}
-                projectThumbnail={project.thumbnail!}
-                projectId={project.id}
-                projectName={project.name!}
-                projectDescription={project.intro!}
-                projectTechStacks={project.techStack!}
-                projectParticipate={project.participants}
-              />
-            ))}
+            {projectsLoading ? preRender() : renderProjects()}
           </div>
           <Link
             to={"/project/edit"}
