@@ -205,6 +205,23 @@ const AdminPage = () => {
           )}
         </div>
       );
+    } else if (selectedTab === 2) {
+      return (
+        <div className="overflow-x-scroll">
+          <h3 className="text-xl font-bold p-2">여기에 뭐 넣을지 의견 받습니다</h3>
+          <p className="text-sm px-2 text-gray-600">하하</p>
+          {false ? (
+            <svg
+              className="animate-pulse h-5 w-5 rounded-full bg-green-950"
+              viewBox="0 0 24 24"
+            ></svg>
+          ) : (
+            <ul>
+              <li></li>
+            </ul>
+          )}
+        </div>
+      );
     }
   };
 

@@ -13,7 +13,7 @@ const RequestTable = ({ requests, onApprove, onDelete }: RequestTableProps) => {
     <table className="requestTable">
       <thead>
         <tr>
-          <th>ID</th>
+          <th>Index</th>
           <th>이름</th>
           <th>학번</th>
           <th>이메일</th>
@@ -66,6 +66,7 @@ const RequestTable = ({ requests, onApprove, onDelete }: RequestTableProps) => {
             if (selectedRequest) {
               onDelete(selectedRequest);
               setSelectedRequest(null);
+              setDialogOpen(false);
             }
           }}
           setDialogOpen={setDialogOpen}
