@@ -41,7 +41,7 @@ const ProjectCard = ({
       </div>
       <div className="w-full h-1/2 p-1.5">
         <p className="text-indigo-400 text-sm">{projectDate}</p>
-        <p className="cursor-pointer text-black text-xl" onClick={onClickProject}>
+        <p className="cursor-pointer font-semibold text-black text-xl" onClick={onClickProject}>
           {projectName}
         </p>
         <p className="text-sm">{projectDescription.slice(0, 30)}</p>
