@@ -40,7 +40,8 @@ const ProjectDetailPage = () => {
   const [commentLoading, setCommentLoading] = useState(true);
 
   // UI 상태 관리
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [deleteDialog, setDeleteDialog] = useState(false);
+  const [updateDialog, setUpdateDialog] = useState(false);
   const [isProjectOwner, setIsProjectOwner] = useState(false);
   const [userId, setUserId] = useState("");
   const [userLoading, setUserLoading] = useState(true);
@@ -80,6 +81,16 @@ const ProjectDetailPage = () => {
         // 글 주인이라면
         await deleteDoc(doc(db, "projects", project!.id));
         navigate("/project");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const updateProject = async () => {
+    try {
+      if (isProjectOwner) {
+        navigate(`/project/edit?id=${id}`);
       }
     } catch (err) {
       console.error(err);
@@ -293,10 +304,14 @@ const ProjectDetailPage = () => {
             {formatTimeDifference(project!.createdAt as number)}
           </span>
           <span className="text-right w-full mb-2 text-sm text-gray-500">
-            <button className="mr-1" onClick={() => alert("미지원입니다 지송 ㅎㅎ")}>
-              수정
-            </button>
-            <button onClick={() => setIsDialogOpen(true)}>삭제</button>
+            {isProjectOwner && (
+              <>
+                <button className="mr-1" onClick={() => setUpdateDialog(true)}>
+                  수정
+                </button>
+                <button onClick={() => setDeleteDialog(true)}>삭제</button>
+              </>
+            )}
           </span>
         </div>
         <div className="w-full inline-flex flex-wrap items-center gap-2 mt-2 text-xs md:text-sm">
@@ -354,12 +369,22 @@ const ProjectDetailPage = () => {
           {commentLoading || userLoading ? <div>댓글 로딩 중....</div> : renderComments()}
         </div>
 
-        {isDialogOpen && (
+        {deleteDialog && (
           <CheckDialog
             message={"프로젝트는 삭제하면 복구가 불가능합니다! \n그래도 삭제하시겠습니까?"}
             btnColor={"red"}
             onConfirm={() => deleteProject()}
-            setDialogOpen={setIsDialogOpen}
+            setDialogOpen={setDeleteDialog}
+          ></CheckDialog>
+        )}
+        {updateDialog && (
+          <CheckDialog
+            message={"프로젝트를 수정하시겠습니까?"}
+            btnColor={"blue"}
+            onConfirm={() => {
+              updateProject();
+            }}
+            setDialogOpen={setUpdateDialog}
           ></CheckDialog>
         )}
       </div>

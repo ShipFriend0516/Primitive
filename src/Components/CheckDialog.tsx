@@ -20,7 +20,7 @@ const CheckDialog = ({ message, btnColor, setDialogOpen, onConfirm }: Dialog) =>
             취소
           </button>
           <button
-            className={`px-2 py-1 text-sm bg-${btnColor}-300 hover:bg-${btnColor}-100`}
+            className={`px-2 py-1 text-sm bg-${btnColor}-300  hover:bg-${btnColor}-200`}
             onClick={() => onConfirm()}
           >
             확인

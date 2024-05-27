@@ -88,12 +88,20 @@ const MemberTable = ({ members, onDelete }: MemberTableProps) => {
                   <td>{member.email}</td>
                   <td>{member.authority}</td>
                   <td>
-                    <button
-                      className="bg-red-300 px-2 py-1.5 rounded-md hover:bg-red-400 hover:shadow-lg text-sm text-nowrap"
-                      onClick={() => openDialog(member)}
-                    >
-                      비활성화
-                    </button>
+                    {member.authorityLevel === 3 ||
+                    member.authorityLevel === 2 ||
+                    member.authorityLevel === 1 ? (
+                      <button className="bg-gray-300 px-2 py-1.5 cursor-default rounded-md hover:shadow-lg text-sm text-nowrap">
+                        😎
+                      </button>
+                    ) : (
+                      <button
+                        className="bg-red-300 px-2 py-1.5 rounded-md hover:bg-red-400 hover:shadow-lg text-sm text-nowrap"
+                        onClick={() => openDialog(member)}
+                      >
+                        비활성화
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}

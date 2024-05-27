@@ -9,11 +9,11 @@ import React, {
   useState,
 } from "react";
 import NavBar from "../Components/NavBar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { db, storage } from "../firebase";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { User, getAuth } from "firebase/auth";
-import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import ReactQuill, { ReactQuillProps } from "react-quill";
 import { CiImageOn } from "react-icons/ci";
 
@@ -49,9 +49,20 @@ const ProjectUploadPage = () => {
   const [success, setSuccess] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const id = searchParams.get("id");
+  const [isEdit, setIsEdit] = useState(false);
+
   const navigate = useNavigate();
 
   // 이펙트
+  useEffect(() => {
+    // 수정 모드일 때
+
+    // 추가로 글 소유자인지 검증하고 아니면 내보내기
+    getProject();
+  }, [id]);
+
   useEffect(() => {
     // 현재 로그인한 사용자 정보를 가져옵니다.
     const unsubscribe = getAuth().onAuthStateChanged((user) => {
@@ -65,6 +76,35 @@ const ProjectUploadPage = () => {
     });
     return () => unsubscribe();
   }, []);
+
+  const getProject = async () => {
+    try {
+      if (id) {
+        const response = await getDoc(doc(db, "projects", id));
+        const data = response.data();
+        const auth = getAuth();
+        if (data && auth.currentUser) {
+          if (auth.currentUser.uid === data.authorId) {
+            setProjectName(data.name);
+            setProjectIntro(data.intro);
+            setThumbnailUrl(data.thumbnail);
+            setParticipants(data.participants);
+            setTechStacks(data.techStack);
+            setProjectDescription(data.description);
+            setIsEdit(true);
+          } else {
+            // 글 주인이 아니야
+            setIsEdit(false);
+            alert("해당 프로젝트에 대한 수정 권한이 없습니다.");
+            navigate("/project");
+          }
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      setError("잘못된 접근입니다.");
+    }
+  };
 
   const validateForm = () => {
     if (!projectName.trim()) {
@@ -111,25 +151,47 @@ const ProjectUploadPage = () => {
     };
 
     try {
-      await addDoc(collection(db, "projects"), projectData);
-      console.log("프로젝트가 성공적으로 업로드되었습니다.");
-      // 폼 초기화
-      setProjectName("");
-      setProjectIntro("");
-      setProjectDescription("");
+      if (!isEdit) {
+        // 새 글 작성
+        await addDoc(collection(db, "projects"), projectData);
+        console.log("프로젝트가 성공적으로 업로드되었습니다.");
 
-      if (editorRef.current) {
-        const quillInstance = editorRef.current.getEditor();
-        quillInstance.setText(""); // 빈 문자열로 설정하여 내용 초기화
+        setProjectName("");
+        setProjectIntro("");
+        setProjectDescription("");
+        if (editorRef.current) {
+          const quillInstance = editorRef.current.getEditor();
+          quillInstance.setText(""); // 빈 문자열로 설정하여 내용 초기화
+        }
+        setThumbnailUrl("");
+        setParticipants([]);
+        setParticipantsInput("");
+        setTechStacks([]);
+        setTechStackInput("");
+        setSuccess("프로젝트 업로드 완료");
+        navigate("/project");
+      } else {
+        // 기존 글 수정
+        if (id) {
+          await updateDoc(doc(db, "projects", id), projectData);
+          console.log("프로젝트가 성공적으로 업로드되었습니다.");
+
+          setProjectName("");
+          setProjectIntro("");
+          setProjectDescription("");
+          if (editorRef.current) {
+            const quillInstance = editorRef.current.getEditor();
+            quillInstance.setText(""); // 빈 문자열로 설정하여 내용 초기화
+          }
+          setThumbnailUrl("");
+          setParticipants([]);
+          setParticipantsInput("");
+          setTechStacks([]);
+          setTechStackInput("");
+          setSuccess("프로젝트 수정 완료");
+          navigate("/project");
+        }
       }
-
-      setThumbnailUrl("");
-      setParticipants([]);
-      setParticipantsInput("");
-      setTechStacks([]);
-      setTechStackInput("");
-
-      setSuccess("프로젝트 업로드 완료");
     } catch (error) {
       console.error("프로젝트 저장 중 오류 발생:", error);
     }
@@ -415,7 +477,7 @@ const ProjectUploadPage = () => {
         </div>
         {error && (
           <div className="w-full text-center text-red-500 text-lg p-2">
-            잘못된 형식: <span className="font-bold">{error}</span>
+            오류: <span className="font-bold">{error}</span>
           </div>
         )}
         {success && (

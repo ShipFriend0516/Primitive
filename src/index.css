@@ -397,6 +397,11 @@ article.projectDescription h6 {
   font-size: 0.875rem;
 }
 
+article.projectDescription ul {
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
 .aspect-project {
   aspect-ratio: 16/6;
 }
@@ -429,7 +434,7 @@ article.projectDescription h6 {
 }
 
 .ql-container {
-  font-size: 1.1em;
+  font-size: 1em;
 }
 
 .progress {
