@@ -142,7 +142,7 @@ h2 {
   background-position: center;
 
   &:hover {
-    background-color: rgb(0, 22, 130);
+    background-color: rgb(30, 27, 75);
     color: white;
     transition: 0.2s;
   }

@@ -348,7 +348,7 @@ const ProjectDetailPage = () => {
           className="mt-6 projectDescription flex flex-col items-start"
           dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project!.description!) }}
         ></article>
-        <div className="commentsWrapper flex flex-col gap-3">
+        <div className="commentsWrapper pt-4 flex flex-col gap-3">
           <div>{comments?.length || 0}개의 댓글</div>
           <div>
             <textarea
@@ -365,7 +365,6 @@ const ProjectDetailPage = () => {
           </div>
         </div>
         <div className="">
-          {/* 댓글 */}
           {commentLoading || userLoading ? <div>댓글 로딩 중....</div> : renderComments()}
         </div>
 
