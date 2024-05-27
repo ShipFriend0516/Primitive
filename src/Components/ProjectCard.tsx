@@ -39,20 +39,20 @@ const ProjectCard = ({
           <div onClick={onClickProject} className="cursor-pointer aspect-video"></div>
         )}
       </div>
-      <div className="w-full h-1/2 p-0.5">
+      <div className="w-full h-1/2 p-1.5">
         <p className="text-indigo-400 text-sm">{projectDate}</p>
-        <p className=" cursor-pointer text-black text-xl" onClick={onClickProject}>
+        <p className="cursor-pointer text-black text-xl" onClick={onClickProject}>
           {projectName}
         </p>
-        <p className="text-sm">{projectDescription}</p>
+        <p className="text-sm">{projectDescription.slice(0, 30)}</p>
         {/* <p className="text-sm">
           {projectParticipate.map((m) => {
-            return <small>{m} </small>;
+            return <span className="mb-1 tag px-1.5">{m}</span>;
           })}
         </p> */}
-        <span className="text-sm inline-flex flex-wrap">
-          {projectTechStacks.map((tag, index) => (
-            <span className="mb-1 tag px-2" key={index}>
+        <span className="mt-1 text-sm inline-flex flex-wrap">
+          {projectTechStacks.slice(0, 5).map((tag, index) => (
+            <span className="mb-1 tag px-1.5" key={index}>
               {tag}
             </span>
           ))}
