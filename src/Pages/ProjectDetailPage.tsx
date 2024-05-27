@@ -150,6 +150,7 @@ const ProjectDetailPage = () => {
           createdAt: new Date().getTime(),
         };
         await addDoc(collection(db, "comments"), commentData);
+        getComments();
       } else {
         // 유저가 아니라면
         alert("로그인이 필요한 서비스입니다.");
