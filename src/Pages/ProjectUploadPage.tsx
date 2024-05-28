@@ -15,6 +15,8 @@ import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { User, getAuth } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import ReactQuill, { ReactQuillProps } from "react-quill";
+import DeltaStatic from "react-quill/lib/index";
+
 import { CiImageOn } from "react-icons/ci";
 
 type ReactQuillWithRefProps = ReactQuillProps & {
@@ -58,7 +60,6 @@ const ProjectUploadPage = () => {
   // 이펙트
   useEffect(() => {
     // 수정 모드일 때
-
     // 추가로 글 소유자인지 검증하고 아니면 내보내기
     getProject();
   }, [id]);
@@ -76,6 +77,43 @@ const ProjectUploadPage = () => {
     });
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    if (editorRef.current) {
+      const editor = editorRef.current.getEditor();
+      editor.setContents(initialContents);
+    }
+  }, [editorRef.current]);
+
+  const initialContents = [
+    { insert: "프로젝트 이름\n", attributes: { header: 1 } },
+    { insert: "프로젝트 개요\n", attributes: { header: 2 } },
+    { insert: "- 설명: 프로젝트의 목적과 주요 기능을 간략히 설명합니다.\n" },
+    { insert: "- 기술 스택: 사용된 주요 기술(프레임워크, 라이브러리 등)을 나열합니다.\n" },
+    { insert: "- 배포 링크: (있는 경우) 프로젝트의 라이브 데모 링크를 제공합니다.\n\n" },
+    { insert: "주요 기능\n", attributes: { header: 2 } },
+    { insert: "1. 기능 1: 기능의 간단한 설명\n" },
+    { insert: "2. 기능 2: 기능의 간단한 설명\n" },
+    { insert: "3. 기능 3: 기능의 간단한 설명\n\n" },
+    { insert: "스크린샷\n", attributes: { header: 2 } },
+    { insert: "- 프로젝트의 주요 화면이나 기능을 보여주는 스크린샷을 첨부합니다.\n\n" },
+    { insert: "설치 및 사용법\n", attributes: { header: 2 } },
+    { insert: "1. 클론: 리포지토리를 클론하는 방법" },
+    { insert: { code: "git clone https://github.com/사용자명/프로젝트명.git" } },
+    { insert: "2. 의존성 설치: 필요한 패키지를 설치하는 방법\n" },
+    { insert: { code: "npm install" } },
+    { insert: "3. 빌드 및 실행: 프로젝트를 빌드하고 실행하는 방법\n" },
+    { insert: { code: "npm start" } },
+    { insert: "\n기여 방법\n", attributes: { header: 2 } },
+    { insert: "- 기여 가이드: 프로젝트에 기여하는 방법에 대한 안내\n" },
+    { insert: "- 이슈 제출: 버그 리포트나 기능 요청 방법\n" },
+    { insert: "- 풀 리퀘스트: 코드 기여 방법\n" },
+    { insert: "\n라이선스\n", attributes: { header: 2 } },
+    { insert: "- 프로젝트에 적용된 라이선스를 명시합니다.\n" },
+    { insert: "\n연락처 정보\n", attributes: { header: 2 } },
+    { insert: "- 이메일: 프로젝트 관련 문의나 피드백을 받을 수 있는 이메일 주소\n" },
+    { insert: "- 기타 연락처: 필요시 추가 연락처 정보 (예: 트위터, 링크드인 등)\n" },
+  ];
 
   const getProject = async () => {
     try {

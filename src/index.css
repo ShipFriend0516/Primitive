@@ -354,13 +354,15 @@ h2 {
 }
 
 /* Project List Page */
-.projectAddBtn::after {
-  content: "새 프로젝트 만들기";
-  opacity: 0;
-  font-size: 1rem;
-  width: 0;
+.projectAddBtn {
+  background-color: rgb(30, 27, 75);
+  color: white;
 }
-.projectAddBtn:hover::after {
+
+.projectAddBtn:hover {
+  opacity: 0.9;
+}
+.projectAddBtn::after {
   content: "새 프로젝트 만들기";
   display: flex;
   align-items: center;

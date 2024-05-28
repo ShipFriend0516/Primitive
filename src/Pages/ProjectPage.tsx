@@ -100,7 +100,7 @@ const ProjectPage = () => {
           </div>
           <Link
             to={"/project/edit"}
-            className="projectAddBtn absolute bg-white bottom-10 right-10 border shadow-xl hover:shadow-lg rounded-full w-12 h-12 flex justify-center items-center text-3xl cursor-pointer hover:bg-indigo-950 hover:text-white"
+            className="projectAddBtn fixed bg-white bottom-10 right-10 border shadow-xl hover:shadow-lg rounded-full w-12 h-12 flex justify-center items-center text-3xl cursor-pointer hover:bg-indigo-950 hover:text-white"
           >
             <IoIosAdd />
           </Link>
