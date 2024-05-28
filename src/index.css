@@ -148,6 +148,16 @@ h2 {
   }
 }
 
+.hoverShow {
+  display: none;
+}
+
+.projectListCard:hover {
+  .hoverShow {
+    display: block;
+  }
+}
+
 /* MembersPage */
 .memberCard {
   display: flex;

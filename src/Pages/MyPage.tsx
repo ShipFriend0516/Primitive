@@ -4,10 +4,13 @@ import NavBar from "../Components/NavBar";
 import useStore from "../store";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import logo from "../Images/logo.webp";
 import User from "../Types/User.d";
+import { ProjectDetail } from "../Types/ProjectType";
+import ProjectCard from "../Components/ProjectCard";
+import { FaArrowCircleRight } from "react-icons/fa";
 
 const MyPage = () => {
   // 전역 상태 관리
@@ -16,6 +19,9 @@ const MyPage = () => {
   // 상태 관리
   const [user, setUser] = useState<User>();
   const [userLoading, setUserLoading] = useState(true);
+  const [showProject, setShowProject] = useState(false);
+  const [projects, setProjects] = useState<ProjectDetail[]>();
+  const [projectsLoading, setProjectsLoading] = useState(true);
   // 라우터
   const navigate = useNavigate();
 
@@ -69,6 +75,26 @@ const MyPage = () => {
     const auth = getAuth();
     auth.signOut();
     navigate("/");
+  };
+
+  const getProjects = async () => {
+    try {
+      const auth = getAuth();
+      if (auth.currentUser) {
+        const response = await getDocs(
+          query(collection(db, "projects"), where("authorId", "==", auth.currentUser.uid))
+        );
+        const data = response.docs.map((doc) => ({
+          id: doc.id,
+          ...(doc.data() as Omit<ProjectDetail, "id">),
+        }));
+
+        setProjects(data);
+        setProjectsLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // 렌더링
@@ -151,7 +177,54 @@ const MyPage = () => {
         ) : (
           <div></div>
         )}
+
+        <div className="mt-8 flex flex-col gap-2 items-start mb-20">
+          <h3 className="text-2xl font-bold ">작성한 프로젝트 모아보기</h3>
+          <p>버튼 눌러 작성한 프로젝트를 모아보세요.</p>
+          <button
+            onClick={() => {
+              setShowProject(!showProject);
+              getProjects();
+            }}
+            className="px-4 py-1 bg-emerald-950 text-white rounded-md"
+          >
+            내가 만든 프로젝트 {showProject ? "닫기" : "보기"}
+          </button>
+          {showProject && (
+            <div className="w-full">
+              {projectsLoading ? (
+                <div>Loading...</div>
+              ) : (
+                <div className="flex flex-col w-full">
+                  {projects ? (
+                    projects!.map((project) => (
+                      <div className="projectListCard w-full flex items-center justify-between p-3 border-b cursor-pointer hover:shadow-md transition">
+                        <div className="flex flex-col">
+                          <h3
+                            onClick={() => navigate(`/project/${project.id}`)}
+                            className="text-xl font-bold"
+                          >
+                            {project.name}
+                          </h3>
+                          <p>{project.intro}</p>
+                        </div>
+                        <div>
+                          <div className="hoverShow bg-gray-100 rounded-md text-sm text-gray-600 p-2">
+                            <FaArrowCircleRight />
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div>아직 프로젝트를 업로드하지 않았어요!</div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
+
       <Footer />
     </section>
   );
