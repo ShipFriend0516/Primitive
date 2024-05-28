@@ -11,6 +11,7 @@ import User from "../Types/User.d";
 import { ProjectDetail } from "../Types/ProjectType";
 import ProjectCard from "../Components/ProjectCard";
 import { FaArrowCircleRight } from "react-icons/fa";
+import LoadingCircle from "../Components/LoadingCircle";
 
 const MyPage = () => {
   // 전역 상태 관리
@@ -141,7 +142,7 @@ const MyPage = () => {
         <div className=" w-full flex flex-col gap-2">
           <h3 className="text-2xl font-bold ">내 정보</h3>
           {userLoading ? (
-            <div>유저 정보 로딩중</div>
+            <LoadingCircle />
           ) : (
             <div className="userdataTable">
               <div>
@@ -170,9 +171,9 @@ const MyPage = () => {
           <div className="mt-8 flex flex-col gap-2 items-start mb-20">
             <h3 className="text-2xl font-bold ">관리자 전용 탭</h3>
             <p>관리자 권한을 갖고 있는 계정입니다.</p>
-            <Link to={"/admin"} className="px-4 py-2 bg-indigo-700 text-white rounded-md">
-              어드민 페이지로 이동
-            </Link>
+            <button className="px-4 py-2 bg-indigo-700 text-white rounded-md">
+              <Link to={"/admin"}>어드민 페이지로 이동</Link>
+            </button>
           </div>
         ) : (
           <div></div>
@@ -186,14 +187,14 @@ const MyPage = () => {
               setShowProject(!showProject);
               getProjects();
             }}
-            className="px-4 py-1 bg-emerald-950 text-white rounded-md"
+            className="px-4 py-2 bg-emerald-950 text-white rounded-md"
           >
             내가 만든 프로젝트 {showProject ? "닫기" : "보기"}
           </button>
           {showProject && (
             <div className="w-full">
               {projectsLoading ? (
-                <div>Loading...</div>
+                <LoadingCircle />
               ) : (
                 <div className="flex flex-col w-full">
                   {projects ? (
