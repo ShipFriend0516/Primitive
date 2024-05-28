@@ -357,6 +357,7 @@ h2 {
 .projectAddBtn {
   background-color: rgb(30, 27, 75);
   color: white;
+  border: 0;
 }
 
 .projectAddBtn:hover {
