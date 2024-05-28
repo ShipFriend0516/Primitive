@@ -23,7 +23,7 @@ const ProjectCard = ({
 
   const preRender = () => {
     return (
-      <div className="p-2 w-full h-full mb-5 animate-pulse">
+      <div className=" p-2 w-full h-full mb-5 animate-pulse">
         <div
           className={`w-full rounded-md aspect-video overflow-hidden  ${
             isEmpty ? "bg-emerald-100" : ""
@@ -65,7 +65,7 @@ const ProjectCard = ({
 
   const cardRender = () => {
     return (
-      <div className="p-2 w-full h-full mb-5">
+      <div className="hover:-translate-y-2 p-2 w-full h-full mb-5 transition">
         <div
           className={`w-full rounded-md aspect-video overflow-hidden  ${
             isEmpty ? "bg-emerald-100" : ""
