@@ -12,6 +12,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -38,6 +39,7 @@ const ProjectDetailPage = () => {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState<CommentType[]>();
   const [commentLoading, setCommentLoading] = useState(true);
+  const [replies, setReplies] = useState<CommentType[]>();
 
   // UI 상태 관리
   const [deleteDialog, setDeleteDialog] = useState(false);
@@ -115,7 +117,7 @@ const ProjectDetailPage = () => {
   const getComments = async () => {
     try {
       const response = await getDocs(
-        query(collection(db, "comments"), where("projectId", "==", id))
+        query(collection(db, "comments"), where("projectId", "==", id), orderBy("createdAt"))
       );
 
       const usernames = await Promise.all(
@@ -127,11 +129,15 @@ const ProjectDetailPage = () => {
         })
       );
 
-      const data = response.docs.map((doc, index) => ({
-        id: doc.id,
-        ...(doc.data() as Omit<CommentType, "id">),
-        username: usernames[index],
-      }));
+      const data = await Promise.all(
+        response.docs.map(async (doc, index) => {
+          return {
+            id: doc.id,
+            ...(doc.data() as Omit<CommentType, "id">),
+            username: usernames[index] as string,
+          };
+        })
+      );
 
       setComments(data);
       setCommentLoading(false);
@@ -139,6 +145,7 @@ const ProjectDetailPage = () => {
       console.error(err);
     }
   };
+
   const postComment = async () => {
     try {
       const isUser = checkIsUser();
@@ -161,7 +168,6 @@ const ProjectDetailPage = () => {
       console.error(e);
     }
   };
-
   const deleteComment = async (commentId: string) => {
     try {
       const commentRef = doc(db, "comments", commentId);
@@ -174,14 +180,14 @@ const ProjectDetailPage = () => {
 
   useEffect(() => {
     getComments();
-  }, []);
+  }, [id]);
 
   const renderComments = () => {
     if (comments) {
       return comments.map((comment) => (
         <Comment
           key={comment.id}
-          _id={comment.id}
+          id={comment.id}
           username={comment.username}
           comment={comment.comment}
           createdAt={new Date(comment.createdAt).getTime()}
@@ -357,7 +363,7 @@ const ProjectDetailPage = () => {
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               className="border p-4 w-full"
-              placeholder="댓글을 작성하세요."
+              placeholder="댓글을 남겨보세요"
             />
           </div>
           <div className="flex justify-end">
@@ -369,14 +375,13 @@ const ProjectDetailPage = () => {
         <div className="">
           {commentLoading || userLoading ? <div>댓글 로딩 중....</div> : renderComments()}
         </div>
-
         {deleteDialog && (
           <CheckDialog
             message={"프로젝트는 삭제하면 복구가 불가능합니다! \n그래도 삭제하시겠습니까?"}
             btnColor={"red"}
             onConfirm={() => deleteProject()}
             setDialogOpen={setDeleteDialog}
-          ></CheckDialog>
+          />
         )}
         {updateDialog && (
           <CheckDialog
@@ -386,7 +391,7 @@ const ProjectDetailPage = () => {
               updateProject();
             }}
             setDialogOpen={setUpdateDialog}
-          ></CheckDialog>
+          />
         )}
       </div>
     );

@@ -3,5 +3,6 @@ export default interface Comment {
   authorId: string;
   username: string;
   comment: string;
+  replies: Comment[];
   createdAt: number;
 }
