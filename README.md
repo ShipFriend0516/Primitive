@@ -11,6 +11,7 @@
 ![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
 ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Firebase](https://img.shields.io/badge/firebase-a08021?style=for-the-badge&logo=firebase&logoColor=ffcd34)
 
 > 마이그레이션 전
 
@@ -35,9 +36,6 @@ lodash 라이브러리의 throttle() 기능과 debounce() 기능을 활용하면
 
 debounce()는 시간 내 함수가 여러번 호출되더라도 마지막 한번만 실행하는 함수
 
-> 어드민 인증 기반 회원가입 구현
-
-[Firebase로 어드민 인증 기반 회원가입 구현하기](https://velog.io/@shipfriend/Firebase%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%96%B4%EB%93%9C%EB%AF%BC-%EC%88%98%EB%9D%BD-%EA%B8%B0%EB%B0%98-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0)
 
 ```jsx
  useEffect(() => {
@@ -56,12 +54,19 @@ debounce()는 시간 내 함수가 여러번 호출되더라도 마지막 한번
 
 ```
 
+> 어드민 인증 기반 회원가입 구현
+
+동아리원임을 인증하기 위해서 어드민 인증 기반 회원가입을 구현
+
+[Firebase로 어드민 인증 기반 회원가입 구현하기](https://velog.io/@shipfriend/Firebase%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%96%B4%EB%93%9C%EB%AF%BC-%EC%88%98%EB%9D%BD-%EA%B8%B0%EB%B0%98-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0)
+
+
 
 ## 🪨 배포
-![image](https://github.com/ShipFriend0516/Primitive/assets/98446924/3b2cbf9b-77ee-4421-8323-a7ab40f0e528)
+
 
 ![Netlify](https://img.shields.io/badge/netlify-%23000000.svg?style=for-the-badge&logo=netlify&logoColor=#00C7B7) 
-
+![alt text](image.png)
 Primitive 공식 홈페이지 [배포 페이지](https://primitive.kr/)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/d7958ca0-2f8e-4eb9-9fd8-f6ec1368bcd5/deploy-status)](https://app.netlify.com/sites/primitive-knu/deploys)
