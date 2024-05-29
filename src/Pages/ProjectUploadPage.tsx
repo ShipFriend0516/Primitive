@@ -350,6 +350,7 @@ const ProjectUploadPage = () => {
             },
             { background: [] },
           ],
+          ["code-block"],
         ],
       },
     };

@@ -12,6 +12,7 @@ import { ProjectDetail } from "../Types/ProjectType";
 import ProjectCard from "../Components/ProjectCard";
 import { FaArrowCircleRight } from "react-icons/fa";
 import LoadingCircle from "../Components/LoadingCircle";
+import ProjectListCard from "../Components/ProjectListCard";
 
 const MyPage = () => {
   // 전역 상태 관리
@@ -199,22 +200,12 @@ const MyPage = () => {
                 <div className="flex flex-col w-full">
                   {projects ? (
                     projects!.map((project) => (
-                      <div className="projectListCard w-full flex items-center justify-between p-3 border-b cursor-pointer hover:shadow-md transition">
-                        <div className="flex flex-col">
-                          <h3
-                            onClick={() => navigate(`/project/${project.id}`)}
-                            className="text-xl font-bold"
-                          >
-                            {project.name}
-                          </h3>
-                          <p>{project.intro}</p>
-                        </div>
-                        <div>
-                          <div className="hoverShow bg-gray-100 rounded-md text-sm text-gray-600 p-2">
-                            <FaArrowCircleRight />
-                          </div>
-                        </div>
-                      </div>
+                      <ProjectListCard
+                        key={project.id}
+                        id={project.id}
+                        name={project.name!}
+                        intro={project.intro!}
+                      />
                     ))
                   ) : (
                     <div>아직 프로젝트를 업로드하지 않았어요!</div>
