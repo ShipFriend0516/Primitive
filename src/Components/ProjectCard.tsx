@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import ProjectType from "../Types/ProjectType.d";
+import { HiLockClosed } from "react-icons/hi";
 
 const ProjectCard = ({
   isEmpty = true,
@@ -10,6 +11,7 @@ const ProjectCard = ({
   projectDescription,
   projectParticipate = [],
   projectTechStacks = [],
+  isPrivate,
 }: ProjectType) => {
   if (projectThumbnail) {
     isEmpty = false;
@@ -83,10 +85,15 @@ const ProjectCard = ({
           )}
         </div>
         <div className="w-full h-1/2 p-1.5">
-          <p className="text-indigo-400 text-sm">{projectDate}</p>
-          <p className="cursor-pointer font-semibold text-black text-xl" onClick={onClickProject}>
-            {projectName}
-          </p>
+          <div className="inline-flex justify-between items-center gap-2">
+            <h2
+              className="cursor-pointer font-semibold text-black text-xl"
+              onClick={onClickProject}
+            >
+              {projectName}
+            </h2>
+            {isPrivate && <HiLockClosed />}
+          </div>
           <p className="text-sm">{projectDescription.slice(0, 30)}</p>
           {/* <p className="text-sm">
             {projectParticipate.map((m) => {

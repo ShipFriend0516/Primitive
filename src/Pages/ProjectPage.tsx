@@ -14,23 +14,43 @@ import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { Link } from "react-router-dom";
 import ProjectType, { ProjectDetail } from "../Types/ProjectType";
+import { getAuth } from "firebase/auth";
+import useStore from "../store";
 
 const ProjectPage = () => {
   // 상태 관리
   const [projects, setProjects] = useState<ProjectDetail[]>([]);
   const [projectsLoading, setProjectsLoading] = useState(true);
 
+  // 전역상태
+  const { isLoggedIn } = useStore();
   // Effect
   useEffect(() => {
-    getProjects();
-  }, []);
+    try {
+      if (isLoggedIn) {
+        getPrivateProjects();
+      } else {
+        getProjects();
+      }
+    } catch (error) {
+      console.error("프로젝트 목록 불러오기 실패!", error);
+    }
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    console.count();
+  }, [projects]);
 
   // 메서드
-
   const getProjects = async () => {
     try {
+      // 비로그인 유저는 공개글만
       const response = await getDocs(
-        query(collection(db, "projects"), orderBy("createdAt", "desc"))
+        query(
+          collection(db, "projects"),
+          where("isPrivate", "!=", true),
+          orderBy("createdAt", "desc")
+        )
       );
       setProjects(
         response.docs.map((doc) => ({
@@ -44,6 +64,25 @@ const ProjectPage = () => {
     }
   };
 
+  const getPrivateProjects = async () => {
+    try {
+      // 로그인 유저
+      const response = await getDocs(
+        query(collection(db, "projects"), orderBy("createdAt", "desc"))
+      );
+      setProjects(
+        response.docs.map((doc) => ({
+          id: doc.id,
+          ...(doc.data() as Omit<ProjectDetail, "id">),
+        }))
+      );
+
+      setProjectsLoading(false);
+    } catch (error) {
+      console.error("비공개 글 불러오기 실패");
+    }
+  };
+
   const renderProjects = () => {
     return projects.map((project, index) => (
       <ProjectCard
@@ -54,6 +93,7 @@ const ProjectPage = () => {
         projectDescription={project.intro!}
         projectTechStacks={project.techStack!}
         projectParticipate={project.participants}
+        isPrivate={project.isPrivate}
       />
     ));
   };
@@ -64,7 +104,7 @@ const ProjectPage = () => {
       .map((project, index) => (
         <ProjectCard
           isEmpty={true}
-          key={project.id}
+          key={index}
           projectThumbnail={project.thumbnail!}
           projectId={project.id}
           projectName={project.name!}

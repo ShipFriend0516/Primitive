@@ -7,6 +7,7 @@ export default interface ProjectType {
   projectDescription: string;
   projectParticipate?: string[];
   projectTechStacks: string[];
+  isPrivate?: boolean;
 }
 
 export interface ProjectDetail {
@@ -19,4 +20,5 @@ export interface ProjectDetail {
   description?: string;
   participants?: string[];
   techStack?: string[];
+  isPrivate?: boolean;
 }

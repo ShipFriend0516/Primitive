@@ -18,6 +18,7 @@ import ReactQuill, { ReactQuillProps } from "react-quill";
 import DeltaStatic from "quill";
 
 import { CiImageOn } from "react-icons/ci";
+import { IoIosCheckbox, IoIosCheckboxOutline } from "react-icons/io";
 
 type ReactQuillWithRefProps = ReactQuillProps & {
   forwardedRef: RefObject<ReactQuill>;
@@ -42,6 +43,7 @@ const ProjectUploadPage = () => {
   const [participantsInput, setParticipantsInput] = useState("");
   const [techStacks, setTechStacks] = useState<string[]>([]);
   const [techStackInput, setTechStackInput] = useState("");
+  const [isPrivate, setIsPrivate] = useState(false);
   const editorRef = useRef<ReactQuill>(null);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -185,6 +187,7 @@ const ProjectUploadPage = () => {
       techStack: techStacks,
       description: projectDescription,
       authorId: author.uid,
+      isPrivate: isPrivate,
       createdAt: new Date().getTime(),
     };
 
@@ -462,6 +465,26 @@ const ProjectUploadPage = () => {
                   onChange={(e) => setTechStackInput(e.target.value)}
                   placeholder="프로젝트 주요 기술 스택"
                 />
+              </div>
+            </div>
+            <div className="w-full flex flex-wrap gap-3 items-center p-1">
+              <h3 className="px-2 py-1.5 bg-black text-white rounded-md">프로젝트 미공개</h3>
+              <div className="checkbox-wrapper-19 flex items-center gap-3">
+                <label className="flex items-center ">
+                  <span
+                    className={`flex-grow pl-2 pr-4 transition-all text-nowrap text-gray-500 ${
+                      isPrivate ? "w-40" : "w-20"
+                    }`}
+                  >
+                    {isPrivate ? "회원만 볼 수 있습니다." : "전체 공개"}
+                  </span>
+                  <input
+                    onChange={(e) => setIsPrivate(e.target.checked)}
+                    type="checkbox"
+                    id="cbtest-19"
+                  />
+                  <label className={`check-box`} htmlFor="cbtest-19" />
+                </label>
               </div>
             </div>
           </div>
