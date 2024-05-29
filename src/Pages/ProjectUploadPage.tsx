@@ -15,7 +15,7 @@ import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
 import { User, getAuth } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import ReactQuill, { ReactQuillProps } from "react-quill";
-import DeltaStatic from "react-quill/lib/index";
+import DeltaStatic from "quill";
 
 import { CiImageOn } from "react-icons/ci";
 
