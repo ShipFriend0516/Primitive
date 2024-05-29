@@ -64,9 +64,10 @@ debounce()는 시간 내 함수가 여러번 호출되더라도 마지막 한번
 
 ## 🪨 배포
 
+![Screenshot 2024-05-29 at 18 51 26](https://github.com/ShipFriend0516/Primitive/assets/98446924/ac18bd96-8511-4c93-ade1-581717e54520)
 
 ![Netlify](https://img.shields.io/badge/netlify-%23000000.svg?style=for-the-badge&logo=netlify&logoColor=#00C7B7) 
-![alt text](image.png)
+
 Primitive 공식 홈페이지 [배포 페이지](https://primitive.kr/)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/d7958ca0-2f8e-4eb9-9fd8-f6ec1368bcd5/deploy-status)](https://app.netlify.com/sites/primitive-knu/deploys)
