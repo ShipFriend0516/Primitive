@@ -537,6 +537,10 @@ button {
   color: white;
   opacity: 1;
   background-color: rgb(30, 27, 75);
+
+  @media (max-width: 768px) {
+    opacity: 0;
+  }
 }
 
 /* Project Detail Page */
