@@ -4,12 +4,12 @@ import Footer from "../Components/Footer";
 import FAQ from "../Components/FAQ";
 const MainPage = () => {
   return (
-    <>
+    <section className="mainpage">
       <NavBar />
       <Intro />
       <FAQ />
       <Footer />
-    </>
+    </section>
   );
 };
 

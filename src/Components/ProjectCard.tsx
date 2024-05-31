@@ -86,10 +86,7 @@ const ProjectCard = ({
         </div>
         <div className="w-full h-1/2 p-1.5">
           <div className="inline-flex justify-between items-center gap-2">
-            <h2
-              className="cursor-pointer font-semibold text-black text-xl"
-              onClick={onClickProject}
-            >
+            <h2 className="cursor-pointer text-black text-xl" onClick={onClickProject}>
               {projectName}
             </h2>
             {isPrivate && <HiLockClosed />}
