@@ -85,8 +85,11 @@ const ProjectCard = ({
           )}
         </div>
         <div className="w-full h-1/2 p-1.5">
-          <div className="inline-flex justify-between items-center gap-2">
-            <h2 className="cursor-pointer text-black text-xl" onClick={onClickProject}>
+          <div className="w-full inline-flex justify-between items-center gap-2 ">
+            <h2
+              className="cursor-pointer text-black text-xl text-nowrap overflow-x-hidden "
+              onClick={onClickProject}
+            >
               {projectName}
             </h2>
             {isPrivate && <HiLockClosed />}

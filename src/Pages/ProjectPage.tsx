@@ -1,20 +1,13 @@
 import { useEffect, useState } from "react";
 import NavBar from "../Components/NavBar";
 import ProjectCard from "../Components/ProjectCard";
-import styled from "styled-components";
 
-import project1 from "../Images/에코초이스.webp";
-import project2 from "../Images/솜뭉치.webp";
-import project3 from "../Images/뜨개랑.webp";
-import project4 from "../Images/인프라운드.webp";
-import project5 from "../Images/primitive.webp";
 import { IoIosAdd } from "react-icons/io";
 import Footer from "../Components/Footer";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { Link } from "react-router-dom";
-import ProjectType, { ProjectDetail } from "../Types/ProjectType";
-import { getAuth } from "firebase/auth";
+import { ProjectDetail } from "../Types/ProjectType";
 import useStore from "../store";
 
 const ProjectPage = () => {
