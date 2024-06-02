@@ -24,6 +24,10 @@ import ProjectType, { ProjectDetail } from "../Types/ProjectType";
 import Comment from "../Components/Comment";
 import CommentType from "../Types/CommentType";
 
+import { HiShare } from "react-icons/hi2";
+import { HiMiniHeart } from "react-icons/hi2";
+import { HiOutlineHeart } from "react-icons/hi2";
+
 const ProjectDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -235,6 +239,19 @@ const ProjectDetailPage = () => {
     }
   }
 
+  const copyUrl = () => {
+    const url = window.location.href;
+
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        alert("URL이 클립보드에 복사되었습니다.");
+      })
+      .catch((err) => {
+        console.error("URL 복사 실패: ", err);
+      });
+  };
+
   const preRender = () => {
     return (
       <div className="mt-10 md:mt-20 max-w-6xl mx-auto w-full flex-grow flex flex-col items-stretch p-5 md:p-10 gap-2">
@@ -360,6 +377,20 @@ const ProjectDetailPage = () => {
             className="mt-6 projectDescription flex flex-col items-start"
             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project!.description!) }}
           ></article>
+          <hr />
+          <div className="inline-flex gap-3 mt-3">
+            <div className="inline-flex items-center gap-1 rounded-lg border px-3 py-1">
+              <button onClick={copyUrl} className="text-xl">
+                <HiShare />
+              </button>
+            </div>
+            <div className="inline-flex items-center gap-1 rounded-lg border px-3 py-1">
+              <button className="text-xl">
+                <HiOutlineHeart />
+              </button>
+              <span>{0}</span>
+            </div>
+          </div>
           <div className="commentsWrapper pt-4 flex flex-col gap-3">
             <div>{comments?.length || 0}개의 댓글</div>
             <div>
