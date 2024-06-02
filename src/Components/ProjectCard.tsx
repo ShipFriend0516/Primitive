@@ -67,7 +67,7 @@ const ProjectCard = ({
 
   const cardRender = () => {
     return (
-      <div className="hover:-translate-y-2 p-2 w-full h-full mb-5 transition">
+      <div className=" p-2 w-full h-full mb-5 transition hover:shadow-xl box-border rounded-b-xl hover:rounded-xl ">
         <div
           className={`w-full rounded-md aspect-video overflow-hidden  ${
             isEmpty ? "bg-emerald-100" : ""

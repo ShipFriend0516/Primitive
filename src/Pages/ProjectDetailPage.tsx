@@ -47,6 +47,7 @@ const ProjectDetailPage = () => {
   const [isProjectOwner, setIsProjectOwner] = useState(false);
   const [userId, setUserId] = useState("");
   const [userLoading, setUserLoading] = useState(true);
+
   // Effect
   useEffect(() => {
     const auth = getAuth();
@@ -68,7 +69,7 @@ const ProjectDetailPage = () => {
       if (id) {
         const projectRef = doc(db, "projects", id);
         const response = await getDoc(projectRef);
-        console.log(response.data());
+
         setProject({ id: response.id, ...(response.data() as Omit<ProjectDetail, "id">) });
         setProjectLoading(false);
       }
@@ -290,111 +291,121 @@ const ProjectDetailPage = () => {
   };
 
   const projectRender = () => {
-    return (
-      <div className="mt-10 md:mt-20 max-w-6xl mx-auto w-full flex-grow flex flex-col items-stretch p-5 md:p-10 gap-2">
-        {project!.thumbnail ? (
-          <img
-            src={project!.thumbnail}
-            alt={project!.name}
-            className="w-full aspect-project object-cover mb-4 md:mb-6 rounded"
-          />
-        ) : (
-          <div className="gothic gap-10 flex justify-center items-center text-white w-full h-96 object-cover mb-4 rounded bg-gradient-to-br from-indigo-950 to-black text-8xl ">
-            <span className="animate-bounce delay-1">.</span>
-            <span className="animate-bounce delay-2">.</span>
-            <span className="animate-bounce delay-3">.</span>
-          </div>
-        )}
-        <h1 className="text-3xl text-center md:text-5xl font-bold">{project!.name}</h1>
-        <p className=" md:text-xl mb-2 text-center">{project!.intro}</p>
-        <div className="flex justify-between">
-          <span className="text-left w-full mb-2 text-sm">
-            {formatTimeDifference(project!.createdAt as number)}
-          </span>
-          <span className="text-right w-full mb-2 text-sm text-gray-500">
-            {isProjectOwner && (
-              <>
-                <button className="mr-1" onClick={() => setUpdateDialog(true)}>
-                  수정
-                </button>
-                <button onClick={() => setDeleteDialog(true)}>삭제</button>
-              </>
-            )}
-          </span>
-        </div>
-        <div className="w-full inline-flex flex-wrap items-center gap-2 mt-2 text-xs md:text-sm">
-          <h3 className="px-2 py-1 bg-indigo-800 text-white rounded-md">프로젝트 참여자</h3>
-          {project!.participants!.map((participant, index) => (
-            <span
-              key={index}
-              className={`px-2 py-1 bg-indigo-100 rounded-md gap-2 tagAnimation text-nowrap
-                ${index % 2 === 0 && "bg-indigo-50"}
-                ${index % 2 === 1 && "bg-indigo-100"}
-                hover:bg-indigo-200
-                `}
-            >
-              {participant}
-            </span>
-          ))}
-        </div>
-        <div className="w-full inline-flex flex-wrap items-center gap-2 text-xs md:text-sm">
-          <h3 className="w-fit px-2 py-1 bg-emerald-900 text-white rounded-md ">사용한 기술스택</h3>
-          {project!.techStack!.map((tech, index) => (
-            <span
-              key={index}
-              className={`px-2 py-1 bg-emerald-100 rounded-md gap-2 tagAnimation text-nowrap
-                ${index % 2 === 0 && "bg-emerald-50"}
-                ${index % 2 === 1 && "bg-emerald-100"}
-                hover:bg-emerald-200
-                `}
-            >
-              {tech}
-            </span>
-          ))}
-        </div>
-        <article
-          className="mt-6 projectDescription flex flex-col items-start"
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project!.description!) }}
-        ></article>
-        <div className="commentsWrapper pt-4 flex flex-col gap-3">
-          <div>{comments?.length || 0}개의 댓글</div>
-          <div>
-            <textarea
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              className="border p-4 w-full"
-              placeholder="댓글을 남겨보세요"
+    try {
+      return (
+        <div className="mt-10 md:mt-20 max-w-6xl mx-auto w-full flex-grow flex flex-col items-stretch p-5 md:p-10 gap-2">
+          {project!.thumbnail ? (
+            <img
+              src={project!.thumbnail}
+              alt={project!.name}
+              className="w-full aspect-project object-cover mb-4 md:mb-6 rounded"
             />
+          ) : (
+            <div className="gothic gap-10 flex justify-center items-center text-white w-full h-96 object-cover mb-4 rounded bg-gradient-to-br from-indigo-950 to-black text-8xl ">
+              <span className="animate-bounce delay-1">.</span>
+              <span className="animate-bounce delay-2">.</span>
+              <span className="animate-bounce delay-3">.</span>
+            </div>
+          )}
+          <h1 className="text-3xl text-center md:text-5xl font-bold">{project!.name}</h1>
+          <p className=" md:text-xl mb-2 text-center">{project!.intro}</p>
+          <div className="flex justify-between">
+            <span className="text-left w-full mb-2 text-sm">
+              {formatTimeDifference(project!.createdAt as number)}
+            </span>
+            <span className="text-right w-full mb-2 text-sm text-gray-500">
+              {isProjectOwner && (
+                <>
+                  <button className="mr-1" onClick={() => setUpdateDialog(true)}>
+                    수정
+                  </button>
+                  <button onClick={() => setDeleteDialog(true)}>삭제</button>
+                </>
+              )}
+            </span>
           </div>
-          <div className="flex justify-end">
-            <button className="px-3 py-1 bg-indigo-600 text-white rounded-md" onClick={postComment}>
-              댓글 작성
-            </button>
+          <div className="w-full inline-flex flex-wrap items-center gap-2 mt-2 text-xs md:text-sm">
+            <h3 className="px-2 py-1 bg-indigo-800 text-white rounded-md">프로젝트 참여자</h3>
+            {project!.participants!.map((participant, index) => (
+              <span
+                key={index}
+                className={`px-2 py-1 bg-indigo-100 rounded-md gap-2 tagAnimation text-nowrap
+                  ${index % 2 === 0 && "bg-indigo-50"}
+                  ${index % 2 === 1 && "bg-indigo-100"}
+                  hover:bg-indigo-200
+                  `}
+              >
+                {participant}
+              </span>
+            ))}
           </div>
+          <div className="w-full inline-flex flex-wrap items-center gap-2 text-xs md:text-sm">
+            <h3 className="w-fit px-2 py-1 bg-emerald-900 text-white rounded-md ">
+              사용한 기술스택
+            </h3>
+            {project!.techStack!.map((tech, index) => (
+              <span
+                key={index}
+                className={`px-2 py-1 bg-emerald-100 rounded-md gap-2 tagAnimation text-nowrap
+                  ${index % 2 === 0 && "bg-emerald-50"}
+                  ${index % 2 === 1 && "bg-emerald-100"}
+                  hover:bg-emerald-200
+                  `}
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+          <article
+            className="mt-6 projectDescription flex flex-col items-start"
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project!.description!) }}
+          ></article>
+          <div className="commentsWrapper pt-4 flex flex-col gap-3">
+            <div>{comments?.length || 0}개의 댓글</div>
+            <div>
+              <textarea
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                className="border p-4 w-full"
+                placeholder="댓글을 남겨보세요"
+              />
+            </div>
+            <div className="flex justify-end">
+              <button
+                className="px-3 py-1 bg-indigo-600 text-white rounded-md"
+                onClick={postComment}
+              >
+                댓글 작성
+              </button>
+            </div>
+          </div>
+          <div className="">
+            {commentLoading || userLoading ? <div>댓글 로딩 중....</div> : renderComments()}
+          </div>
+          {deleteDialog && (
+            <CheckDialog
+              message={"프로젝트는 삭제하면 복구가 불가능합니다! \n그래도 삭제하시겠습니까?"}
+              btnColor={"red"}
+              onConfirm={() => deleteProject()}
+              setDialogOpen={setDeleteDialog}
+            />
+          )}
+          {updateDialog && (
+            <CheckDialog
+              message={"프로젝트를 수정하시겠습니까?"}
+              btnColor={"blue"}
+              onConfirm={() => {
+                updateProject();
+              }}
+              setDialogOpen={setUpdateDialog}
+            />
+          )}
         </div>
-        <div className="">
-          {commentLoading || userLoading ? <div>댓글 로딩 중....</div> : renderComments()}
-        </div>
-        {deleteDialog && (
-          <CheckDialog
-            message={"프로젝트는 삭제하면 복구가 불가능합니다! \n그래도 삭제하시겠습니까?"}
-            btnColor={"red"}
-            onConfirm={() => deleteProject()}
-            setDialogOpen={setDeleteDialog}
-          />
-        )}
-        {updateDialog && (
-          <CheckDialog
-            message={"프로젝트를 수정하시겠습니까?"}
-            btnColor={"blue"}
-            onConfirm={() => {
-              updateProject();
-            }}
-            setDialogOpen={setUpdateDialog}
-          />
-        )}
-      </div>
-    );
+      );
+    } catch (error) {
+      console.log("404ERROR", error);
+      navigate("/error");
+    }
   };
 
   return (
