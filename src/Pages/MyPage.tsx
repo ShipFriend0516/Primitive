@@ -198,7 +198,7 @@ const MyPage = () => {
                 <LoadingCircle />
               ) : (
                 <div className="flex flex-col w-full">
-                  {projects ? (
+                  {projects!.length > 0 ? (
                     projects!.map((project) => (
                       <ProjectListCard
                         key={project.id}
@@ -208,7 +208,13 @@ const MyPage = () => {
                       />
                     ))
                   ) : (
-                    <div>아직 프로젝트를 업로드하지 않았어요!</div>
+                    <ProjectListCard
+                      id="edit"
+                      name={"아직 프로젝트를 업로드하지 않았어요!"}
+                      intro={
+                        "프로젝트 탭에서 새 프로젝트를 생성할 수 있습니다. 클릭해 생성해보세요!"
+                      }
+                    />
                   )}
                 </div>
               )}
