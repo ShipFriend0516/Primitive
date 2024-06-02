@@ -335,7 +335,7 @@ button {
   display: flex;
   flex-direction: column;
   padding: 24px;
-  height: 30%;
+  min-height: 30%;
   color: white;
   font-weight: bold;
   padding-bottom: 30px;
