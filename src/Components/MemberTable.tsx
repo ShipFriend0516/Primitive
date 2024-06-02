@@ -107,7 +107,7 @@ const MemberTable = ({ members, onDelete, upgrade, downgrade }: MemberTableProps
                   <td>{member.username}</td>
                   <td>{member.studentYear}</td>
                   <td>{member.email}</td>
-                  <td className="inline-flex justify-between gap-3 items-center">
+                  <td className="w-full flex text-center justify-center gap-3 items-center">
                     <span>{member.authority}</span>
                     {authorityLevel > member.authorityLevel && (
                       <div className="flex flex-col gap-0.5 text-gray-400">
