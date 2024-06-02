@@ -33,6 +33,8 @@ const AdminPage = () => {
 
   const [selectedTab, setSelectedTab] = useState(0);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [authorityLevel, setAuthorityLevel] = useState(0);
+  const authorityArr = ["동아리원", "관리자", "부회장", "회장"];
 
   // UI 상태
 
@@ -174,6 +176,47 @@ const AdminPage = () => {
     }
   };
 
+  const upgradeAuthority = async (id: string, level: number, userLevel: number) => {
+    try {
+      if (userLevel > level) {
+        if (level <= 3) {
+          alert("해당 유저는 이미 권한이 최대입니다.");
+          return;
+        }
+        const authority = authorityArr[level + 1];
+        await updateDoc(doc(db, "users", id), {
+          authority: authority,
+          authorityLevel: level + 1,
+        });
+        getUsers();
+      }
+    } catch (err) {
+      console.error("권한 업 실패", err);
+    }
+  };
+
+  const downgradeAuthority = async (id: string, level: number, userLevel: number) => {
+    try {
+      if (userLevel > level) {
+        if (level <= 0) {
+          alert("해당 유저는 이미 권한이 최소입니다.");
+          return;
+        }
+
+        const authority = authorityArr[level - 1];
+        await updateDoc(doc(db, "users", id), {
+          authority: authority,
+          authorityLevel: level - 1,
+        });
+        getUsers();
+      }
+    } catch (err) {
+      console.error("권한 다운 실패", err);
+    } finally {
+      getUsers();
+    }
+  };
+
   const tabRender = () => {
     if (selectedTab === 0) {
       return (
@@ -201,7 +244,12 @@ const AdminPage = () => {
               viewBox="0 0 24 24"
             ></svg>
           ) : (
-            <MemberTable members={users} onDelete={deleteUser} />
+            <MemberTable
+              members={users}
+              onDelete={deleteUser}
+              upgrade={upgradeAuthority}
+              downgrade={downgradeAuthority}
+            />
           )}
         </div>
       );

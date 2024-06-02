@@ -1,28 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CheckDialog from "./CheckDialog";
-import { doc, updateDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { doc, updateDoc, collection, getDocs, query, where, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { MemberDataType } from "../Types/MemberType";
+import { FaArrowAltCircleUp } from "react-icons/fa";
+import { FaArrowCircleDown } from "react-icons/fa";
+import { getAuth } from "firebase/auth";
 
 interface MemberTableProps {
   members: MemberDataType[];
   onDelete: (member: MemberDataType) => Promise<void>;
+  upgrade: (id: string, level: number, userLevel: number) => Promise<void>;
+  downgrade: (id: string, level: number, userLevel: number) => Promise<void>;
 }
 
-interface Member {
-  id: string;
-  username?: string;
-  studentYear?: string;
-  email?: string;
-  authority?: string;
-}
-
-const MemberTable = ({ members, onDelete }: MemberTableProps) => {
+const MemberTable = ({ members, onDelete, upgrade, downgrade }: MemberTableProps) => {
+  // UI 상태관리
   const [dialogOpen, setDialogOpen] = useState(false);
   const [toActiveDialogOpen, setToActiveDialogOpen] = useState(false);
   const [selectedMember, setSelectedMember] = useState<MemberDataType | null>();
   const [isShowInactive, setIsShowInactive] = useState(true);
   const [inactiveUsers, setInactiveUsers] = useState<MemberDataType[]>([]);
+
+  // 상태 관리
+  const [authorityLevel, setAuthorityLevel] = useState(0);
+  const authorityArr = ["동아리원", "관리자", "부회장", "회장"];
+
   const closeDialog = () => {
     setDialogOpen(false);
     setSelectedMember(null);
@@ -64,6 +67,24 @@ const MemberTable = ({ members, onDelete }: MemberTableProps) => {
     }
   };
 
+  const getAuthorityLevel = async () => {
+    try {
+      const auth = getAuth();
+      if (auth.currentUser) {
+        const uid = auth.currentUser.uid;
+        const response = await getDoc(doc(db, "users", uid));
+        setAuthorityLevel(response.data()!.authorityLevel);
+        console.log(response.data()!.authorityLevel);
+      }
+    } catch (err) {
+      console.error("권한등급 불러오기 실패", err);
+    }
+  };
+
+  useEffect(() => {
+    getAuthorityLevel();
+  }, []);
+
   return (
     <>
       <table className="requestTable">
@@ -86,7 +107,25 @@ const MemberTable = ({ members, onDelete }: MemberTableProps) => {
                   <td>{member.username}</td>
                   <td>{member.studentYear}</td>
                   <td>{member.email}</td>
-                  <td>{member.authority}</td>
+                  <td className="inline-flex justify-between gap-3 items-center">
+                    <span>{member.authority}</span>
+                    {authorityLevel > member.authorityLevel && (
+                      <div className="flex flex-col gap-0.5 text-gray-400">
+                        <button
+                          onClick={() => upgrade(member.id, member.authorityLevel, authorityLevel)}
+                        >
+                          <FaArrowAltCircleUp />
+                        </button>
+                        <button
+                          onClick={() =>
+                            downgrade(member.id, member.authorityLevel, authorityLevel)
+                          }
+                        >
+                          <FaArrowCircleDown />
+                        </button>
+                      </div>
+                    )}
+                  </td>
                   <td>
                     {member.authorityLevel === 3 ||
                     member.authorityLevel === 2 ||
