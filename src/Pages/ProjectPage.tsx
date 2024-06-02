@@ -1,18 +1,28 @@
 import { useEffect, useState } from "react";
 import NavBar from "../Components/NavBar";
 import ProjectCard from "../Components/ProjectCard";
-import { IoIosAdd } from "react-icons/io";
 import Footer from "../Components/Footer";
-import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
+import {
+  QueryFieldFilterConstraint,
+  collection,
+  getDocs,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "../firebase";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { ProjectDetail } from "../Types/ProjectType";
 import useStore from "../store";
-import { BiEdit } from "react-icons/bi";
+import { HiPencilSquare } from "react-icons/hi2";
 
 type Filter = "default" | "app" | "web" | "personal" | "team";
+type MyIndexType = {
+  team: QueryFieldFilterConstraint;
+  personal: QueryFieldFilterConstraint;
+};
 
-const filters = ["app", "web", "personal", "team"];
+const filters = ["personal", "team"];
 
 const ProjectPage = () => {
   // 전역상태
@@ -38,10 +48,8 @@ const ProjectPage = () => {
   useEffect(() => {
     try {
       if (isLoggedIn) {
-        setProjects([]);
         getPrivateProjects();
       } else {
-        setProjects([]);
         getProjects();
       }
     } catch (error) {
@@ -51,9 +59,10 @@ const ProjectPage = () => {
 
   useEffect(() => {
     console.count();
+    console.log(projects);
   }, [projects]);
 
-  const filterWhere = {
+  const filterWhere: MyIndexType = {
     team: where("participantsCount", ">", 1),
     personal: where("participantsCount", "==", 1),
   };
@@ -82,7 +91,7 @@ const ProjectPage = () => {
           query(
             collection(db, "projects"),
             where("isPrivate", "!=", true),
-            filterWhere[filter],
+            filterWhere[filter as keyof MyIndexType],
             orderBy("createdAt", "desc")
           )
         );
@@ -116,7 +125,11 @@ const ProjectPage = () => {
         setProjectsLoading(false);
       } else {
         const response = await getDocs(
-          query(collection(db, "projects"), filterWhere[filter], orderBy("createdAt", "desc"))
+          query(
+            collection(db, "projects"),
+            filterWhere[filter as keyof MyIndexType],
+            orderBy("createdAt", "desc")
+          )
         );
         setProjects(
           response.docs.map((doc) => ({
@@ -174,7 +187,7 @@ const ProjectPage = () => {
               to={"/project/edit"}
               className="projectAddBtn absolute bg-white -right-14 border rounded-full w-12 h-12 flex justify-center items-center text-3xl cursor-pointer hover:bg-indigo-950 hover:text-white"
             >
-              <BiEdit />
+              <HiPencilSquare />
             </Link>
           </h1>
           <p className="text-lg mt-2 mb-5">프리미티브의 활동들을 모아보세요!</p>

@@ -131,6 +131,7 @@ const ProjectUploadPage = () => {
             setParticipants(data.participants);
             setTechStacks(data.techStack);
             setProjectDescription(data.description);
+            setIsPrivate(data.isPrivate);
             setIsEdit(true);
           } else {
             // 글 주인이 아니야
@@ -483,6 +484,7 @@ const ProjectUploadPage = () => {
                     onChange={(e) => setIsPrivate(e.target.checked)}
                     type="checkbox"
                     id="cbtest-19"
+                    checked={isPrivate}
                   />
                   <label className={`check-box`} htmlFor="cbtest-19" />
                 </label>
