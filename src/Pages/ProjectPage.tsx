@@ -5,7 +5,7 @@ import { IoIosAdd } from "react-icons/io";
 import Footer from "../Components/Footer";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { db } from "../firebase";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { ProjectDetail } from "../Types/ProjectType";
 import useStore from "../store";
 import { BiEdit } from "react-icons/bi";
@@ -15,15 +15,22 @@ type Filter = "default" | "app" | "web" | "personal" | "team";
 const filters = ["app", "web", "personal", "team"];
 
 const ProjectPage = () => {
+  // 전역상태
+  const { isLoggedIn } = useStore();
+  const [searchParams] = useSearchParams();
+  const filterKind = searchParams.get("filter");
+  const navigate = useNavigate();
+
   // 상태 관리
   const [projects, setProjects] = useState<ProjectDetail[]>([]);
   const [projectsLoading, setProjectsLoading] = useState(true);
   const [filter, setFilter] = useState<Filter>("default");
 
-  // 전역상태
-  const { isLoggedIn } = useStore();
-  const navigate = useNavigate();
   // Effect
+  useEffect(() => {
+    setFilter(filterKind as Filter);
+  }, []);
+
   useEffect(() => {
     navigate(`/project?filter=${filter}`);
   }, [filter]);
@@ -31,37 +38,62 @@ const ProjectPage = () => {
   useEffect(() => {
     try {
       if (isLoggedIn) {
+        setProjects([]);
         getPrivateProjects();
       } else {
+        setProjects([]);
         getProjects();
       }
     } catch (error) {
       console.error("프로젝트 목록 불러오기 실패!", error);
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, filter]);
 
   useEffect(() => {
     console.count();
   }, [projects]);
 
+  const filterWhere = {
+    team: where("participantsCount", ">", 1),
+    personal: where("participantsCount", "==", 1),
+  };
+
   // 메서드
   const getProjects = async () => {
     try {
       // 비로그인 유저는 공개글만
-      const response = await getDocs(
-        query(
-          collection(db, "projects"),
-          where("isPrivate", "!=", true),
-          orderBy("createdAt", "desc")
-        )
-      );
-      setProjects(
-        response.docs.map((doc) => ({
-          id: doc.id,
-          ...(doc.data() as Omit<ProjectDetail, "id">),
-        }))
-      );
-      setProjectsLoading(false);
+      if (filter === "default") {
+        const response = await getDocs(
+          query(
+            collection(db, "projects"),
+            where("isPrivate", "!=", true),
+            orderBy("createdAt", "desc")
+          )
+        );
+        setProjects(
+          response.docs.map((doc) => ({
+            id: doc.id,
+            ...(doc.data() as Omit<ProjectDetail, "id">),
+          }))
+        );
+        setProjectsLoading(false);
+      } else {
+        const response = await getDocs(
+          query(
+            collection(db, "projects"),
+            where("isPrivate", "!=", true),
+            filterWhere[filter],
+            orderBy("createdAt", "desc")
+          )
+        );
+        setProjects(
+          response.docs.map((doc) => ({
+            id: doc.id,
+            ...(doc.data() as Omit<ProjectDetail, "id">),
+          }))
+        );
+        setProjectsLoading(false);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -70,19 +102,33 @@ const ProjectPage = () => {
   const getPrivateProjects = async () => {
     try {
       // 로그인 유저
-      const response = await getDocs(
-        query(collection(db, "projects"), orderBy("createdAt", "desc"))
-      );
-      setProjects(
-        response.docs.map((doc) => ({
-          id: doc.id,
-          ...(doc.data() as Omit<ProjectDetail, "id">),
-        }))
-      );
+      if (filter === "default") {
+        const response = await getDocs(
+          query(collection(db, "projects"), orderBy("createdAt", "desc"))
+        );
+        setProjects(
+          response.docs.map((doc) => ({
+            id: doc.id,
+            ...(doc.data() as Omit<ProjectDetail, "id">),
+          }))
+        );
 
-      setProjectsLoading(false);
+        setProjectsLoading(false);
+      } else {
+        const response = await getDocs(
+          query(collection(db, "projects"), filterWhere[filter], orderBy("createdAt", "desc"))
+        );
+        setProjects(
+          response.docs.map((doc) => ({
+            id: doc.id,
+            ...(doc.data() as Omit<ProjectDetail, "id">),
+          }))
+        );
+
+        setProjectsLoading(false);
+      }
     } catch (error) {
-      console.error("비공개 글 불러오기 실패");
+      console.error("비공개 글 불러오기 실패", error);
     }
   };
 
@@ -144,6 +190,7 @@ const ProjectPage = () => {
             </div>
             {filters.map((kind) => (
               <div
+                key={kind}
                 onClick={() => setFilter(kind as Filter)}
                 className={`${filter === kind && "selected"}`}
               >

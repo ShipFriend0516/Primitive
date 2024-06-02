@@ -184,6 +184,7 @@ const ProjectUploadPage = () => {
       intro: projectIntro,
       thumbnail: thumbnailUrl,
       participants: participants,
+      participantsCount: participants.length,
       techStack: techStacks,
       description: projectDescription,
       authorId: author.uid,
