@@ -84,12 +84,11 @@ const Footer = () => {
 
   const designedRender = () => {
     return (
-      <footer className="footer w-full h-52">
+      <footer className="footer w-full h-40">
         <div className="inline-flex items-center gap-2">
           {/* <div className=" w-10 h-10 overflow-hidden rounded-full">
             <img src={logo} alt="프리미티브 로고" className="grayscale" />
           </div> */}
-          <span className="text-lg">PRIMITIVE</span>
         </div>
         <div className="flex justify-center items-center gap-2">
           <a
