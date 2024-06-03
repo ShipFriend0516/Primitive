@@ -502,7 +502,7 @@ button {
 
 /* Project List Page */
 .projectAddBtn {
-  background-color: rgb(30, 27, 75);
+  background-color: black;
   color: white;
   border: 0;
 }
@@ -511,6 +511,7 @@ button {
   display: flex;
   opacity: 1;
 }
+
 .projectAddBtn::after {
   content: "새 프로젝트 만들기";
   display: flex;
