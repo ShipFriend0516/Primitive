@@ -155,11 +155,11 @@ const Intro = () => {
             <div className="introCards mt-10" ref={introCardRef}>
               <div className="w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100">
                 <h4 className="text-2xl md:text-3xl gothic">활동 기간</h4>
-                <span className="font-bold">{animatedActivityYears}년+</span>
+                <span className="font-bold">{20}년+</span>
               </div>
               <div className="w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100">
                 <h4 className="text-2xl md:text-3xl gothic">총 동아리원 수</h4>
-                <span className="font-bold">{animatedMemberCount}명+</span>
+                <span className="font-bold">{120}명+</span>
               </div>
               <div className="w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100">
                 <h4 className="text-2xl md:text-3xl gothic">등록된 프로젝트 수</h4>
