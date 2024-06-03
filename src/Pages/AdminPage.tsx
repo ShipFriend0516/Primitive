@@ -22,6 +22,7 @@ import useStore from "../store";
 import { useNavigate } from "react-router-dom";
 import Member, { MemberDataType } from "../Types/MemberType";
 import User from "../Types/User";
+import StaffsWord from "../Components/StaffsWord";
 
 const AdminPage = () => {
   // 상태 관리
@@ -33,6 +34,7 @@ const AdminPage = () => {
 
   const [selectedTab, setSelectedTab] = useState(0);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [userId, setUserId] = useState("");
   const [authorityLevel, setAuthorityLevel] = useState(0);
   const authorityArr = ["동아리원", "관리자", "부회장", "회장"];
 
@@ -56,8 +58,13 @@ const AdminPage = () => {
         const userRef = doc(db, "users", uid);
         const userDoc = await getDoc(userRef);
         const authority = userDoc.data()!.authority;
-        if (authority === "관리자" || authority === "회장" || authority === "부회장")
+        const level = userDoc.data()!.authorityLevel;
+        const id = userDoc.id;
+        setUserId(id);
+        if (authority === "관리자" || authority === "회장" || authority === "부회장") {
           setIsAdmin(true);
+          setAuthorityLevel(level);
+        }
       } else {
         setIsAdmin(false);
       }
@@ -257,17 +264,17 @@ const AdminPage = () => {
     } else if (selectedTab === 2) {
       return (
         <div className="overflow-x-scroll">
-          <h3 className="text-xl font-bold p-2">여기에 뭐 넣을지 의견 받습니다</h3>
-          <p className="text-sm px-2 text-gray-600">하하</p>
+          <h3 className="text-xl font-bold p-2">회장과 부회장의 메시지</h3>
+          <p className="text-sm px-2 text-gray-600 mb-3">
+            회장과 부회장이라면 각자의 메시지를 수정할 수 있습니다.
+          </p>
           {false ? (
             <svg
               className="animate-pulse h-5 w-5 rounded-full bg-green-950"
               viewBox="0 0 24 24"
             ></svg>
           ) : (
-            <ul>
-              <li></li>
-            </ul>
+            <StaffsWord id={userId} level={authorityLevel} />
           )}
         </div>
       );
@@ -299,7 +306,7 @@ const AdminPage = () => {
                   className={`${selectedTab === 2 && "selected"}`}
                   onClick={() => setSelectedTab(2)}
                 >
-                  몰라
+                  운영진의 한마디
                 </div>
               </div>
             </div>
