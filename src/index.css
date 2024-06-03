@@ -731,6 +731,29 @@ td {
   border-left: 1px solid gray;
 }
 
+.profile-add {
+  display: none;
+  width: 90%;
+  height: 90%;
+  background-color: rgb(194, 194, 194);
+  font-size: 5em;
+  opacity: 0.6;
+}
+
+.profile:hover .profile-add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  border-radius: 100%;
+}
+
+.profile-add:hover::after {
+  opacity: 1;
+}
+
 /* Footer Style */
 .footer {
   background-color: rgb(239, 239, 239);

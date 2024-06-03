@@ -13,6 +13,7 @@ import LoadingCircle from "../Components/LoadingCircle";
 import ProjectListCard from "../Components/ProjectListCard";
 import UserDataTable from "../Components/UserDataTable";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { HiPlusSmall } from "react-icons/hi2";
 
 const MyPage = () => {
   // 전역 상태 관리
@@ -201,13 +202,16 @@ const MyPage = () => {
                 inputRef.current.click();
               }
             }}
-            className="flex justify-center items-center relative cursor-pointer rounded-full w-20 h-20  md:w-32 md:h-32 overflow-hidden bg-gray-300"
+            className="flex justify-center items-center relative cursor-pointer rounded-full w-20 h-20  md:w-32 md:h-32 overflow-hidden bg-gray-300 profile"
           >
             <img
               src={profileThumbnail || logo}
               className="object-cover"
               alt={`${user?.username}의 프로필사진`}
             />
+            <div className="profile-add">
+              <HiPlusSmall />
+            </div>
             {isUploading && <div className="loader absolute"></div>}
             <input
               ref={inputRef}
