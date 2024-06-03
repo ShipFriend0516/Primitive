@@ -23,6 +23,10 @@ type MyIndexType = {
 };
 
 const filters = ["personal", "team"];
+// filterKind가 Filter 타입인지 확인하는 함수
+const isFilter = (value: any): value is Filter => {
+  return ["default", "app", "web", "personal", "team"].includes(value);
+};
 
 const ProjectPage = () => {
   // 전역상태
@@ -34,12 +38,7 @@ const ProjectPage = () => {
   // 상태 관리
   const [projects, setProjects] = useState<ProjectDetail[]>([]);
   const [projectsLoading, setProjectsLoading] = useState(true);
-  const [filter, setFilter] = useState<Filter>("default");
-
-  // Effect
-  useEffect(() => {
-    setFilter(filterKind as Filter);
-  }, []);
+  const [filter, setFilter] = useState<Filter>(isFilter(filterKind) ? filterKind : "default");
 
   useEffect(() => {
     navigate(`/project?filter=${filter}`);
