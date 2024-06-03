@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
 import useStore from "../store";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
-import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
-import { db } from "../firebase";
+import { collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { db, storage } from "../firebase";
 import logo from "../Images/logo.webp";
 import User from "../Types/User.d";
 import { ProjectDetail } from "../Types/ProjectType";
-import ProjectCard from "../Components/ProjectCard";
-import { FaArrowCircleRight } from "react-icons/fa";
 import LoadingCircle from "../Components/LoadingCircle";
 import ProjectListCard from "../Components/ProjectListCard";
+import UserDataTable from "../Components/UserDataTable";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 const MyPage = () => {
   // 전역 상태 관리
@@ -24,6 +24,13 @@ const MyPage = () => {
   const [showProject, setShowProject] = useState(false);
   const [projects, setProjects] = useState<ProjectDetail[]>();
   const [projectsLoading, setProjectsLoading] = useState(true);
+  const [profileThumbnail, setProfileThumbnail] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // UI 상태
+  const [isUploading, setIsUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
+
   // 라우터
   const navigate = useNavigate();
 
@@ -57,9 +64,9 @@ const MyPage = () => {
         // 문서가 존재하는지 확인
         if (userDocSnapshot.exists()) {
           // 사용자의 세부 정보를 가져와서 setUser로 설정
-          setUser(userDocSnapshot.data() as User);
+          setUser({ id: userDocSnapshot.id, ...userDocSnapshot.data() });
+          setProfileThumbnail(userDocSnapshot.data().profileThumbnail);
           setUserLoading(false);
-          console.log(userDocSnapshot.data());
         } else {
           console.log("해당 사용자의 문서가 존재하지 않습니다.");
         }
@@ -99,6 +106,80 @@ const MyPage = () => {
     }
   };
 
+  // 이미지 업로드
+  const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+    try {
+      const file = e.target.files?.[0];
+      const maxSize = import.meta.VITE_FB_UPLOAD_SIZE_LIMIT * 1024 * 1024 || 5 * 1024 * 1024;
+
+      if (!file) {
+        return;
+      } else {
+        setProfileThumbnail("");
+      }
+
+      if (file.size > maxSize) {
+        alert("파일크기는 5MB 이하여야합니다.");
+        e.preventDefault();
+        return;
+      }
+      const lastDotIndex = file.name.lastIndexOf(".");
+      if (lastDotIndex === -1) {
+        alert("잘못된 이미지입니다.");
+        return;
+      }
+      const savedFile = `profile-images/${user?.username}${getTimeStamp()}${file.name.slice(
+        lastDotIndex
+      )}`;
+
+      setIsUploading(true);
+      const uploadedFile = uploadBytesResumable(ref(storage, savedFile), file);
+      console.log(uploadedFile);
+
+      uploadedFile.on(
+        "state_changed",
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          setProgress(progress);
+
+          switch (snapshot.state) {
+            case "paused":
+              alert("업로드가 중단되었습니다.");
+              setIsUploading(false);
+              break;
+          }
+        },
+        (error) => console.error(error),
+        async () => {
+          const image_url = await getDownloadURL(ref(storage, savedFile));
+          setProfileThumbnail(image_url);
+          if (user) {
+            const result = await updateDoc(doc(db, "users", user.id), {
+              profileThumbnail: image_url,
+            });
+            console.log(result);
+          }
+          setIsUploading(false);
+        }
+      );
+    } catch (err) {
+      console.error(err);
+      setIsUploading(false);
+    }
+  };
+
+  const getTimeStamp = () => {
+    const now = new Date();
+    const month = now.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더해줍니다.
+    const monthString = month < 10 ? "0" + month : month; // 한 자리 숫자인 경우 앞에 0을 붙입니다.
+    const day = now.getDate();
+    const dayString = day < 10 ? "0" + day : day; // 한 자리 숫자인 경우 앞에 0을 붙입니다.
+    const hour = now.getHours();
+    const minute = now.getMinutes();
+    const second = now.getSeconds();
+    return `${now.getFullYear()}${monthString}${dayString}${hour}${minute}${second}`;
+  };
+
   // 렌더링
   const profileRender = () => {
     return userLoading ? (
@@ -114,8 +195,27 @@ const MyPage = () => {
     ) : (
       <div className="profileWrapper flex justify-between items-center gap-4">
         <div className="flex items-center gap-4">
-          <div className="rounded-full w-20 h-20  md:w-32 md:h-32 overflow-hidden bg-gray-300">
-            <img src={user!.profileThumbnail || logo} className="object-cover" alt="프로필사진" />
+          <div
+            onClick={() => {
+              if (inputRef.current) {
+                inputRef.current.click();
+              }
+            }}
+            className="flex justify-center items-center relative cursor-pointer rounded-full w-20 h-20  md:w-32 md:h-32 overflow-hidden bg-gray-300"
+          >
+            <img
+              src={profileThumbnail || logo}
+              className="object-cover"
+              alt={`${user?.username}의 프로필사진`}
+            />
+            {isUploading && <div className="loader absolute"></div>}
+            <input
+              ref={inputRef}
+              className="hidden"
+              type={"file"}
+              accept="image/*"
+              onChange={(e) => handleImageUpload(e)}
+            />
           </div>
           <div className="text-sm"></div>
           <div>
@@ -145,24 +245,12 @@ const MyPage = () => {
           {userLoading ? (
             <LoadingCircle />
           ) : (
-            <div className="userdataTable">
-              <div>
-                <span>이메일</span>
-                <span>{user!.email}</span>
-              </div>
-              <div>
-                <span>권한 등급</span>
-                <span>{user!.authority}</span>
-              </div>
-              <div>
-                <span>학번</span>
-                <span>{user!.studentYear}학번</span>
-              </div>
-              <div>
-                <span>이름</span>
-                <span>{user!.username}</span>
-              </div>
-            </div>
+            <UserDataTable
+              email={user!.email!}
+              authority={user!.authority!}
+              studentYear={user!.studentYear!}
+              username={user!.username!}
+            />
           )}
         </div>
         {!userLoading &&
@@ -179,7 +267,6 @@ const MyPage = () => {
         ) : (
           <div></div>
         )}
-
         <div className="mt-8 flex flex-col gap-2 items-start mb-20">
           <h3 className="text-2xl font-bold ">작성한 프로젝트 모아보기</h3>
           <p>버튼 눌러 작성한 프로젝트를 모아보세요.</p>
@@ -222,7 +309,6 @@ const MyPage = () => {
           )}
         </div>
       </div>
-
       <Footer />
     </section>
   );

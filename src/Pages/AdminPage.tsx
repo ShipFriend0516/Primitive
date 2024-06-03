@@ -134,6 +134,7 @@ const AdminPage = () => {
           authority: "동아리원",
           authorityLevel: 0,
           status: "Active",
+          profileThumbnail: "",
         });
       } catch (e) {
         console.error("회원가입 중 오류 발생", e);
