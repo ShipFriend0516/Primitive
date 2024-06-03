@@ -510,6 +510,11 @@ button {
 .projectAddBtn:hover::after {
   display: flex;
   opacity: 1;
+
+  @media (max-width: 768px) {
+    opacity: 0;
+    display: none;
+  }
 }
 
 .projectAddBtn::after {
@@ -531,6 +536,7 @@ button {
 
   @media (max-width: 768px) {
     opacity: 0;
+    display: none;
   }
 }
 
