@@ -165,14 +165,14 @@ const LoginPage = () => {
             <div className="flex justify-center gap-3">
               <input
                 type="text"
-                placeholder="이름을 입력하세요"
+                placeholder="이름"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="authInput w-1/2"
               />
               <input
                 type="text"
-                placeholder="학번"
+                placeholder="학번 (예: 21)"
                 value={studentYear}
                 onChange={(e) => setStudentYear(e.target.value)}
                 className="authInput w-1/2"
@@ -181,14 +181,14 @@ const LoginPage = () => {
           )}
           <input
             type="email"
-            placeholder="이메일을 입력하세요"
+            placeholder="이메일"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="authInput"
           />
           <input
             type="password"
-            placeholder="비밀번호를 입력하세요"
+            placeholder="비밀번호"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onKeyDown={(e) => {
@@ -202,7 +202,7 @@ const LoginPage = () => {
             <>
               <input
                 type="password"
-                placeholder="비밀번호를 한 번 더 입력하세요"
+                placeholder="비밀번호 확인"
                 value={checkPassword}
                 onChange={(e) => setCheckPassword(e.target.value)}
                 className="authInput"
