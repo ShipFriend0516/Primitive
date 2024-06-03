@@ -125,12 +125,17 @@ const ProjectDetailPage = () => {
         query(collection(db, "comments"), where("projectId", "==", id), orderBy("createdAt"))
       );
 
-      const usernames = await Promise.all(
+      const userdatas = await Promise.all(
         response.docs.map(async (document) => {
           const userId = document.data().authorId;
           const userRef = doc(db, "users", userId);
           const userDoc = await getDoc(userRef);
-          return userDoc.data()?.username || "Unknown User";
+          return (
+            {
+              username: userDoc.data()?.username,
+              profileThumbnail: userDoc.data()?.profileThumbnail,
+            } || "Unknown User"
+          );
         })
       );
 
@@ -139,7 +144,8 @@ const ProjectDetailPage = () => {
           return {
             id: doc.id,
             ...(doc.data() as Omit<CommentType, "id">),
-            username: usernames[index] as string,
+            username: userdatas[index].username as string,
+            profileThumbnail: userdatas[index].profileThumbnail as string,
           };
         })
       );
@@ -197,6 +203,7 @@ const ProjectDetailPage = () => {
           comment={comment.comment}
           createdAt={new Date(comment.createdAt).getTime()}
           isOwner={userId === comment.authorId}
+          thumbnailUrl={comment.profileThumbnail}
           deleteComment={deleteComment}
         />
       ));

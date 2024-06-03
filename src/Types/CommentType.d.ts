@@ -3,6 +3,7 @@ export default interface Comment {
   authorId: string;
   username: string;
   comment: string;
+  profileThumbnail?: string;
   replies: Comment[];
   createdAt: number;
 }

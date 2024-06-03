@@ -17,7 +17,9 @@ const Reply = ({ id, username, reply, thumbnailUrl, isOwner, createdAt, deleteRe
     <div className="w-full flex flex-col justify-center gap-3 border-b p-3">
       <div className="flex flex-row items-center gap-3">
         <div>
-          <div className="rounded-full w-12 h-12 bg-gray-300"></div>
+          <div className="rounded-full w-12 h-12 bg-gray-300 overflow-hidden">
+            {thumbnailUrl && <img src={thumbnailUrl} alt={username} />}
+          </div>
         </div>
         <div className="flex flex-col flex-grow">
           <div className="font-bold">{username}</div>
