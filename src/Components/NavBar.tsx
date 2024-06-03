@@ -81,7 +81,7 @@ const NavBar = () => {
   }, [isLoggedIn]);
 
   return (
-    <div className="w-screen md:h-14 h-10 fixed bg-gray-950 z-10 text-white flex flex-row gap-5 justify-between border-b-gray-50 sm:text-lg text-xs hahmlet select-none">
+    <div className="w-screen md:h-14 h-10 fixed bg-black z-10 text-white flex flex-row gap-5 justify-between border-b-gray-50 sm:text-lg text-xs hahmlet select-none">
       <>
         <li
           className="navbarTo"
