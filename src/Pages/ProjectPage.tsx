@@ -151,6 +151,7 @@ const ProjectPage = () => {
         projectThumbnail={project.thumbnail!}
         projectId={project.id}
         projectName={project.name!}
+        projectDate={project.createdAt!}
         projectDescription={project.intro!}
         projectTechStacks={project.techStack!}
         projectParticipate={project.participants}

@@ -67,9 +67,9 @@ const ProjectCard = ({
 
   const cardRender = () => {
     return (
-      <div className=" p-2 w-full h-full mb-5 transition hover:shadow-xl box-border rounded-b-xl hover:rounded-xl ">
+      <div className="p-2 w-full h-full mb-5 transition hover:shadow-xl box-border rounded-b-xl hover:rounded-xl ">
         <div
-          className={`w-full rounded-md aspect-video overflow-hidden  ${
+          className={`w-full rounded-sm aspect-video overflow-hidden  ${
             isEmpty ? "bg-emerald-100" : ""
           }`}
         >
@@ -85,6 +85,9 @@ const ProjectCard = ({
           )}
         </div>
         <div className="w-full h-1/2 p-1.5">
+          <p className="text-sm text-indigo-700 font-bold">
+            Published At {formatTimeDifference(projectDate!) || ""}
+          </p>
           <div className="w-full inline-flex justify-between items-center gap-2 ">
             <h2
               className="cursor-pointer text-black text-xl text-nowrap overflow-x-hidden "
@@ -111,7 +114,29 @@ const ProjectCard = ({
       </div>
     );
   };
+  function formatTimeDifference(uploadedTime: number) {
+    const now = new Date().getTime();
+    const uploadedDate = new Date(uploadedTime);
+    const past = new Date(uploadedTime).getTime();
 
+    const diffInMs = now - past;
+    const diffInMinutes = Math.floor(diffInMs / 60000);
+    const diffInHours = Math.floor(diffInMs / 3600000);
+    const diffInDays = Math.floor(diffInMs / 86400000);
+
+    if (diffInMinutes < 1) {
+      return "방금 전";
+    } else if (diffInMinutes < 60) {
+      return `${diffInMinutes}분 전`;
+    } else if (diffInHours < 24) {
+      return `${diffInHours}시간 전`;
+    } else {
+      const year = uploadedDate.getFullYear();
+      const month = String(uploadedDate.getMonth() + 1).padStart(2, "0");
+      const day = String(uploadedDate.getDate()).padStart(2, "0");
+      return `${year % 100}/${month}`;
+    }
+  }
   return isEmpty ? preRender() : cardRender();
 };
 
