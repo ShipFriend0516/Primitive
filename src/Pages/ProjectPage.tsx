@@ -161,7 +161,7 @@ const ProjectPage = () => {
   };
 
   const preRender = () => {
-    return Array(8)
+    return Array(6)
       .fill(0)
       .map((project, index) => (
         <ProjectCard

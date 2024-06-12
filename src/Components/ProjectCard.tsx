@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import ProjectType from "../Types/ProjectType.d";
 import { HiLockClosed } from "react-icons/hi";
-
+import logo from "../Images/logo.webp";
+import { useState } from "react";
 const ProjectCard = ({
   isEmpty = true,
   projectId,
@@ -16,6 +17,7 @@ const ProjectCard = ({
   if (projectThumbnail) {
     isEmpty = false;
   }
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   const navigate = useNavigate();
 
@@ -65,6 +67,10 @@ const ProjectCard = ({
     );
   };
 
+  const handleImageLoad = () => {
+    setIsImageLoaded(true);
+  };
+
   const cardRender = () => {
     return (
       <div className="p-2 w-full h-full mb-5 transition hover:shadow-xl box-border rounded-b-xl hover:rounded-xl ">
@@ -74,12 +80,16 @@ const ProjectCard = ({
           }`}
         >
           {projectThumbnail ? (
-            <img
-              onClick={onClickProject}
-              className="cursor-pointer object-cover aspect-video"
-              src={projectThumbnail}
-              alt={projectName}
-            />
+            <div className="w-full h-full flex justify-center items-center">
+              {!isImageLoaded && <div className="loader"></div>}
+              <img
+                onClick={onClickProject}
+                className="cursor-pointer object-cover aspect-video"
+                src={projectThumbnail}
+                alt={projectName}
+                onLoad={handleImageLoad}
+              />
+            </div>
           ) : (
             <div onClick={onClickProject} className="cursor-pointer aspect-video"></div>
           )}
@@ -98,11 +108,6 @@ const ProjectCard = ({
             {isPrivate && <HiLockClosed />}
           </div>
           <p className="text-sm">{projectDescription.slice(0, 30)}</p>
-          {/* <p className="text-sm">
-            {projectParticipate.map((m) => {
-              return <span className="mb-1 tag px-1.5">{m}</span>;
-            })}
-          </p> */}
           <span className="mt-1 text-sm inline-flex flex-wrap">
             {projectTechStacks.slice(0, 5).map((tag, index) => (
               <span className="mb-1 tag px-1.5" key={index}>
@@ -114,6 +119,7 @@ const ProjectCard = ({
       </div>
     );
   };
+
   function formatTimeDifference(uploadedTime: number) {
     const now = new Date().getTime();
     const uploadedDate = new Date(uploadedTime);

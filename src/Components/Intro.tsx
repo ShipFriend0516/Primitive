@@ -12,9 +12,10 @@ import ProjectCard from "./ProjectCard";
 import { useEffect, useRef, useState } from "react";
 import Cover from "./Cover";
 import ActivityCard from "./ActivityCard";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, limit, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { query } from "firebase/firestore";
+import { ProjectDetail } from "../Types/ProjectType";
 
 const Intro = () => {
   // 스크롤 애니메이션 관련 상태 관리
@@ -33,6 +34,10 @@ const Intro = () => {
   const [animatedMemberCount, setAnimatedMemberCount] = useState(0);
   const [animatedActivityYears, setAnimatedActivityYears] = useState(0);
 
+  // 프로젝트 상태
+  const [projects, setProjects] = useState<ProjectDetail[]>();
+  const [projectsLoading, setProjectsLoading] = useState(true);
+
   useEffect(() => {
     try {
       getDocs(query(collection(db, "projects"))).then((projects) => {
@@ -41,6 +46,10 @@ const Intro = () => {
     } catch (e) {
       console.error(e);
     }
+  }, []);
+
+  useEffect(() => {
+    getRecentProjects();
   }, []);
 
   useEffect(() => {
@@ -110,6 +119,25 @@ const Intro = () => {
     animateCount1();
     animateCount2();
     animateCount3();
+  };
+
+  // Method
+
+  const getRecentProjects = async () => {
+    try {
+      const response = await getDocs(
+        query(collection(db, "projects"), where("isPrivate", "==", false), limit(3))
+      );
+
+      const data = response.docs.map((doc) => ({
+        id: doc.id,
+        ...(doc.data() as Omit<ProjectDetail, "id">),
+      }));
+      setProjects(data);
+      setProjectsLoading(false);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -214,33 +242,32 @@ const Intro = () => {
             <p className="text-xl">Primitive의 대표 프로젝트에는 이런 것들이 있어요</p>
           </div>
           <div className="w-full h-2/4 grid grid-cols-1 grid-rows-1 md:grid-cols-3 gap-5 ">
-            <ProjectCard
-              projectId="1"
-              projectThumbnail={project1}
-              projectName={"에코초이스"}
-              projectDate={1698764400000}
-              projectDescription={"친환경 이커머스 서비스"}
-              // projectParticipate={["서정우", "윤가은"]}
-              projectTechStacks={["Web", "React", "Spring", "MySQL", "AWS"]}
-            />
-            <ProjectCard
-              projectId="1"
-              projectThumbnail={project2}
-              projectName={"솜뭉치"}
-              projectDate={1704034800000}
-              projectDescription={"장애인생산품 판매 중개 플랫폼"}
-              // projectParticipate={["이진성", "김유진", "이나경"]}
-              projectTechStacks={["App", "Flutter", "Spring"]}
-            />
-            <ProjectCard
-              projectId="1"
-              projectThumbnail={project3}
-              projectName={"뜨개랑"}
-              projectDate={1704034800000}
-              projectDescription={"뜨개용품 판매 특화 커뮤니티 서비스"}
-              // projectParticipate={["이찬규", "홍현지", "박시현"]}
-              projectTechStacks={["Web", "React", "Spring"]}
-            />
+            {projectsLoading
+              ? projects?.map((project, index) => (
+                  <ProjectCard
+                    isEmpty={true}
+                    key={index}
+                    projectThumbnail={project.thumbnail!}
+                    projectId={project.id}
+                    projectName={project.name!}
+                    projectDescription={project.intro!}
+                    projectTechStacks={project.techStack!}
+                    projectParticipate={project.participants}
+                  />
+                ))
+              : projects?.map((project) => (
+                  <ProjectCard
+                    key={project.id}
+                    projectThumbnail={project.thumbnail!}
+                    projectId={project.id}
+                    projectName={project.name!}
+                    projectDate={project.createdAt!}
+                    projectDescription={project.intro!}
+                    projectTechStacks={project.techStack!}
+                    projectParticipate={project.participants}
+                    isPrivate={project.isPrivate}
+                  />
+                ))}
           </div>
         </Cover>
       </section>
