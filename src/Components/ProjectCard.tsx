@@ -4,7 +4,7 @@ import { HiLockClosed } from "react-icons/hi";
 import logo from "../Images/logo.webp";
 import { useState } from "react";
 const ProjectCard = ({
-  isEmpty = true,
+  isEmpty = false,
   projectId,
   projectThumbnail,
   projectName,
@@ -91,7 +91,10 @@ const ProjectCard = ({
               />
             </div>
           ) : (
-            <div onClick={onClickProject} className="cursor-pointer aspect-video"></div>
+            <div
+              onClick={onClickProject}
+              className="cursor-pointer aspect-video bg-slate-200"
+            ></div>
           )}
         </div>
         <div className="w-full h-1/2 p-1.5">
