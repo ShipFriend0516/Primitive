@@ -12,8 +12,10 @@ import {
   doc,
   getDoc,
   getDocs,
+  limit,
   orderBy,
   query,
+  setDoc,
   where,
 } from "firebase/firestore";
 import { db } from "../firebase";
@@ -24,9 +26,7 @@ import ProjectType, { ProjectDetail } from "../Types/ProjectType";
 import Comment from "../Components/Comment";
 import CommentType from "../Types/CommentType";
 
-import { HiShare } from "react-icons/hi2";
-import { HiMiniHeart } from "react-icons/hi2";
-import { HiOutlineHeart } from "react-icons/hi2";
+import { HiHeart, HiShare, HiOutlineHeart } from "react-icons/hi2";
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
@@ -51,6 +51,9 @@ const ProjectDetailPage = () => {
   const [isProjectOwner, setIsProjectOwner] = useState(false);
   const [userId, setUserId] = useState("");
   const [userLoading, setUserLoading] = useState(true);
+  const [isLiked, setIsLiked] = useState(false);
+  const [likesCount, setLikesCount] = useState(0);
+  const [likeLoading, setLikeLoading] = useState(true);
 
   // Effect
   useEffect(() => {
@@ -66,6 +69,10 @@ const ProjectDetailPage = () => {
     }
     setUserLoading(false);
   }, [id, project]);
+
+  useEffect(() => {
+    getLikesCount();
+  }, [id]);
 
   // Method
   const getProjectDetail = async () => {
@@ -190,8 +197,9 @@ const ProjectDetailPage = () => {
   };
 
   useEffect(() => {
+    getIsLiked();
     getComments();
-  }, [id]);
+  }, [id, userId]);
 
   const renderComments = () => {
     if (comments) {
@@ -258,6 +266,79 @@ const ProjectDetailPage = () => {
         console.error("URL 복사 실패: ", err);
       });
   };
+
+  // Like
+
+  const getLikesCount = async () => {
+    try {
+      const likesRef = await getDocs(query(collection(db, "likes"), where("projectId", "==", id)));
+      setLikesCount(likesRef.docs.length || 0);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getIsLiked = async () => {
+    try {
+      const likesRef = await getDocs(
+        query(
+          collection(db, "likes"),
+          where("projectId", "==", id),
+          where("userId", "==", userId),
+          limit(1)
+        )
+      );
+
+      if (likesRef.docs.length > 0) {
+        setIsLiked(true);
+      } else {
+        setIsLiked(false);
+      }
+
+      console.log(likesRef.docs.map((doc) => doc.data()));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const postLike = async () => {
+    try {
+      const response = await setDoc(doc(db, "likes", `${userId}${id}`), {
+        projectId: id,
+        userId: userId,
+      });
+      console.log(response);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const deleteLike = async () => {
+    try {
+      const like = await getDocs(
+        query(collection(db, "likes"), where("projectId", "==", id), where("userId", "==", userId))
+      );
+      const doc = like.docs;
+      console.log(doc);
+      like.docs.map(async (doc) => await deleteDoc(doc.ref));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const toggleLike = async () => {
+    if (isLiked) {
+      deleteLike();
+      setLikesCount((prev) => prev - 1);
+      setIsLiked(false);
+    } else {
+      postLike();
+      setLikesCount((prev) => prev + 1);
+      setIsLiked(true);
+    }
+  };
+
+  // Rendering
 
   const preRender = () => {
     return (
@@ -391,12 +472,13 @@ const ProjectDetailPage = () => {
                 <HiShare />
               </button>
             </div>
-            <div className="inline-flex items-center gap-1 rounded-lg border px-3 py-1">
-              <button className="text-xl">
-                <HiOutlineHeart />
-              </button>
-              <span>{0}</span>
-            </div>
+            <button
+              onClick={toggleLike}
+              className="inline-flex items-center gap-1 rounded-lg border px-3 py-1"
+            >
+              <div className="text-xl">{isLiked ? <HiHeart /> : <HiOutlineHeart />}</div>
+              <span>{likesCount || 0}</span>
+            </button>
           </div>
           <div className="commentsWrapper pt-4 flex flex-col gap-3">
             <div>{comments?.length || 0}개의 댓글</div>
