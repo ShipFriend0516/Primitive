@@ -327,14 +327,19 @@ const ProjectDetailPage = () => {
   };
 
   const toggleLike = async () => {
-    if (isLiked) {
-      deleteLike();
-      setLikesCount((prev) => prev - 1);
-      setIsLiked(false);
+    if (userId) {
+      if (isLiked) {
+        deleteLike();
+        setLikesCount((prev) => prev - 1);
+        setIsLiked(false);
+      } else {
+        postLike();
+        setLikesCount((prev) => prev + 1);
+        setIsLiked(true);
+      }
     } else {
-      postLike();
-      setLikesCount((prev) => prev + 1);
-      setIsLiked(true);
+      alert("로그인이 필요한 서비스입니다.");
+      navigate("/login");
     }
   };
 
