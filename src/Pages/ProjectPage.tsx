@@ -51,7 +51,7 @@ const ProjectPage = () => {
   // 페이지네이션
   const [additionalLoading, setAdditionalLoading] = useState(false);
   const lastDocRef = useRef<HTMLDivElement>(null);
-  const [lastDoc, setLastDoc] = useState<QueryDocumentSnapshot>();
+  const [lastDoc, setLastDoc] = useState<QueryDocumentSnapshot | null>();
   const option = {
     threshold: 0.5,
   };
@@ -178,6 +178,7 @@ const ProjectPage = () => {
 
   const getAdditionalProjects = async (isPrivate: boolean, lastDoc: QueryDocumentSnapshot) => {
     try {
+      if (lastDoc === null || lastDoc === undefined) return;
       const baseQuery = query(
         collection(db, "projects"),
         orderBy("createdAt", "desc"),
@@ -198,7 +199,11 @@ const ProjectPage = () => {
       }));
       console.log(data);
       const nextLastDoc = response.docs[response.docs.length - 1];
-      setLastDoc(nextLastDoc);
+      if (nextLastDoc) {
+        setLastDoc(nextLastDoc);
+      } else {
+        setLastDoc(null);
+      }
       setProjects((prev) => [...prev, ...data]);
 
       console.log("마지막 요소 감지됨");
@@ -209,19 +214,17 @@ const ProjectPage = () => {
 
   const renderProjects = () => {
     return projects.map((project, index) => (
-      <>
-        <ProjectCard
-          key={project.id}
-          projectThumbnail={project.thumbnail!}
-          projectId={project.id}
-          projectName={project.name!}
-          projectDate={project.createdAt!}
-          projectDescription={project.intro!}
-          projectTechStacks={project.techStack!}
-          projectParticipate={project.participants}
-          isPrivate={project.isPrivate}
-        />
-      </>
+      <ProjectCard
+        key={project.id}
+        projectThumbnail={project.thumbnail!}
+        projectId={project.id}
+        projectName={project.name!}
+        projectDate={project.createdAt!}
+        projectDescription={project.intro!}
+        projectTechStacks={project.techStack!}
+        projectParticipate={project.participants}
+        isPrivate={project.isPrivate}
+      />
     ));
   };
 
