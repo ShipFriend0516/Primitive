@@ -225,7 +225,7 @@ const ProjectPage = () => {
   };
 
   const preRender = () => {
-    return Array(6)
+    return Array(12)
       .fill(0)
       .map((project, index) => (
         <ProjectCard
@@ -281,7 +281,7 @@ const ProjectPage = () => {
           >
             {projectsLoading ? preRender() : renderProjects()}
           </div>
-          {additionalLoading && preRender()}
+          {additionalLoading && <LoadingCircle />}
         </div>
         <div ref={lastDocRef}></div>
       </>

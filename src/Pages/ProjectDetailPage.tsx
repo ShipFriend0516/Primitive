@@ -27,6 +27,7 @@ import Comment from "../Components/Comment";
 import CommentType from "../Types/CommentType";
 
 import { HiHeart, HiShare, HiOutlineHeart } from "react-icons/hi2";
+import LoadingCircle from "../Components/LoadingCircle";
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
@@ -363,27 +364,27 @@ const ProjectDetailPage = () => {
           프로젝트가 작성된 날짜
         </p>
         <div className="w-full inline-flex items-center gap-2 ">
-          <h3 className="px-2 rounded-md bg-gray-200 animate-pulse text-gray-200">
+          <h3 className="text-nowrap px-1 rounded-md bg-gray-200 animate-pulse text-gray-200">
             프로젝트 참여자
           </h3>
 
           {projectEx.participants.map((participant, index) => (
             <span
               key={index}
-              className={` px-2  rounded-md bg-gray-200 animate-pulse text-gray-200 gap-2  text-nowrap`}
+              className={`px-1  rounded-md bg-gray-200 animate-pulse text-gray-200 gap-2  text-nowrap`}
             >
               {participant}
             </span>
           ))}
         </div>
         <div className="w-full inline-flex items-center gap-2">
-          <h3 className="w-fit  px-2  rounded-md bg-gray-200 animate-pulse text-gray-200 ">
+          <h3 className="text-nowrap px-1  rounded-md bg-gray-200 animate-pulse text-gray-200 ">
             사용한 기술스택
           </h3>
           {projectEx.techStacks.map((tech, index) => (
             <span
               key={index}
-              className={`px-2 rounded-md bg-gray-200 animate-pulse text-gray-200 gap-2  text-nowrap`}
+              className={`px-1 rounded-md bg-gray-200 animate-pulse text-gray-200 gap-2  text-nowrap`}
             >
               {tech}
             </span>
@@ -505,7 +506,13 @@ const ProjectDetailPage = () => {
             </div>
           </div>
           <div className="">
-            {commentLoading || userLoading ? <div>댓글 로딩 중....</div> : renderComments()}
+            {commentLoading || userLoading ? (
+              <div>
+                댓글 로딩 중.... <LoadingCircle />
+              </div>
+            ) : (
+              renderComments()
+            )}
           </div>
           {deleteDialog && (
             <CheckDialog
