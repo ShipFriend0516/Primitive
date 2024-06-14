@@ -179,18 +179,14 @@ const ProjectPage = () => {
   const getAdditionalProjects = async (isPrivate: boolean, lastDoc: QueryDocumentSnapshot) => {
     try {
       if (lastDoc === null || lastDoc === undefined) return;
-      const baseQuery = query(
+      const additionalQuery = query(
         collection(db, "projects"),
         orderBy("createdAt", "desc"),
         ...(isPrivate ? [] : [where("isPrivate", "==", false)]),
+        ...(filter !== "default" ? [filterWhere[filter as keyof MyIndexType]] : []),
         limit(12),
         startAfter(lastDoc)
       );
-
-      const additionalQuery =
-        filter !== "default"
-          ? query(baseQuery, filterWhere[filter as keyof MyIndexType])
-          : baseQuery;
 
       const response = await getDocs(additionalQuery);
       const data = response.docs.map((doc) => ({
