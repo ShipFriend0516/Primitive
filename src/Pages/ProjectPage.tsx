@@ -1,13 +1,19 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import NavBar from "../Components/NavBar";
 import ProjectCard from "../Components/ProjectCard";
 import Footer from "../Components/Footer";
 import {
+  QueryDocumentSnapshot,
   QueryFieldFilterConstraint,
   collection,
+  endAt,
+  endBefore,
   getDocs,
+  limit,
   orderBy,
   query,
+  startAfter,
+  startAt,
   where,
 } from "firebase/firestore";
 import { db } from "../firebase";
@@ -15,6 +21,8 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { ProjectDetail } from "../Types/ProjectType";
 import useStore from "../store";
 import { HiPencilSquare } from "react-icons/hi2";
+import Pagination from "../Components/Pagination";
+import LoadingCircle from "../Components/LoadingCircle";
 
 type Filter = "default" | "app" | "web" | "personal" | "team";
 type MyIndexType = {
@@ -40,6 +48,32 @@ const ProjectPage = () => {
   const [projectsLoading, setProjectsLoading] = useState(true);
   const [filter, setFilter] = useState<Filter>(isFilter(filterKind) ? filterKind : "default");
 
+  // 페이지네이션
+  const [additionalLoading, setAdditionalLoading] = useState(false);
+  const lastDocRef = useRef<HTMLDivElement>(null);
+  const [lastDoc, setLastDoc] = useState<QueryDocumentSnapshot>();
+  const option = {
+    threshold: 0.5,
+  };
+  const observer = new IntersectionObserver(async (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        setAdditionalLoading(true);
+        getAdditionalProjects(isLoggedIn || false, lastDoc!);
+        setAdditionalLoading(false);
+      }
+    });
+  }, option);
+
+  useEffect(() => {
+    if (lastDocRef.current) {
+      observer.observe(lastDocRef.current);
+    }
+    return () => {
+      observer.disconnect();
+    };
+  }, [isLoggedIn, lastDocRef.current, lastDoc]);
+
   useEffect(() => {
     navigate(`/project?filter=${filter}`);
   }, [filter]);
@@ -55,11 +89,6 @@ const ProjectPage = () => {
       console.error("프로젝트 목록 불러오기 실패!", error);
     }
   }, [isLoggedIn, filter]);
-
-  useEffect(() => {
-    console.count();
-    console.log(projects);
-  }, [projects]);
 
   const filterWhere: MyIndexType = {
     team: where("participantsCount", ">", 1),
@@ -84,6 +113,8 @@ const ProjectPage = () => {
             ...(doc.data() as Omit<ProjectDetail, "id">),
           }))
         );
+        const lastDoc = response.docs[response.docs.length - 1];
+        setLastDoc(lastDoc);
         setProjectsLoading(false);
       } else {
         const response = await getDocs(
@@ -94,6 +125,8 @@ const ProjectPage = () => {
             orderBy("createdAt", "desc")
           )
         );
+        const lastDoc = response.docs[response.docs.length - 1];
+        setLastDoc(lastDoc);
         setProjects(
           response.docs.map((doc) => ({
             id: doc.id,
@@ -111,32 +144,31 @@ const ProjectPage = () => {
     try {
       // 로그인 유저
       if (filter === "default") {
-        const response = await getDocs(
-          query(collection(db, "projects"), orderBy("createdAt", "desc"))
-        );
+        const q = query(collection(db, "projects"), orderBy("createdAt", "desc"), limit(12));
+        const response = await getDocs(q);
         setProjects(
           response.docs.map((doc) => ({
             id: doc.id,
             ...(doc.data() as Omit<ProjectDetail, "id">),
           }))
         );
-
+        const lastDoc = response.docs[response.docs.length - 1];
+        setLastDoc(lastDoc);
         setProjectsLoading(false);
       } else {
-        const response = await getDocs(
-          query(
-            collection(db, "projects"),
-            filterWhere[filter as keyof MyIndexType],
-            orderBy("createdAt", "desc")
-          )
+        const q = query(
+          collection(db, "projects"),
+          filterWhere[filter as keyof MyIndexType],
+          orderBy("createdAt", "desc")
         );
-        setProjects(
-          response.docs.map((doc) => ({
-            id: doc.id,
-            ...(doc.data() as Omit<ProjectDetail, "id">),
-          }))
-        );
-
+        const response = await getDocs(q);
+        const data = response.docs.map((doc) => ({
+          id: doc.id,
+          ...(doc.data() as Omit<ProjectDetail, "id">),
+        }));
+        const lastDoc = response.docs[response.docs.length - 1];
+        setLastDoc(lastDoc);
+        setProjects(data);
         setProjectsLoading(false);
       }
     } catch (error) {
@@ -144,19 +176,52 @@ const ProjectPage = () => {
     }
   };
 
+  const getAdditionalProjects = async (isPrivate: boolean, lastDoc: QueryDocumentSnapshot) => {
+    try {
+      const baseQuery = query(
+        collection(db, "projects"),
+        orderBy("createdAt", "desc"),
+        ...(isPrivate ? [] : [where("isPrivate", "==", false)]),
+        limit(12),
+        startAfter(lastDoc)
+      );
+
+      const additionalQuery =
+        filter !== "default"
+          ? query(baseQuery, filterWhere[filter as keyof MyIndexType])
+          : baseQuery;
+
+      const response = await getDocs(additionalQuery);
+      const data = response.docs.map((doc) => ({
+        id: doc.id,
+        ...(doc.data() as Omit<ProjectDetail, "id">),
+      }));
+      console.log(data);
+      const nextLastDoc = response.docs[response.docs.length - 1];
+      setLastDoc(nextLastDoc);
+      setProjects((prev) => [...prev, ...data]);
+
+      console.log("마지막 요소 감지됨");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const renderProjects = () => {
     return projects.map((project, index) => (
-      <ProjectCard
-        key={project.id}
-        projectThumbnail={project.thumbnail!}
-        projectId={project.id}
-        projectName={project.name!}
-        projectDate={project.createdAt!}
-        projectDescription={project.intro!}
-        projectTechStacks={project.techStack!}
-        projectParticipate={project.participants}
-        isPrivate={project.isPrivate}
-      />
+      <>
+        <ProjectCard
+          key={project.id}
+          projectThumbnail={project.thumbnail!}
+          projectId={project.id}
+          projectName={project.name!}
+          projectDate={project.createdAt!}
+          projectDescription={project.intro!}
+          projectTechStacks={project.techStack!}
+          projectParticipate={project.participants}
+          isPrivate={project.isPrivate}
+        />
+      </>
     ));
   };
 
@@ -217,7 +282,9 @@ const ProjectPage = () => {
           >
             {projectsLoading ? preRender() : renderProjects()}
           </div>
+          {additionalLoading && preRender()}
         </div>
+        <div ref={lastDocRef}></div>
       </>
       <Footer />
     </section>
