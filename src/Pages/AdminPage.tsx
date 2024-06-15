@@ -187,7 +187,7 @@ const AdminPage = () => {
   const upgradeAuthority = async (id: string, level: number, userLevel: number) => {
     try {
       if (userLevel > level) {
-        if (level <= 3) {
+        if (level >= 3) {
           alert("해당 유저는 이미 권한이 최대입니다.");
           return;
         }
