@@ -13,6 +13,7 @@ import app, { db } from "../firebase";
 import { FaGithub } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import useStore from "../store";
+import LoadingCircle from "../Components/LoadingCircle";
 
 const LoginPage = () => {
   // 상태관리
@@ -20,7 +21,6 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
-  const [code, setCode] = useState("");
   const [studentYear, setStudentYear] = useState("");
 
   // 전역 상태관리
@@ -30,6 +30,7 @@ const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [loginLoading, setLoginLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -64,7 +65,6 @@ const LoginPage = () => {
           setEmail("");
           setPassword("");
           setCheckPassword("");
-          setCode("");
           setStudentYear("");
           setUsername("");
         } else {
@@ -82,6 +82,7 @@ const LoginPage = () => {
   const loginUser = async () => {
     try {
       if (validateLogin()) {
+        setLoginLoading(true);
         const auth = getAuth(app);
         const result = await signInWithEmailAndPassword(auth, email, password);
 
@@ -95,6 +96,8 @@ const LoginPage = () => {
     } catch (error) {
       setError("로그인에 실패했습니다. 다시 시도해주세요.");
       console.error(error);
+    } finally {
+      setLoginLoading(false);
     }
   };
 
@@ -139,9 +142,9 @@ const LoginPage = () => {
       isValid = false;
     }
 
-    const pwRegex = /[!@#$%^&*?]/;
-    if (password.length < 8 || !pwRegex.test(password)) {
-      setError("비밀번호는 8자리 이상이며, 특수문자를 포함해야 합니다.");
+    // const pwRegex = /[!@#$%^&*?]/;
+    if (password.length < 8) {
+      setError("비밀번호는 8자리 이상이어야합니다.");
       isValid = false;
     }
 
@@ -174,8 +177,19 @@ const LoginPage = () => {
                 type="text"
                 placeholder="학번 (예: 21)"
                 value={studentYear}
-                onChange={(e) => setStudentYear(e.target.value)}
-                className="authInput w-1/2"
+                onChange={(e) => {
+                  setStudentYear(e.target.value);
+                  if (e.target.value.length !== 2) {
+                    setError("학번은 2자리 숫자입니다.");
+                  } else {
+                    setError("");
+                  }
+                }}
+                className={`authInput w-1/2  ${
+                  studentYear.length !== 2
+                    ? "outline outline-red-600"
+                    : "outline outline-emerald-600"
+                }`}
               />
             </div>
           )}
@@ -183,20 +197,38 @@ const LoginPage = () => {
             type="email"
             placeholder="이메일"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="authInput"
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (
+                !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)
+              )
+                setError("올바르지 않은 이메일 형식입니다.");
+              else setError("");
+            }}
+            className={`authInput  ${
+              !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)
+                ? "outline outline-red-600"
+                : "outline outline-emerald-600"
+            }`}
           />
           <input
             type="password"
             placeholder="비밀번호"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              if (!/[!@#$%^&*?]/.test(e.target.value))
+                setError("비밀번호는 8자리 이상이어야합니다.");
+              else setError("");
+            }}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 handleSubmit(e);
               }
             }}
-            className="authInput"
+            className={`authInput  ${
+              password.length < 8 ? "outline outline-red-600" : "outline outline-emerald-600"
+            }`}
           />
           {!isLogin && (
             <>
@@ -207,17 +239,15 @@ const LoginPage = () => {
                 onChange={(e) => setCheckPassword(e.target.value)}
                 className="authInput"
               />
-              {/* <input
-                type="password"
-                placeholder="프리미티브 인증코드"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                className="authInput"
-              /> */}
             </>
           )}
-          <button type="button" onClick={(e) => handleSubmit(e)} className="authBtn">
-            {isLogin ? "로그인" : "회원가입"}
+          <button
+            type="button"
+            onClick={(e) => handleSubmit(e)}
+            className="authBtn flex justify-center items-center"
+          >
+            {isLogin ? `${loginLoading ? "" : "로그인"}` : "회원가입"}
+            {loginLoading && <div className="loader-small text-transparent">Loading...</div>}
           </button>
           <div className="p-1 text-left text-red-500 text-sm">{error}</div>
           <div className="p-1 text-left text-green-500 text-sm">{message}</div>

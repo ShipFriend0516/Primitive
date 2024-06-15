@@ -472,6 +472,8 @@ button {
   color: #fff;
   font-size: 1rem;
 
+  outline-offset: 2px;
+
   &::placeholder {
     color: rgba(255, 255, 255, 0.6);
   }
@@ -783,6 +785,18 @@ td {
     conic-gradient(#0000 30%, rgb(39, 147, 241));
   -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
   mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+  animation: l13 1s infinite linear;
+  z-index: 30;
+}
+
+.loader-small {
+  height: 24px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(farthest-side, rgb(25, 23, 189) 94%, #0000) top/4px 4px no-repeat,
+    conic-gradient(#0000 30%, rgb(25, 23, 189));
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 4px), #000 0);
+  mask: radial-gradient(farthest-side, #0000 calc(100% - 4px), #000 0);
   animation: l13 1s infinite linear;
   z-index: 30;
 }
