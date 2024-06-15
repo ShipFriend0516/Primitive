@@ -233,8 +233,7 @@ const LoginPage = () => {
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
-              if (!/[!@#$%^&*?]/.test(e.target.value))
-                setError("비밀번호는 8자리 이상이어야합니다.");
+              if (e.target.value.length < 8) setError("비밀번호는 8자리 이상이어야합니다.");
               else setError("");
             }}
             onKeyDown={(e) => {
