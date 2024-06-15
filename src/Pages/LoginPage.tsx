@@ -178,17 +178,18 @@ const LoginPage = () => {
                 placeholder="학번 (예: 21)"
                 value={studentYear}
                 onChange={(e) => {
-                  setStudentYear(e.target.value);
-                  if (e.target.value.length !== 2) {
+                  const data = e.target.value;
+                  setStudentYear(data);
+                  if (data === "") {
+                    setError("");
+                  } else if (data.length !== 2) {
                     setError("학번은 2자리 숫자입니다.");
                   } else {
                     setError("");
                   }
                 }}
                 className={`authInput w-1/2  ${
-                  studentYear.length !== 2
-                    ? "outline outline-red-600"
-                    : "outline outline-emerald-600"
+                  studentYear.length !== 2 && studentYear.length !== 0 && "outline outline-red-600"
                 }`}
               />
             </div>
@@ -198,17 +199,24 @@ const LoginPage = () => {
             placeholder="이메일"
             value={email}
             onChange={(e) => {
-              setEmail(e.target.value);
-              if (
-                !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)
-              )
+              const inputEmail = e.target.value;
+              setEmail(inputEmail);
+              if (inputEmail === "") {
+                setError("");
+              } else if (
+                !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+                  inputEmail
+                )
+              ) {
                 setError("올바르지 않은 이메일 형식입니다.");
-              else setError("");
+              } else {
+                setError("");
+              }
             }}
             className={`authInput  ${
-              !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)
-                ? "outline outline-red-600"
-                : "outline outline-emerald-600"
+              email !== "" &&
+              !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email) &&
+              "outline outline-red-600"
             }`}
           />
           <input
@@ -227,7 +235,7 @@ const LoginPage = () => {
               }
             }}
             className={`authInput  ${
-              password.length < 8 ? "outline outline-red-600" : "outline outline-emerald-600"
+              password.length < 8 && password.length > 0 && "outline outline-red-600"
             }`}
           />
           {!isLogin && (
