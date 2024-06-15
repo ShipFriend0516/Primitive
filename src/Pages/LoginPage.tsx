@@ -182,14 +182,17 @@ const LoginPage = () => {
                   setStudentYear(data);
                   if (data === "") {
                     setError("");
-                  } else if (data.length !== 2) {
+                  } else if (data.length !== 2 || typeof data !== "number") {
                     setError("학번은 2자리 숫자입니다.");
                   } else {
                     setError("");
                   }
                 }}
                 className={`authInput w-1/2  ${
-                  studentYear.length !== 2 && studentYear.length !== 0 && "outline outline-red-600"
+                  isNaN(parseInt(studentYear)) ||
+                  (studentYear.length !== 2 && studentYear.length !== 0)
+                    ? "outline outline-red-600"
+                    : ""
                 }`}
               />
             </div>
