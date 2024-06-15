@@ -6,4 +6,5 @@ export default interface Comment {
   profileThumbnail?: string;
   replies: Comment[];
   createdAt: number;
+  updatedAt?: number;
 }

@@ -13,6 +13,7 @@ import {
   where,
   orderBy,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +25,7 @@ interface Params {
   thumbnailUrl?: string;
   createdAt: number;
   isOwner: boolean;
+  updateComment: (id: string, comment: string) => Promise<void>;
   deleteComment: (id: string) => Promise<void>;
 }
 
@@ -34,6 +36,7 @@ const Comment = ({
   thumbnailUrl,
   isOwner,
   createdAt,
+  updateComment,
   deleteComment,
 }: Params) => {
   const [isReplyShow, setIsReplyShow] = useState(false);
@@ -41,6 +44,8 @@ const Comment = ({
   const [replies, setReplies] = useState<CommentType[]>();
   const [replyLoading, setReplyLoading] = useState(true);
   const [userId, setUserId] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
+  const [commentInput, setCommentInput] = useState("");
 
   const navigate = useNavigate();
 
@@ -197,12 +202,50 @@ const Comment = ({
         </div>
         {isOwner && (
           <div className="text-sm text-gray-500">
-            <button className="mr-1">수정</button>
+            {!isEditing && (
+              <button
+                onClick={() => {
+                  setIsEditing(true);
+                  setCommentInput(comment);
+                }}
+                className="mr-1"
+              >
+                수정
+              </button>
+            )}
             <button onClick={() => deleteComment(id)}>삭제</button>
           </div>
         )}
       </div>
-      <div className="content">{comment}</div>
+      {isEditing ? (
+        <div>
+          <textarea
+            value={commentInput}
+            onChange={(e) => setCommentInput(e.target.value)}
+            className="border p-4 w-full"
+            placeholder="댓글 수정 중..."
+          />
+          <div className="w-full inline-flex justify-end">
+            <button
+              className="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded-md mr-2"
+              onClick={() => setIsEditing(false)}
+            >
+              취소
+            </button>
+            <button
+              className="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md"
+              onClick={() => {
+                updateComment(id, commentInput);
+                setIsEditing(false);
+              }}
+            >
+              수정
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="content">{comment}</div>
+      )}
       <div
         className="text-emerald-500 cursor-pointer"
         onClick={() => {

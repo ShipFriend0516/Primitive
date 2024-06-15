@@ -16,6 +16,7 @@ import {
   orderBy,
   query,
   setDoc,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import { db } from "../firebase";
@@ -174,6 +175,7 @@ const ProjectDetailPage = () => {
           authorId: isUser,
           comment: comment,
           createdAt: new Date().getTime(),
+          updatedAt: new Date().getTime(),
         };
         await addDoc(collection(db, "comments"), commentData);
         getComments();
@@ -196,6 +198,29 @@ const ProjectDetailPage = () => {
       console.error(err);
     }
   };
+  const updateComment = async (id: string, updatedComment: string) => {
+    try {
+      const now = new Date().getTime();
+      await updateDoc(doc(db, "comments", id), {
+        comment: updatedComment,
+        createdAt: new Date().getTime(),
+      });
+      setComments((prev) =>
+        prev?.map((value) => {
+          if (value.id === id) {
+            const newValue = value;
+            newValue.comment = updatedComment;
+            newValue.createdAt = now;
+            return newValue;
+          } else {
+            return value;
+          }
+        })
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     getIsLiked();
@@ -214,6 +239,7 @@ const ProjectDetailPage = () => {
           isOwner={userId === comment.authorId}
           thumbnailUrl={comment.profileThumbnail}
           deleteComment={deleteComment}
+          updateComment={updateComment}
         />
       ));
     }
@@ -367,7 +393,6 @@ const ProjectDetailPage = () => {
           <h3 className="text-nowrap px-1 rounded-md bg-gray-200 animate-pulse text-gray-200">
             프로젝트 참여자
           </h3>
-
           {projectEx.participants.map((participant, index) => (
             <span
               key={index}
@@ -498,7 +523,7 @@ const ProjectDetailPage = () => {
             </div>
             <div className="flex justify-end">
               <button
-                className="px-3 py-1 bg-indigo-600 text-white rounded-md"
+                className="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md"
                 onClick={postComment}
               >
                 댓글 작성
