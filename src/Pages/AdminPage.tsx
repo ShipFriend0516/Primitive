@@ -149,9 +149,7 @@ const AdminPage = () => {
 
       // signupRequests 컬렉션의 상태를 'accepted'로 업데이트
       const requestRef = doc(db, "signupRequests", request.id);
-      await updateDoc(requestRef, {
-        status: "approved",
-      });
+      await deleteDoc(requestRef);
 
       // 상태 업데이트 (필요한 경우)
       setRequests((prevRequests) => prevRequests!.filter((req) => req.id !== request.id));
