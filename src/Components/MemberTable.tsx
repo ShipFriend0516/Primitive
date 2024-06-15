@@ -87,7 +87,14 @@ const MemberTable = ({ members, onDelete, upgrade, downgrade }: MemberTableProps
 
   return (
     <>
-      <table className="requestTable">
+      <div className="w-full inline-flex justify-end">
+        <input
+          className=" w-1/2 border rounded-md py-1 px-2 mb-2"
+          placeholder="유저 이름으로 검색"
+        />
+      </div>
+      <hr />
+      <table className="requestTable mt-2">
         <thead>
           <tr className="border-b-2">
             <th>Index</th>

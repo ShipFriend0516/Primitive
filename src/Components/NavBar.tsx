@@ -81,7 +81,7 @@ const NavBar = () => {
   }, [isLoggedIn]);
 
   return (
-    <div className="w-screen md:h-14 h-10 fixed bg-black z-10 text-white flex flex-row gap-5 justify-between border-b-gray-50 sm:text-lg text-xs hahmlet select-none">
+    <nav className="w-screen md:h-14 h-10 fixed bg-black z-10 text-white flex flex-row gap-5 justify-between items-center border-b-gray-50 sm:text-lg text-xs hahmlet select-none overflow-hidden">
       <>
         <li
           className="navbarTo"
@@ -113,7 +113,7 @@ const NavBar = () => {
           )}
         </div>
       ) : (
-        <ul className="flex flex-row">
+        <ul className="flex flex-row h-full items-center">
           <li
             className={`navbarTo ${pathname === "/" ? "underline underline-offset-4" : ""}`}
             onClick={() => navigate("/")}
@@ -152,7 +152,7 @@ const NavBar = () => {
             </li>
           )}
           <li
-            className={`navbarTo  bg-blue-500 hover:text-black ${
+            className={`navbarTo bg-blue-500 hover:text-black ${
               pathname === "/recruit" ? "underline underline-offset-4" : ""
             }`}
             onClick={() => navigate("/recruit")}
@@ -161,7 +161,7 @@ const NavBar = () => {
           </li>
         </ul>
       )}
-    </div>
+    </nav>
   );
 };
 
