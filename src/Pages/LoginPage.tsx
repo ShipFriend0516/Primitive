@@ -48,9 +48,16 @@ const LoginPage = () => {
     try {
       if (validateSignup()) {
         setLoginLoading(true);
-        const q = query(collection(db, "signupRequests"), where("email", "==", email));
+        const requestQuery = query(collection(db, "signupRequests"), where("email", "==", email));
+        const registeredQuery = query(collection(db, "users"), where("email", "==", email));
 
-        const querySnapshot = await getDocs(q);
+        const registeredSnapshot = await getDocs(registeredQuery);
+        if (!registeredSnapshot.empty) {
+          // 이미 유저있을때
+          setError("이미 등록된 이메일입니다.");
+          return;
+        }
+        const querySnapshot = await getDocs(requestQuery);
         if (querySnapshot.empty) {
           await addDoc(collection(db, "signupRequests"), {
             email: email,
