@@ -47,6 +47,7 @@ const LoginPage = () => {
   const registerUser = async () => {
     try {
       if (validateSignup()) {
+        setLoginLoading(true);
         const q = query(collection(db, "signupRequests"), where("email", "==", email));
 
         const querySnapshot = await getDocs(q);
@@ -76,6 +77,8 @@ const LoginPage = () => {
     } catch (error) {
       console.error(error);
       setError("회원가입 과정 중 오류가 발생했습니다.");
+    } finally {
+      setLoginLoading(false);
     }
   };
 
@@ -189,8 +192,8 @@ const LoginPage = () => {
                   }
                 }}
                 className={`authInput w-1/2  ${
-                  isNaN(parseInt(studentYear)) ||
-                  (studentYear.length !== 2 && studentYear.length !== 0)
+                  (isNaN(parseInt(studentYear)) && studentYear.length !== 0) ||
+                  (studentYear.length !== 0 && studentYear.length !== 2)
                     ? "outline outline-red-600"
                     : ""
                 }`}
@@ -217,9 +220,11 @@ const LoginPage = () => {
               }
             }}
             className={`authInput  ${
-              email !== "" &&
-              !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email) &&
-              "outline outline-red-600"
+              email !== "" ||
+              (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+                email
+              ) &&
+                "outline outline-red-600")
             }`}
           />
           <input
@@ -257,7 +262,7 @@ const LoginPage = () => {
             onClick={(e) => handleSubmit(e)}
             className="authBtn flex justify-center items-center"
           >
-            {isLogin ? `${loginLoading ? "" : "로그인"}` : "회원가입"}
+            {isLogin ? `${loginLoading ? "" : "로그인"}` : `${loginLoading ? "" : "회원가입"}`}
             {loginLoading && <div className="loader-small text-transparent">Loading...</div>}
           </button>
           <div className="p-1 text-left text-red-500 text-sm">{error}</div>
