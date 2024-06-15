@@ -111,7 +111,7 @@ const MyPage = () => {
   const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     try {
       const file = e.target.files?.[0];
-      const maxSize = import.meta.VITE_FB_UPLOAD_SIZE_LIMIT * 1024 * 1024 || 5 * 1024 * 1024;
+      const maxSize = 3 * 1024 * 1024;
 
       if (!file) {
         return;
@@ -120,7 +120,7 @@ const MyPage = () => {
       }
 
       if (file.size > maxSize) {
-        alert("파일크기는 5MB 이하여야합니다.");
+        alert("파일크기는 3MB 이하여야합니다.");
         e.preventDefault();
         return;
       }
