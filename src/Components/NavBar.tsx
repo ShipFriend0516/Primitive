@@ -113,7 +113,7 @@ const NavBar = () => {
           )}
         </div>
       ) : (
-        <ul className="flex flex-row h-full items-center">
+        <ul className="flex flex-row h-full ">
           <li
             className={`navbarTo ${pathname === "/" ? "underline underline-offset-4" : ""}`}
             onClick={() => navigate("/")}
