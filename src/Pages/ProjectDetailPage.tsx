@@ -29,6 +29,7 @@ import CommentType from "../Types/CommentType";
 
 import { HiHeart, HiShare, HiOutlineHeart } from "react-icons/hi2";
 import LoadingCircle from "../Components/LoadingCircle";
+import ImageDetailView from "../Components/ImageDetailView";
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
@@ -46,6 +47,7 @@ const ProjectDetailPage = () => {
   const [comments, setComments] = useState<CommentType[]>();
   const [commentLoading, setCommentLoading] = useState(true);
   const [replies, setReplies] = useState<CommentType[]>();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   // UI 상태 관리
   const [deleteDialog, setDeleteDialog] = useState(false);
@@ -370,6 +372,12 @@ const ProjectDetailPage = () => {
     }
   };
 
+  const viewImageDetail = () => {
+    setModalIsOpen(true);
+  };
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
   // Rendering
 
   const preRender = () => {
@@ -432,9 +440,10 @@ const ProjectDetailPage = () => {
         <div className="mt-10 md:mt-20 max-w-6xl mx-auto w-full flex-grow flex flex-col items-stretch p-5 md:p-10 gap-2">
           {project!.thumbnail ? (
             <img
+              onClick={viewImageDetail}
               src={project!.thumbnail}
               alt={project!.name}
-              className="w-full aspect-project object-cover mb-4 md:mb-6 rounded"
+              className="w-full aspect-project object-cover mb-4 md:mb-6 rounded cursor-pointer"
             />
           ) : (
             <div className="gothic gap-10 flex justify-center items-center text-white w-full h-96 object-cover mb-4 rounded bg-gradient-to-br from-indigo-950 to-black text-8xl ">
@@ -556,6 +565,9 @@ const ProjectDetailPage = () => {
               }}
               setDialogOpen={setUpdateDialog}
             />
+          )}
+          {modalIsOpen && (
+            <ImageDetailView closeModal={closeModal} thumbnail={project?.thumbnail || ""} />
           )}
         </div>
       );

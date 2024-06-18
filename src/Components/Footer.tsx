@@ -39,7 +39,7 @@ const Footer = () => {
               <a
                 href="https://cafe.naver.com/primitive315"
                 target="_blank"
-                className="text-gray-300 hover:text-white ml-2"
+                className="text-gray-300 hover:text-white ml-2 z-0"
                 rel="noreferrer"
               >
                 <i className="fab">

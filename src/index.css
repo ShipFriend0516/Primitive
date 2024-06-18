@@ -559,6 +559,10 @@ button {
 }
 
 /* Project Detail Page */
+.detailview {
+  max-height: 60vh;
+}
+
 section article.projectDescription {
   display: flex;
   flex-direction: column;
