@@ -47,6 +47,7 @@ const ProjectPage = () => {
   const [projects, setProjects] = useState<ProjectDetail[]>([]);
   const [projectsLoading, setProjectsLoading] = useState(true);
   const [filter, setFilter] = useState<Filter>(isFilter(filterKind) ? filterKind : "default");
+  const [tagFilter, setTagFilter] = useState("");
 
   // 페이지네이션
   const [additionalLoading, setAdditionalLoading] = useState(false);
@@ -79,16 +80,17 @@ const ProjectPage = () => {
   }, [filter]);
 
   useEffect(() => {
+    if (tagFilter) navigate(`/project?filter=${tagFilter}`);
+  }, [tagFilter]);
+
+  useEffect(() => {
     try {
-      if (isLoggedIn) {
-        getPrivateProjects();
-      } else {
-        getProjects();
-      }
+      getProjects();
+      console.log("프로젝트 불러오기...");
     } catch (error) {
       console.error("프로젝트 목록 불러오기 실패!", error);
     }
-  }, [isLoggedIn, filter]);
+  }, [isLoggedIn, filter, tagFilter]);
 
   const filterWhere: MyIndexType = {
     team: where("participantsCount", ">", 1),
@@ -96,15 +98,18 @@ const ProjectPage = () => {
   };
 
   // 메서드
+
+  // 프로젝트 불러오기
   const getProjects = async () => {
     try {
-      // 비로그인 유저는 공개글만
+      // Filter 없을 때
       if (filter === "default") {
         const response = await getDocs(
           query(
             collection(db, "projects"),
-            where("isPrivate", "!=", true),
-            orderBy("createdAt", "desc")
+            ...(isLoggedIn ? [] : [where("isPrivate", "==", false)]),
+            ...(tagFilter ? [where("techStack", "array-contains", tagFilter)] : [])
+            // orderBy("createdAt", "desc")
           )
         );
         setProjects(
@@ -117,11 +122,13 @@ const ProjectPage = () => {
         setLastDoc(lastDoc);
         setProjectsLoading(false);
       } else {
+        // Filter 있을 시
         const response = await getDocs(
           query(
             collection(db, "projects"),
-            where("isPrivate", "!=", true),
             filterWhere[filter as keyof MyIndexType],
+            ...(isLoggedIn ? [] : [where("isPrivate", "==", false)]),
+            ...(tagFilter !== "" ? [where("techStack", "array-contains", tagFilter)] : []),
             orderBy("createdAt", "desc")
           )
         );
@@ -140,42 +147,7 @@ const ProjectPage = () => {
     }
   };
 
-  const getPrivateProjects = async () => {
-    try {
-      // 로그인 유저
-      if (filter === "default") {
-        const q = query(collection(db, "projects"), orderBy("createdAt", "desc"), limit(12));
-        const response = await getDocs(q);
-        setProjects(
-          response.docs.map((doc) => ({
-            id: doc.id,
-            ...(doc.data() as Omit<ProjectDetail, "id">),
-          }))
-        );
-        const lastDoc = response.docs[response.docs.length - 1];
-        setLastDoc(lastDoc);
-        setProjectsLoading(false);
-      } else {
-        const q = query(
-          collection(db, "projects"),
-          filterWhere[filter as keyof MyIndexType],
-          orderBy("createdAt", "desc")
-        );
-        const response = await getDocs(q);
-        const data = response.docs.map((doc) => ({
-          id: doc.id,
-          ...(doc.data() as Omit<ProjectDetail, "id">),
-        }));
-        const lastDoc = response.docs[response.docs.length - 1];
-        setLastDoc(lastDoc);
-        setProjects(data);
-        setProjectsLoading(false);
-      }
-    } catch (error) {
-      console.error("비공개 글 불러오기 실패", error);
-    }
-  };
-
+  // 무한 스크롤시 추가 프로젝트 불러오기
   const getAdditionalProjects = async (isPrivate: boolean, lastDoc: QueryDocumentSnapshot) => {
     try {
       if (lastDoc === null || lastDoc === undefined) return;
@@ -184,6 +156,7 @@ const ProjectPage = () => {
         orderBy("createdAt", "desc"),
         ...(isPrivate ? [] : [where("isPrivate", "==", false)]),
         ...(filter !== "default" ? [filterWhere[filter as keyof MyIndexType]] : []),
+        ...(tagFilter !== "" ? [where("techStack", "array-contains", tagFilter)] : []),
         limit(12),
         startAfter(lastDoc)
       );
@@ -208,6 +181,7 @@ const ProjectPage = () => {
     }
   };
 
+  // Render
   const renderProjects = () => {
     return projects.map((project, index) => (
       <ProjectCard
@@ -220,6 +194,7 @@ const ProjectPage = () => {
         projectTechStacks={project.techStack!}
         projectParticipate={project.participants}
         isPrivate={project.isPrivate}
+        setTagFilter={setTagFilter}
       />
     ));
   };
@@ -237,6 +212,7 @@ const ProjectPage = () => {
           projectDescription={project.intro!}
           projectTechStacks={project.techStack!}
           projectParticipate={project.participants}
+          setTagFilter={() => {}}
         />
       ));
   };
@@ -274,6 +250,13 @@ const ProjectPage = () => {
                 {kind.toUpperCase()[0].concat(kind.slice(1))}
               </div>
             ))}
+          </div>
+          <div className="w-4/5 inline-flex justify-end items-center">
+            {tagFilter && (
+              <div onClick={() => setTagFilter("")}>
+                <span className="tag px-1.5 py-0.5">{tagFilter}</span>로 검색 중...
+              </div>
+            )}
           </div>
           <div
             id="projectGrid"

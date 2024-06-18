@@ -3,6 +3,11 @@ import ProjectType from "../Types/ProjectType.d";
 import { HiLockClosed } from "react-icons/hi";
 import logo from "../Images/logo.webp";
 import { useState } from "react";
+
+interface Props extends ProjectType {
+  setTagFilter: (tag: string) => void;
+}
+
 const ProjectCard = ({
   isEmpty = false,
   projectId,
@@ -13,7 +18,8 @@ const ProjectCard = ({
   projectParticipate = [],
   projectTechStacks = [],
   isPrivate,
-}: ProjectType) => {
+  setTagFilter,
+}: Props) => {
   if (projectThumbnail) {
     isEmpty = false;
   }
@@ -113,7 +119,11 @@ const ProjectCard = ({
           <p className="text-sm">{projectDescription.slice(0, 30)}</p>
           <span className="mt-1 text-sm inline-flex flex-wrap">
             {projectTechStacks.slice(0, 5).map((tag, index) => (
-              <span className="mb-1 tag px-1.5" key={index}>
+              <span
+                onClick={() => setTagFilter(tag)}
+                className="cursor-pointer mb-1 tag px-1.5"
+                key={index}
+              >
                 {tag}
               </span>
             ))}
