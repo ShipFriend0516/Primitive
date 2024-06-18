@@ -23,7 +23,7 @@ const ImageDetailView: React.FC<ImageDetailViewProps> = ({ closeModal, thumbnail
             onLoad={() => setIsImageLoaded(true)}
             src={thumbnail}
             alt="Selected"
-            className="detailview max-w-4/5 py-1 "
+            className="detailview max-w-4/5 py-1 cursor-pointer "
           />
           {!isImageLoaded && <div className="loader"></div>}
         </div>
