@@ -96,7 +96,8 @@ const AdminPage = () => {
         query(
           collection(db, "users"),
           where("status", "==", "Active"),
-          orderBy("authorityLevel", "desc")
+          orderBy("authorityLevel", "desc"),
+          orderBy("studentYear", "asc")
         )
       );
       setUsers(
