@@ -24,41 +24,29 @@ webpack에서 vite로, js에서 ts로 마이그레이션했다. 빌드 속도가
 
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
-
-> Intersection Observer API 사용
->
+---
+### Intersection Observer API 사용
 소개 탭 부드러운 애니메이션을 적용하기 위해 사용
 
-> lodash 성능 최적화
-> 
+### lodash 성능 최적화
 모바일 반응성 웹으로 만들기 위해서 사용, 창 사이즈를 변경하면 1px 변경될 때마다 핸들함수가 실행되는데, 너무 비효율적이고 메모리 낭비가 된다.
 lodash 라이브러리의 throttle() 기능과 debounce() 기능을 활용하면 최적화 가능.
 
 debounce()는 시간 내 함수가 여러번 호출되더라도 마지막 한번만 실행하는 함수
 
+### 프로젝트 업로드 및 조회 기능
+- 프로젝트 업로드와 세부 설명 작성하는 에디터를 통해 세부 소개 작성 가능
+- Firebase의 Storage 기능으로 이미지 업로드 및 조회 기능 구현으로 프로젝트 썸네일 및 프로필 사진 등의 기능 구현
+  
+![스크린샷 2024-06-19 오후 6 47 13](https://github.com/ShipFriend0516/Primitive/assets/98446924/530ff01b-03cd-4657-89e5-f2544509e6c6)
 
-```jsx
- useEffect(() => {
-    const handleResize = debounce(() => {
-      setWindowWidth(window.innerWidth);
-      setIsMobile(windowWidth <= 768 ? true : false);
-    }, 100);
-    console.count();
 
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [windowWidth]);
-
-```
-
-> 어드민 인증 기반 회원가입 구현
-
+### 어드민 인증 기반 회원가입 구현
 동아리원임을 인증하기 위해서 어드민 인증 기반 회원가입을 구현
 
 [Firebase로 어드민 인증 기반 회원가입 구현하기](https://velog.io/@shipfriend/Firebase%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%96%B4%EB%93%9C%EB%AF%BC-%EC%88%98%EB%9D%BD-%EA%B8%B0%EB%B0%98-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0)
+
+![image](https://github.com/ShipFriend0516/Primitive/assets/98446924/b42006f6-9bca-4a12-90a7-b84884888e8c)
 
 
 
