@@ -502,7 +502,7 @@ const ProjectDetailPage = () => {
             ))}
           </div>
           <article
-            className="mt-6 projectDescription flex flex-col items-start"
+            className="w-full min-w-full mt-6 projectDescription flex flex-col items-start"
             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project!.description!) }}
           ></article>
           <hr />

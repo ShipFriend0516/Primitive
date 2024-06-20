@@ -564,11 +564,20 @@ button {
 }
 
 section article.projectDescription {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: start;
   padding-bottom: 80px;
+  flex-wrap: wrap;
+  text-wrap: wrap;
+  overflow-x: hidden;
+  overflow-wrap: break-word;
+}
+section article.projectDescription * {
+  width: 100%;
+  word-wrap: break-word;
 }
 
 article.projectDescription h1 {
