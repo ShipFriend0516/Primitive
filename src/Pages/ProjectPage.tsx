@@ -23,6 +23,7 @@ import useStore from "../store";
 import { HiPencilSquare } from "react-icons/hi2";
 import Pagination from "../Components/Pagination";
 import LoadingCircle from "../Components/LoadingCircle";
+import ScrollToTop from "../Components/ScrollToTop";
 
 type Filter = "default" | "app" | "web" | "personal" | "team";
 type MyIndexType = {
@@ -267,6 +268,7 @@ const ProjectPage = () => {
           {additionalLoading && <LoadingCircle />}
         </div>
         <div ref={lastDocRef}></div>
+        <ScrollToTop />
       </>
       <Footer />
     </section>

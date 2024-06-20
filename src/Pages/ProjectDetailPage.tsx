@@ -26,10 +26,10 @@ import CheckDialog from "../Components/CheckDialog";
 import ProjectType, { ProjectDetail } from "../Types/ProjectType";
 import Comment from "../Components/Comment";
 import CommentType from "../Types/CommentType";
-
 import { HiHeart, HiShare, HiOutlineHeart } from "react-icons/hi2";
 import LoadingCircle from "../Components/LoadingCircle";
 import ImageDetailView from "../Components/ImageDetailView";
+import ScrollToTop from "../Components/ScrollToTop";
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
@@ -437,7 +437,7 @@ const ProjectDetailPage = () => {
   const projectRender = () => {
     try {
       return (
-        <div className="mt-10 md:mt-20 max-w-6xl mx-auto w-full flex-grow flex flex-col items-stretch p-5 md:p-10 gap-2">
+        <div className="relative mt-10 md:mt-20 max-w-6xl mx-auto w-full flex-grow flex flex-col items-stretch p-5 md:p-10 gap-2">
           {project!.thumbnail ? (
             <img
               onClick={viewImageDetail}
@@ -569,6 +569,7 @@ const ProjectDetailPage = () => {
           {modalIsOpen && (
             <ImageDetailView closeModal={closeModal} thumbnail={project?.thumbnail || ""} />
           )}
+          <ScrollToTop />
         </div>
       );
     } catch (error) {
