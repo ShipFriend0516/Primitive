@@ -30,6 +30,8 @@ import { HiHeart, HiShare, HiOutlineHeart } from "react-icons/hi2";
 import LoadingCircle from "../Components/LoadingCircle";
 import ImageDetailView from "../Components/ImageDetailView";
 import ScrollToTop from "../Components/ScrollToTop";
+import { IoLogoGithub } from "react-icons/io";
+import { HiLink } from "react-icons/hi";
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
@@ -84,7 +86,7 @@ const ProjectDetailPage = () => {
       if (id) {
         const projectRef = doc(db, "projects", id);
         const response = await getDoc(projectRef);
-
+        console.log(response.data());
         setProject({ id: response.id, ...(response.data() as Omit<ProjectDetail, "id">) });
         setProjectLoading(false);
       }
@@ -506,19 +508,49 @@ const ProjectDetailPage = () => {
             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project!.description!) }}
           ></article>
           <hr />
-          <div className="inline-flex gap-3 mt-3">
-            <div className="inline-flex items-center gap-1 rounded-lg border px-3 py-1">
+          <div className="inline-flex gap-1.5 mt-3">
+            <div className="inline-flex items-center gap-1 rounded-lg border px-3 py-1 hover:bg-gray-700 hover:text-white">
               <button onClick={copyUrl} className="text-xl">
                 <HiShare />
               </button>
             </div>
             <button
               onClick={toggleLike}
-              className="inline-flex items-center gap-1 rounded-lg border px-3 py-1"
+              className="inline-flex items-center gap-1 rounded-lg border px-3 py-1 hover:bg-gray-700 hover:text-white"
             >
               <div className="text-xl">{isLiked ? <HiHeart /> : <HiOutlineHeart />}</div>
               <span>{likesCount || 0}</span>
             </button>
+            {project?.githubLink && (
+              <a
+                className="inline-flex items-center gap-1 rounded-lg border px-3 py-1 hover:bg-gray-700 hover:text-white"
+                href={project?.githubLink}
+                target="_blank"
+                referrerPolicy="no-referrer"
+              >
+                <button className="flex justify-center items-center gap-1">
+                  <div className="text-xl ">
+                    <IoLogoGithub />
+                  </div>
+                  <span className="text-sm">Github</span>
+                </button>
+              </a>
+            )}
+            {project?.otherLink && (
+              <a
+                className="inline-flex items-center gap-1 rounded-lg border px-3 py-1 hover:bg-gray-700 hover:text-white"
+                href={project?.otherLink}
+                target="_blank"
+                referrerPolicy="no-referrer"
+              >
+                <button className="flex justify-center items-center gap-1">
+                  <div className="text-xl ">
+                    <HiLink />
+                  </div>
+                  <span className="text-sm">Other</span>
+                </button>
+              </a>
+            )}
           </div>
           <div className="commentsWrapper pt-4 flex flex-col gap-3">
             <div>{comments?.length || 0}개의 댓글</div>
