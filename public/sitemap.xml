@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <!-- 홈페이지 -->
+  <url>
+    <loc>https://primitive.kr/</loc>
+    <lastmod>2024-08-17T14:11:01+00:00</lastmod>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- 프로젝트 페이지 -->
+  <url>
+    <loc>https://primitive.kr/project</loc>
+    <lastmod>2024-08-17T14:11:01+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- 운영진 페이지 -->
+  <url>
+    <loc>https://primitive.kr/members</loc>
+    <lastmod>2024-08-17T14:11:01+00:00</lastmod>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- 리크루트 페이지 -->
+  <url>
+    <loc>https://primitive.kr/recruit</loc>
+    <lastmod>2024-08-17T14:11:01+00:00</lastmod>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- 프로젝트 세부 페이지 예시 (실제로는 동적으로 생성해야 함) -->
+  <url>
+    <loc>https://primitive.kr/project/1</loc>
+    <lastmod>2024-08-17T14:11:01+00:00</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://primitive.kr/project/2</loc>
+    <lastmod>2024-08-17T14:11:01+00:00</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://primitive.kr/project/3</loc>
+    <lastmod>2024-08-17T14:11:01+00:00</lastmod>
+    <priority>0.6</priority>
+  </url>
+</urlset>
