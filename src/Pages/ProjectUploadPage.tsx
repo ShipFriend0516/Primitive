@@ -395,7 +395,7 @@ const ProjectUploadPage = () => {
   ];
 
   const githubLinkHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const pattern = /^https?:\/\/github\.com\/[\w.-]+\/[\w.-]+\/?$/;
+    const pattern = /^https?:\/\/github\.com\/[\w.-]+(?:\/[\w.-]+)?$/;
     setGithubLink(e.target.value);
     if (pattern.test(e.target.value)) {
       setError("");
