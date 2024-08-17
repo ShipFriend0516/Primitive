@@ -44,8 +44,11 @@ const ProjectUploadPage = () => {
   const [techStacks, setTechStacks] = useState<string[]>([]);
   const [techStackInput, setTechStackInput] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
-  const editorRef = useRef<ReactQuill>(null);
+  const [githubLink, setGithubLink] = useState("");
+  const [otherLink, setOtherLink] = useState("");
 
+  // Editor
+  const editorRef = useRef<ReactQuill>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // UI 상태
@@ -56,6 +59,8 @@ const ProjectUploadPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const id = searchParams.get("id");
   const [isEdit, setIsEdit] = useState(false);
+  const [isGithubInvalid, setIsGithubInvalid] = useState(false);
+  const [isOtherInvalid, setIsOtherInvalid] = useState(false);
 
   const navigate = useNavigate();
 
@@ -89,32 +94,32 @@ const ProjectUploadPage = () => {
 
   const initialContents = [
     { insert: "프로젝트 이름\n", attributes: { header: 1 } },
-    { insert: "프로젝트 개요\n", attributes: { header: 2 } },
-    { insert: "- 설명: 프로젝트의 목적과 주요 기능을 간략히 설명합니다.\n" },
-    { insert: "- 기술 스택: 사용된 주요 기술(프레임워크, 라이브러리 등)을 나열합니다.\n" },
-    { insert: "- 배포 링크: (있는 경우) 프로젝트의 라이브 데모 링크를 제공합니다.\n\n" },
-    { insert: "주요 기능\n", attributes: { header: 2 } },
-    { insert: "1. 기능 1: 기능의 간단한 설명\n" },
-    { insert: "2. 기능 2: 기능의 간단한 설명\n" },
-    { insert: "3. 기능 3: 기능의 간단한 설명\n\n" },
-    { insert: "스크린샷\n", attributes: { header: 2 } },
-    { insert: "- 프로젝트의 주요 화면이나 기능을 보여주는 스크린샷을 첨부합니다.\n\n" },
-    { insert: "설치 및 사용법\n", attributes: { header: 2 } },
-    { insert: "1. 클론: 리포지토리를 클론하는 방법" },
-    { insert: { code: "git clone https://github.com/사용자명/프로젝트명.git" } },
-    { insert: "2. 의존성 설치: 필요한 패키지를 설치하는 방법\n" },
-    { insert: { code: "npm install" } },
-    { insert: "3. 빌드 및 실행: 프로젝트를 빌드하고 실행하는 방법\n" },
-    { insert: { code: "npm start" } },
-    { insert: "\n기여 방법\n", attributes: { header: 2 } },
-    { insert: "- 기여 가이드: 프로젝트에 기여하는 방법에 대한 안내\n" },
-    { insert: "- 이슈 제출: 버그 리포트나 기능 요청 방법\n" },
-    { insert: "- 풀 리퀘스트: 코드 기여 방법\n" },
-    { insert: "\n라이선스\n", attributes: { header: 2 } },
-    { insert: "- 프로젝트에 적용된 라이선스를 명시합니다.\n" },
-    { insert: "\n연락처 정보\n", attributes: { header: 2 } },
-    { insert: "- 이메일: 프로젝트 관련 문의나 피드백을 받을 수 있는 이메일 주소\n" },
-    { insert: "- 기타 연락처: 필요시 추가 연락처 정보 (예: 트위터, 링크드인 등)\n" },
+    // { insert: "프로젝트 개요\n", attributes: { header: 2 } },
+    // { insert: "- 설명: 프로젝트의 목적과 주요 기능을 간략히 설명합니다.\n" },
+    // { insert: "- 기술 스택: 사용된 주요 기술(프레임워크, 라이브러리 등)을 나열합니다.\n" },
+    // { insert: "- 배포 링크: (있는 경우) 프로젝트의 라이브 데모 링크를 제공합니다.\n\n" },
+    // { insert: "주요 기능\n", attributes: { header: 2 } },
+    // { insert: "1. 기능 1: 기능의 간단한 설명\n" },
+    // { insert: "2. 기능 2: 기능의 간단한 설명\n" },
+    // { insert: "3. 기능 3: 기능의 간단한 설명\n\n" },
+    // { insert: "스크린샷\n", attributes: { header: 2 } },
+    // { insert: "- 프로젝트의 주요 화면이나 기능을 보여주는 스크린샷을 첨부합니다.\n\n" },
+    // { insert: "설치 및 사용법\n", attributes: { header: 2 } },
+    // { insert: "1. 클론: 리포지토리를 클론하는 방법" },
+    // { insert: { code: "git clone https://github.com/사용자명/프로젝트명.git" } },
+    // { insert: "2. 의존성 설치: 필요한 패키지를 설치하는 방법\n" },
+    // { insert: { code: "npm install" } },
+    // { insert: "3. 빌드 및 실행: 프로젝트를 빌드하고 실행하는 방법\n" },
+    // { insert: { code: "npm start" } },
+    // { insert: "\n기여 방법\n", attributes: { header: 2 } },
+    // { insert: "- 기여 가이드: 프로젝트에 기여하는 방법에 대한 안내\n" },
+    // { insert: "- 이슈 제출: 버그 리포트나 기능 요청 방법\n" },
+    // { insert: "- 풀 리퀘스트: 코드 기여 방법\n" },
+    // { insert: "\n라이선스\n", attributes: { header: 2 } },
+    // { insert: "- 프로젝트에 적용된 라이선스를 명시합니다.\n" },
+    // { insert: "\n연락처 정보\n", attributes: { header: 2 } },
+    // { insert: "- 이메일: 프로젝트 관련 문의나 피드백을 받을 수 있는 이메일 주소\n" },
+    // { insert: "- 기타 연락처: 필요시 추가 연락처 정보 (예: 트위터, 링크드인 등)\n" },
   ];
 
   const getProject = async () => {
@@ -132,6 +137,8 @@ const ProjectUploadPage = () => {
             setTechStacks(data.techStack);
             setProjectDescription(data.description);
             setIsPrivate(data.isPrivate);
+            setGithubLink(data.githubLink);
+            setOtherLink(data.otherLink);
             setIsEdit(true);
           } else {
             // 글 주인이 아니야
@@ -190,6 +197,8 @@ const ProjectUploadPage = () => {
       description: projectDescription,
       authorId: author.uid,
       isPrivate: isPrivate,
+      githubLink: githubLink,
+      otherLink: otherLink,
       createdAt: new Date().getTime(),
     };
 
@@ -211,6 +220,9 @@ const ProjectUploadPage = () => {
         setParticipantsInput("");
         setTechStacks([]);
         setTechStackInput("");
+        setIsPrivate(false);
+        setGithubLink("");
+        setOtherLink("");
         setSuccess("프로젝트 업로드 완료");
         navigate("/project");
       } else {
@@ -231,6 +243,8 @@ const ProjectUploadPage = () => {
           setParticipantsInput("");
           setTechStacks([]);
           setTechStackInput("");
+          setGithubLink("");
+          setOtherLink("");
           setSuccess("프로젝트 수정 완료");
           navigate("/project");
         }
@@ -380,6 +394,40 @@ const ProjectUploadPage = () => {
     "h1",
   ];
 
+  const githubLinkHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const pattern = /^https?:\/\/github\.com\/[\w.-]+\/[\w.-]+\/?$/;
+    setGithubLink(e.target.value);
+    if (pattern.test(e.target.value)) {
+      setError("");
+      setIsGithubInvalid(false);
+    } else {
+      setError("깃허브 링크가 유효하지 않음");
+      setIsGithubInvalid(true);
+    }
+  };
+
+  const isValidUrl = (string: string) => {
+    let url;
+
+    try {
+      url = new URL(string);
+    } catch (_) {
+      return false;
+    }
+
+    return url.protocol === "http:" || url.protocol === "https:";
+  };
+
+  const otherLinkHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const isValid = isValidUrl(e.target.value);
+    setOtherLink(e.target.value);
+    if (isValid) {
+      setError("");
+    } else {
+      setError("기타 링크가 유효하지 않음");
+    }
+  };
+
   return (
     <section className="page">
       <NavBar />
@@ -470,7 +518,7 @@ const ProjectUploadPage = () => {
               </div>
             </div>
             <div className="w-full flex flex-wrap gap-3 items-center p-1">
-              <h3 className="px-2 py-1.5 bg-black text-white rounded-md">프로젝트 미공개</h3>
+              <h3 className="px-2 py-1.5 bg-teal-950 text-white rounded-md">프로젝트 미공개</h3>
               <div className="checkbox-wrapper-19 flex items-center gap-3">
                 <label className="flex items-center ">
                   <span
@@ -526,10 +574,35 @@ const ProjectUploadPage = () => {
             </div>
           </div>
         </div>
-        {/*  */}
         <hr className="my-2" />
+        {/*  */}
+        <div className="flex gap-1 justify-between">
+          <div className="w-1/2 flex flex-wrap gap-3 items-center p-1 ">
+            <h3 className="px-2 py-1.5 bg-black text-white rounded-md">Github Repository</h3>
+            <input
+              className={`flex-1 ${isGithubInvalid ? "invalid" : "valid"}`}
+              type="text"
+              value={githubLink}
+              onChange={githubLinkHandler}
+              placeholder="프로젝트 Github 저장소 (선택)"
+            />
+          </div>
+          <div className="w-1/2 flex flex-wrap gap-3 items-center p-1">
+            <h3 className="px-2 py-1.5 bg-black text-white rounded-md">Other</h3>
+            <input
+              className={`flex-1`}
+              type="text"
+              value={otherLink}
+              onChange={otherLinkHandler}
+              placeholder="프로젝트 기타 링크 (선택)"
+            />
+          </div>
+        </div>
+
         <div className="mb-10">
-          <h3 className="text-xl mb-3">프로젝트 세부 설명</h3>
+          {/* <h3 className="text-2xl mb-4 text-gray-700">
+            프로젝트 세부 설명을 작성해주세요! 어떤 기술 스택을 사용했나요? 어떤 도전이 있었나요?
+          </h3> */}
           <ReactQuillWithRef
             forwardedRef={editorRef}
             formats={formats}
