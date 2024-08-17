@@ -21,4 +21,6 @@ export interface ProjectDetail {
   participants?: string[];
   techStack?: string[];
   isPrivate?: boolean;
+  githubLink?: string;
+  otherLink?: string;
 }

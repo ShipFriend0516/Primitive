@@ -650,6 +650,20 @@ article.projectDescription ul {
   outline-color: indigo;
 }
 
+.project-upload input.invalid {
+  padding: 0.5em 0.5em;
+  border-bottom: 1.5px solid lightgray;
+  margin: 2px;
+  outline-color: tomato;
+}
+
+.project-upload input.valid {
+  padding: 0.5em 0.5em;
+  border-bottom: 1.5px solid lightgray;
+  margin: 2px;
+  outline-color: limegreen;
+}
+
 .project-upload .col1 {
   gap: 6px;
 }
