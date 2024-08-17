@@ -6,6 +6,8 @@
 ## 🌿 제작 목적
 프리미티브 동아리의 홍보 목적으로 제작 시작, 후 프로젝트 공유 플랫폼으로 추가 기획
 
+[개발회고 보러가기](https://velog.io/@shipfriend/%ED%94%84%EB%A6%AC%EB%AF%B8%ED%8B%B0%EB%B8%8C-%EB%8F%99%EC%95%84%EB%A6%AC-%ED%99%88%ED%8E%98%EC%9D%B4%EC%A7%80-%EA%B0%9C%EB%B0%9C-%ED%9A%8C%EA%B3%A0)
+
 ## 🙊 사용 기술
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
