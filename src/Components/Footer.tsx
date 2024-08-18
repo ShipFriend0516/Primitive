@@ -3,6 +3,8 @@
 import React from "react";
 import { FaInstagram, FaGithub } from "react-icons/fa";
 import logo from "../Images/logo.webp";
+import { Link } from "react-router-dom";
+import { FaCircleInfo } from "react-icons/fa6";
 const Footer = () => {
   const render = () => {
     return (
@@ -68,6 +70,9 @@ const Footer = () => {
                   </svg>
                 </i>
               </a>
+              <Link className="text-gray-300 hover:text-white ml-2 z-0" to={"/notice"}>
+                <FaCircleInfo />
+              </Link>
             </div>
           </div>
           <hr className="my-4 border-gray-600" />
@@ -143,6 +148,9 @@ const Footer = () => {
               </svg>
             </i>
           </a>
+          <Link className="text-gray-300 hover:text-gray-600" to={"/notice"}>
+            <FaCircleInfo style={{ width: 24 + "px", height: 24 + "px" }} />
+          </Link>
         </div>
         <hr className="w-4/5 inset-2 h-2 border-gray-300" />
         <p className="text-center relative text-sm">
