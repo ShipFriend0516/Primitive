@@ -6,6 +6,7 @@ import Notice from "../Types/NoticeType";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import LoadingCircle from "../Components/LoadingCircle";
+import { FaLongArrowAltLeft } from "react-icons/fa";
 
 const NoticeDetailPage = () => {
   const { id } = useParams();
@@ -56,7 +57,11 @@ const NoticeDetailPage = () => {
           <div className="prose max-w-none pb-20 whitespace-pre-wrap">
             <p>{notice.content}</p>
           </div>
-          <Link to="/notice" className="inline-block mt-8 text-black hover:underline font-bold">
+          <Link
+            to="/notice"
+            className="inline-flex mt-8 text-black hover:underline font-bold  items-center gap-2"
+          >
+            <FaLongArrowAltLeft size={20} />
             목록으로
           </Link>
         </div>
