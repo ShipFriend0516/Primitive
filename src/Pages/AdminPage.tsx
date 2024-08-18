@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import Member, { MemberDataType } from "../Types/MemberType";
 import User from "../Types/User";
 import StaffsWord from "../Components/StaffsWord";
+import NoticeUpload from "../Components/NoticeUpload";
 
 const AdminPage = () => {
   // 상태 관리
@@ -277,6 +278,16 @@ const AdminPage = () => {
           )}
         </div>
       );
+    } else if (selectedTab === 3) {
+      return (
+        <div className="overflow-x-scroll">
+          <h3 className="text-xl font-bold p-2">공지사항 작성</h3>
+          <p className="text-sm px-2 text-gray-600 mb-3">
+            회장과 부회장, 관리자라면 공지사항을 작성할 수 있습니다.
+          </p>
+          <NoticeUpload onSubmit={() => {}} />
+        </div>
+      );
     }
   };
 
@@ -306,6 +317,12 @@ const AdminPage = () => {
                   onClick={() => setSelectedTab(2)}
                 >
                   운영진의 한마디
+                </div>
+                <div
+                  className={`${selectedTab === 3 && "selected"}`}
+                  onClick={() => setSelectedTab(3)}
+                >
+                  공지사항 작성
                 </div>
               </div>
             </div>
