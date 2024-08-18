@@ -1,12 +1,12 @@
-interface NoticeProps {
-  kind: string;
-  title: string;
-  content: string;
+import Notice from "../Types/NoticeType";
+
+interface NoticeType extends Notice {
+  toDetail: () => void;
 }
 
-const NoticeBox = ({ kind, title, content }: NoticeProps) => {
+const NoticeBox = ({ id, kind, title, content, toDetail }: NoticeType) => {
   return (
-    <div className="flex border-t  py-6">
+    <div onClick={toDetail} className="flex border-t py-6 cursor-pointer">
       <span className="mx-4 w-20">{kind}</span>
       <h2 className="text-xl">{title}</h2>
       {/* <p>{content}</p> */}

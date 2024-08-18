@@ -5,6 +5,8 @@ import NoticeBox from "../Components/NoticeBox";
 import { db } from "../firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import Notice from "../Types/NoticeType";
+import LoadingCircle from "../Components/LoadingCircle";
+import { useNavigate } from "react-router-dom";
 
 const NoticePage = () => {
   const exNotice = [
@@ -24,8 +26,10 @@ const NoticePage = () => {
   const filterKinds = ["전체", "공지사항", "업데이트", "서비스", "공고"];
 
   // 상태관리
+  const navigate = useNavigate();
   const [filter, setFilter] = useState("전체");
   const [notices, setNotices] = useState<Notice[]>([]);
+  const [noticeLoading, setNoticeLoading] = useState(true);
 
   // Effect
   useEffect(() => {
@@ -45,16 +49,26 @@ const NoticePage = () => {
       ...(doc.data() as Omit<Notice, "id">),
     }));
     setNotices(data);
-    console.log(data);
+    setNoticeLoading(false);
   };
 
   // 렌더
 
   const renderNotice = () => {
-    return (
+    return noticeLoading ? (
+      <LoadingCircle color="bg-indigo-200" />
+    ) : (
       <div className="border-b">
-        {exNotice.map((notice, index) => (
-          <NoticeBox key={index} kind={notice.kind} title={notice.title} content={notice.content} />
+        {notices.length === 0 && <div>공지사항이 없습니다...</div>}
+        {notices.map((notice, index) => (
+          <NoticeBox
+            key={index}
+            id={notice.id}
+            kind={notice.kind}
+            title={notice.title}
+            content={notice.content}
+            toDetail={() => navigate(`/notice/${notice.id}`)}
+          />
         ))}
       </div>
     );
