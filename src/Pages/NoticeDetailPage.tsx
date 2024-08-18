@@ -53,7 +53,7 @@ const NoticeDetailPage = () => {
             {notice.date ? new Date(notice.date.toDate()).toLocaleString() : "알 수 없음"}
           </p>
           <hr className="my-8" />
-          <div className="prose max-w-none pb-20">
+          <div className="prose max-w-none pb-20 whitespace-pre-wrap">
             <p>{notice.content}</p>
           </div>
           <Link to="/notice" className="inline-block mt-8 text-black hover:underline font-bold">
