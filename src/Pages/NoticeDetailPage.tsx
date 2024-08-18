@@ -1,33 +1,69 @@
+import { Link, useParams } from "react-router-dom";
 import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
+import { useEffect, useState } from "react";
+import Notice from "../Types/NoticeType";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase";
+import LoadingCircle from "../Components/LoadingCircle";
 
-interface NoticeDetailProps {
-  id: number;
-}
-
-const NoticeDetailPage = ({ id }: NoticeDetailProps) => {
+const NoticeDetailPage = () => {
+  const { id } = useParams();
+  console.log(id);
   // 실제 구현에서는 ID를 기반으로 공지사항을 가져와야 합니다.
-  const notice = {
-    id: id,
-    title: "네이버웍스 코어 비정기 업데이트 소식",
-    date: "2024.08.05",
-    content:
-      "네이버웍스 코어 비정기 업데이트가 2024년 8월 6일(화)에 진행됩니다. 자세한 업데이트 사항은 아래 내용을 확인해 주시기 바랍니다.",
+
+  // 상태관리
+
+  const [notice, setNotice] = useState<Notice>();
+  const [noticeLoading, setNoticeLoading] = useState(true);
+
+  // Effect
+  useEffect(() => {
+    getNoticeDetail();
+  }, [id]);
+
+  // Method
+  const getNoticeDetail = async () => {
+    try {
+      const docRef = doc(db, "notices", id!);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const data = {
+          id: docSnap.id,
+          ...(docSnap.data() as Omit<Notice, "id">),
+        };
+        setNotice(data);
+        setNoticeLoading(false);
+        console.log(data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <section className="flex flex-col min-h-screen  justify-between bg-white text-black">
       <NavBar />
-      <div className="relative mt-10 md:mt-20 max-w-6xl mx-auto w-full flex-grow flex flex-col items-stretch p-5 md:p-10 gap-2">
-        <h1 className="text-3xl font-bold mb-2">{notice.title}</h1>
-        <p className="text-gray-600 mb-6">{notice.date}</p>
-        <div className="prose max-w-none">
-          <p>{notice.content}</p>
+      {!noticeLoading && notice ? (
+        <div className="relative mt-10 md:mt-20 max-w-6xl mx-auto w-full flex-grow flex flex-col items-stretch p-5 md:p-10 gap-2">
+          <h1 className="text-5xl font-bold mb-4">{notice.title}</h1>
+          <p className="text-gray-600 mb-2">
+            {notice.date ? new Date(notice.date.toDate()).toLocaleString() : "알 수 없음"}
+          </p>
+          <hr className="my-8" />
+          <div className="prose max-w-none">
+            <p>{notice.content}</p>
+          </div>
+          <Link to="/notice" className="inline-block mt-8 text-black hover:underline font-bold">
+            목록으로
+          </Link>
         </div>
-        <a href="/" className="inline-block mt-8 text-blue-600 hover:underline">
-          목록으로
-        </a>
-      </div>
+      ) : (
+        <div>
+          <LoadingCircle />
+        </div>
+      )}
       <Footer />
     </section>
   );
