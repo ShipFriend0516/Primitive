@@ -48,7 +48,7 @@ const NoticeDetailPage = () => {
       {!noticeLoading && notice ? (
         <div className="relative mt-10 md:mt-20 max-w-6xl mx-auto w-full flex-grow flex flex-col items-stretch p-5 md:p-10 gap-2">
           <span className="text-gray-500">{notice.category}</span>
-          <h1 className="text-5xl font-bold mb-4">{notice.title}</h1>
+          <h1 className="text-2xl md:text-3xl lg:text-5xl font-bold mb-4">{notice.title}</h1>
           <p className="text-gray-600 mb-2">
             {notice.date ? new Date(notice.date.toDate()).toLocaleString() : "알 수 없음"}
           </p>
