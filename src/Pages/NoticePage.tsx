@@ -3,7 +3,7 @@ import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
 import NoticeBox from "../Components/NoticeBox";
 import { db } from "../firebase";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import Notice from "../Types/NoticeType";
 import LoadingCircle from "../Components/LoadingCircle";
 import { useNavigate } from "react-router-dom";
@@ -40,8 +40,13 @@ const NoticePage = () => {
   const getNotices = async () => {
     // 공지사항 목록 불러오기
     let q;
-    if (filter === "전체") q = query(collection(db, "notices"));
-    else q = query(collection(db, "notices"), where("category", "==", filter));
+    if (filter === "전체") q = query(collection(db, "notices"), orderBy("date", "desc"));
+    else
+      q = query(
+        collection(db, "notices"),
+        where("category", "==", filter),
+        orderBy("date", "desc")
+      );
     const response = await getDocs(q);
 
     const data = response.docs.map((doc) => ({
