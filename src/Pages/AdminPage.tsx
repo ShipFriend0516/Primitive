@@ -8,8 +8,8 @@ import {
   where,
   getDoc,
   deleteDoc,
-  DocumentData,
   orderBy,
+  addDoc,
 } from "firebase/firestore";
 import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
@@ -225,6 +225,24 @@ const AdminPage = () => {
     }
   };
 
+  // 공지사항 관련
+
+  const postNotice = async (title: string, content: string, category: string) => {
+    try {
+      const docRef = await addDoc(collection(db, "notices"), {
+        title: title,
+        content: content,
+        category: category,
+        date: new Date(),
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
+  };
+
+  // 렌더링
+
   const tabRender = () => {
     if (selectedTab === 0) {
       return (
@@ -285,7 +303,7 @@ const AdminPage = () => {
           <p className="text-sm px-2 text-gray-600 mb-3">
             회장과 부회장, 관리자라면 공지사항을 작성할 수 있습니다.
           </p>
-          <NoticeUpload onSubmit={() => {}} />
+          <NoticeUpload onSubmit={postNotice} />
         </div>
       );
     }
