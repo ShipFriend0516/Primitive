@@ -2,7 +2,7 @@ import { Timestamp } from "firebase/firestore";
 
 interface Notice {
   id: string;
-  kind: string;
+  category: string;
   title: string;
   content: string;
   date?: Timestamp;
