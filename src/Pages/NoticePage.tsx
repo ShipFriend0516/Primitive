@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../Components/Footer";
 import NavBar from "../Components/NavBar";
 import NoticeBox from "../Components/NoticeBox";
+import { db } from "../firebase";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import Notice from "../Types/NoticeType";
 
 const NoticePage = () => {
   const exNotice = [
@@ -18,15 +21,40 @@ const NoticePage = () => {
     },
   ];
 
+  const filterKinds = ["전체", "공지사항", "업데이트", "서비스", "공고"];
+
   // 상태관리
   const [filter, setFilter] = useState("전체");
-  const filterKinds = ["전체", "공지사항", "업데이트", "서비스", "공고"];
+  const [notices, setNotices] = useState<Notice[]>([]);
+
+  // Effect
+  useEffect(() => {
+    getNotices();
+  }, [filter]);
+
+  // Method
+  const getNotices = async () => {
+    // 공지사항 목록 불러오기
+    let q;
+    if (filter === "전체") q = query(collection(db, "notices"));
+    else q = query(collection(db, "notices"), where("kind", "==", filter));
+    const response = await getDocs(q);
+
+    const data = response.docs.map((doc) => ({
+      id: doc.id,
+      ...(doc.data() as Omit<Notice, "id">),
+    }));
+    setNotices(data);
+    console.log(data);
+  };
+
+  // 렌더
 
   const renderNotice = () => {
     return (
       <div className="border-b">
-        {exNotice.map((notice) => (
-          <NoticeBox kind={notice.kind} title={notice.title} content={notice.content} />
+        {exNotice.map((notice, index) => (
+          <NoticeBox key={index} kind={notice.kind} title={notice.title} content={notice.content} />
         ))}
       </div>
     );
