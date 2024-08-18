@@ -808,6 +808,16 @@ td {
   opacity: 1;
 }
 
+/* Notice Style */
+.noticeFilter > span {
+  color: lightgray;
+  font-weight: bold;
+}
+
+.noticeFilter > span.active {
+  color: black;
+}
+
 /* Footer Style */
 .footer {
   background-color: rgb(239, 239, 239);

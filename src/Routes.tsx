@@ -9,6 +9,7 @@ import ProjectDetailPage from "./Pages/ProjectDetailPage";
 import LoginPage from "./Pages/LoginPage";
 import MyPage from "./Pages/MyPage";
 import ProjectUploadPage from "./Pages/ProjectUploadPage";
+import NoticePage from "./Pages/NoticePage";
 
 const routes = [
   {
@@ -46,6 +47,10 @@ const routes = [
   {
     element: <AdminPage />,
     path: "/admin",
+  },
+  {
+    element: <NoticePage />,
+    path: "/notice",
   },
   {
     element: <TestPage />,
