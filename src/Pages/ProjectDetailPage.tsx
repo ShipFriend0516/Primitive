@@ -22,7 +22,7 @@ import {
 import { db } from "../firebase";
 import DOMPurify from "dompurify";
 import { User, getAuth } from "firebase/auth";
-import CheckDialog from "../Components/CheckDialog";
+import CheckDialog from "../Components/common/CheckDialog";
 import ProjectType, { ProjectDetail } from "../Types/ProjectType";
 import Comment from "../Components/project/Comment";
 import CommentType from "../Types/CommentType";

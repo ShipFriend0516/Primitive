@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CheckDialog from "./CheckDialog";
+import CheckDialog from "./common/CheckDialog";
 
 interface RequestTableProps {
   requests: SignupRequest[];

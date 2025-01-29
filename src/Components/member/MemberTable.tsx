@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import CheckDialog from "../CheckDialog";
+import CheckDialog from "../common/CheckDialog";
 import {
   doc,
   updateDoc,
