@@ -3,8 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
 import { IoMenuOutline } from "react-icons/io5";
 import { useSpring, animated } from "react-spring";
-import styles from "../Styles/menu.module.css";
-import useStore from "../store";
+import styles from "../../Styles/menu.module.css";
+import useStore from "../../store";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const NavBar = () => {

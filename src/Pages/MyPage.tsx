@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import Footer from "../Components/Footer";
-import NavBar from "../Components/NavBar";
+import Footer from "../Components/common/Footer";
+import NavBar from "../Components/common/NavBar";
 import useStore from "../store";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";

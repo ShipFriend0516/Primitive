@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
-import Footer from "../Components/Footer";
-import NavBar from "../Components/NavBar";
+import Footer from "../Components/common/Footer";
+import NavBar from "../Components/common/NavBar";
 import { useEffect, useState } from "react";
 import Notice from "../Types/NoticeType";
 import { doc, getDoc } from "firebase/firestore";

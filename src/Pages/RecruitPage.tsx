@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import NavBar from "../Components/NavBar";
-import PrimitiveRecruit24 from "../Images/24PrimitiveRecruit.webp";
-import Footer from "../Components/Footer";
+import NavBar from "../Components/common/NavBar";
+import PrimitiveRecruit24 from "../Images/2024/24PrimitiveRecruit.webp";
+import Footer from "../Components/common/Footer";
 import { useSpring, animated } from "react-spring";
 
 const RecruitPage = () => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Footer from "../Components/Footer";
-import NavBar from "../Components/NavBar";
+import Footer from "../Components/common/Footer";
+import NavBar from "../Components/common/NavBar";
 import NoticeBox from "../Components/NoticeBox";
 import { db } from "../firebase";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";

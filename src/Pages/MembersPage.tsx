@@ -1,9 +1,9 @@
-import NavBar from "../Components/NavBar";
+import NavBar from "../Components/common/NavBar";
 import MemberCard from "../Components/MemberCard";
-import Footer from "../Components/Footer";
-import jeongwoo from "../Images/jeongwoo.webp";
-import gaeun from "../Images/gaeun.webp";
-import jinseong from "../Images/jinseong.webp";
+import Footer from "../Components/common/Footer";
+import jeongwoo from "../Images/members/jeongwoo.webp";
+import gaeun from "../Images/members/gaeun.webp";
+import jinseong from "../Images/members/jinseong.webp";
 
 const MembersPage = () => {
   return (

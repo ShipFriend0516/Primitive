@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import NavBar from "../Components/NavBar";
+import NavBar from "../Components/common/NavBar";
 import {
   getAuth,
   createUserWithEmailAndPassword,

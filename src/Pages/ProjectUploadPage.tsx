@@ -8,7 +8,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import NavBar from "../Components/NavBar";
+import NavBar from "../Components/common/NavBar";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { db, storage } from "../firebase";
 import { addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
