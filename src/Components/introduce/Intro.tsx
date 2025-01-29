@@ -1,21 +1,21 @@
-import project1 from "../Images/2024/에코초이스.webp";
-import project2 from "../Images/2024/솜뭉치.webp";
-import project3 from "../Images/2024/뜨개랑.webp";
+import project1 from "../../Images/2024/에코초이스.webp";
+import project2 from "../../Images/2024/솜뭉치.webp";
+import project3 from "../../Images/2024/뜨개랑.webp";
 
-import Introduction1 from "../Images/2024/1.webp";
-import Introduction2 from "../Images/2024/2.webp";
-import Introduction3 from "../Images/2024/3.webp";
-import Introduction4 from "../Images/2024/4.webp";
+import Introduction1 from "../../Images/2024/1.webp";
+import Introduction2 from "../../Images/2024/2.webp";
+import Introduction3 from "../../Images/2024/3.webp";
+import Introduction4 from "../../Images/2024/4.webp";
 
-import ProjectCard from "./ProjectCard";
+import ProjectCard from "../ProjectCard";
 
 import { useEffect, useRef, useState } from "react";
 import Cover from "./Cover";
 import ActivityCard from "./ActivityCard";
 import { collection, getDocs, limit, where } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { query } from "firebase/firestore";
-import { ProjectDetail } from "../Types/ProjectType";
+import { ProjectDetail } from "../../Types/ProjectType";
 
 const Intro = () => {
   // 스크롤 애니메이션 관련 상태 관리

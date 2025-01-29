@@ -1,5 +1,5 @@
 import NavBar from "../Components/common/NavBar";
-import MemberCard from "../Components/MemberCard";
+import MemberCard from "../Components/member/MemberCard";
 import Footer from "../Components/common/Footer";
 import jeongwoo from "../Images/members/jeongwoo.webp";
 import gaeun from "../Images/members/gaeun.webp";

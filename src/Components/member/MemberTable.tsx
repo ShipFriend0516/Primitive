@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import CheckDialog from "./CheckDialog";
+import CheckDialog from "../CheckDialog";
 import {
   doc,
   updateDoc,
@@ -12,8 +12,8 @@ import {
   startAt,
   endAt,
 } from "firebase/firestore";
-import { db } from "../firebase";
-import { MemberDataType } from "../Types/MemberType";
+import { db } from "../../firebase";
+import { MemberDataType } from "../../Types/MemberType";
 import { FaArrowAltCircleUp } from "react-icons/fa";
 import { FaArrowCircleDown } from "react-icons/fa";
 import { getAuth } from "firebase/auth";

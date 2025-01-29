@@ -9,7 +9,7 @@ import { db, storage } from "../firebase";
 import logo from "../Images/logo.webp";
 import User from "../Types/User.d";
 import { ProjectDetail } from "../Types/ProjectType";
-import LoadingCircle from "../Components/LoadingCircle";
+import LoadingCircle from "../Components/common/LoadingCircle";
 import ProjectListCard from "../Components/ProjectListCard";
 import UserDataTable from "../Components/UserDataTable";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";

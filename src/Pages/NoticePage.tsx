@@ -5,7 +5,7 @@ import NoticeBox from "../Components/NoticeBox";
 import { db } from "../firebase";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import Notice from "../Types/NoticeType";
-import LoadingCircle from "../Components/LoadingCircle";
+import LoadingCircle from "../Components/common/LoadingCircle";
 import { useNavigate } from "react-router-dom";
 
 const NoticePage = () => {

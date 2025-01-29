@@ -22,7 +22,7 @@ import { ProjectDetail } from "../Types/ProjectType";
 import useStore from "../store";
 import { HiPencilSquare } from "react-icons/hi2";
 import Pagination from "../Components/Pagination";
-import LoadingCircle from "../Components/LoadingCircle";
+import LoadingCircle from "../Components/common/LoadingCircle";
 import ScrollToTop from "../Components/common/ScrollToTop";
 
 type Filter = "default" | "app" | "web" | "personal" | "team";

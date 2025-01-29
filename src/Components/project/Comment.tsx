@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import CommentType from "../Types/CommentType";
-import LoadingCircle from "./LoadingCircle";
+import CommentType from "../../Types/CommentType";
+import LoadingCircle from "../common/LoadingCircle";
 import Reply from "./Reply";
 import { getAuth } from "firebase/auth";
 import {
@@ -15,7 +15,7 @@ import {
   deleteDoc,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 
 interface Params {

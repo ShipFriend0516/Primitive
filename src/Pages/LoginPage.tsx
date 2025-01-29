@@ -13,7 +13,7 @@ import app, { db } from "../firebase";
 import { FaGithub } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import useStore from "../store";
-import LoadingCircle from "../Components/LoadingCircle";
+import LoadingCircle from "../Components/common/LoadingCircle";
 
 const LoginPage = () => {
   // 상태관리
