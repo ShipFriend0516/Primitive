@@ -14,6 +14,11 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FB_APP_ID,
 };
 
+if(!firebaseConfig.apiKey) {
+  console.error('Firebase API Key가 존재하지 않습니다.')
+  alert('Firebase API Key가 존재하지 않습니다.')
+}
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const adminApp = initializeApp(firebaseConfig, "Admin");

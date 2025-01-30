@@ -140,6 +140,10 @@ const Intro = () => {
     }
   };
 
+  if(!db) {
+    return <div>Firebase와의 연결이 없습니다. </div>
+  }
+
   return (
     <div className="bg-black w-screen min-h-screen">
       <section className="bg-gradient-to-b from-black to-indigo-950 bg-black text-white h-screen flex flex-col justify-center items-center select-none">
