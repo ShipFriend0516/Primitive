@@ -123,7 +123,7 @@ const Footer = () => {
         </div>
         <hr className="w-4/5 inset-2 h-2 border-gray-300" />
         <p className="text-center relative text-sm">
-          © 2024 Primitive. All rights reserved.{" "}
+          © {new Date().getFullYear()} Primitive. All rights reserved.{" "}
           <span className="absolute right-0 text-gray-800 text-xs hidden md:block text-transparent">
             Special Thanks.... Yungang
           </span>
