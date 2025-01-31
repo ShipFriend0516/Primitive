@@ -1,4 +1,4 @@
-import RecruitPage from "./Pages/RecruitPage";
+import RecruitPage from "./Pages/RecruitPage/RecruitPage";
 import MainPage from "./Pages/MainPage";
 import MembersPage from "./Pages/MembersPage";
 import ProjectPage from "./Pages/ProjectPage";
