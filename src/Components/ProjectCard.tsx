@@ -99,7 +99,7 @@ const ProjectCard = ({
             <div className="w-full h-full flex justify-center items-center">
               {!isImageLoaded && (
                 <LoadingSpinner
-                  className={"text-black/75 w-20 h-20 animate-spin"}
+                  className={"text-black/75 w-12 h-12 animate-spin"}
                 />
               )}
               {/*{!isImageLoaded && <div className="loader"> </div>}*/}
