@@ -1,4 +1,4 @@
-import QuestionBox from "./QuestionBox";
+import QuestionBox from "../QuestionBox";
 
 const FAQ = () => {
   return (

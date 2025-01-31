@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
@@ -13,6 +13,11 @@ const firebaseConfig = {
   messagingSenderId: import.meta.env.VITE_FB_MESSAGING,
   appId: import.meta.env.VITE_FB_APP_ID,
 };
+
+if(!firebaseConfig.apiKey) {
+  console.error('Firebase API Key가 존재하지 않습니다.')
+  alert('Firebase API Key가 존재하지 않습니다.')
+}
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

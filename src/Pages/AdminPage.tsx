@@ -11,12 +11,12 @@ import {
   orderBy,
   addDoc,
 } from "firebase/firestore";
-import Footer from "../Components/Footer";
-import NavBar from "../Components/NavBar";
+import Footer from "../Components/common/Footer";
+import NavBar from "../Components/common/NavBar";
 import { adminApp, db } from "../firebase";
 import { useEffect, useState } from "react";
 import RequestTable from "../Components/RequestTable";
-import MemberTable from "../Components/MemberTable";
+import MemberTable from "../Components/member/MemberTable";
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged } from "firebase/auth";
 import useStore from "../store";
 import { useNavigate } from "react-router-dom";

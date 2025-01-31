@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MemberCardType } from "../Types/MemberType";
+import { MemberCardType } from "../../Types/MemberType";
 
 const MemberCard = ({ image, name, number, position, description, type }: MemberCardType) => {
   const emojis = ["🔥", "🌿", "🌱", "😁", "😎", "👍", "🚀", "👀", "🎉"];

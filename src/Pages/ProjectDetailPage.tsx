@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import NavBar from "../Components/NavBar";
+import NavBar from "../Components/common/NavBar";
 
-import Footer from "../Components/Footer";
+import Footer from "../Components/common/Footer";
 import { useNavigate, useParams } from "react-router-dom";
 
-import thumbnailEx from "../Images/에코초이스.webp";
+import thumbnailEx from "../Images/2024/에코초이스.webp";
 import {
   addDoc,
   collection,
@@ -22,14 +22,14 @@ import {
 import { db } from "../firebase";
 import DOMPurify from "dompurify";
 import { User, getAuth } from "firebase/auth";
-import CheckDialog from "../Components/CheckDialog";
+import CheckDialog from "../Components/common/CheckDialog";
 import ProjectType, { ProjectDetail } from "../Types/ProjectType";
-import Comment from "../Components/Comment";
+import Comment from "../Components/project/Comment";
 import CommentType from "../Types/CommentType";
 import { HiHeart, HiShare, HiOutlineHeart } from "react-icons/hi2";
-import LoadingCircle from "../Components/LoadingCircle";
-import ImageDetailView from "../Components/ImageDetailView";
-import ScrollToTop from "../Components/ScrollToTop";
+import LoadingCircle from "../Components/common/LoadingCircle";
+import ImageDetailView from "../Components/common/ImageDetailView";
+import ScrollToTop from "../Components/common/ScrollToTop";
 import { IoLogoGithub } from "react-icons/io";
 import { HiLink } from "react-icons/hi";
 

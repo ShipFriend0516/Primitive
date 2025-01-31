@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import Footer from "../Components/Footer";
-import NavBar from "../Components/NavBar";
+import Footer from "../Components/common/Footer";
+import NavBar from "../Components/common/NavBar";
 import useStore from "../store";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
@@ -9,7 +9,7 @@ import { db, storage } from "../firebase";
 import logo from "../Images/logo.webp";
 import User from "../Types/User.d";
 import { ProjectDetail } from "../Types/ProjectType";
-import LoadingCircle from "../Components/LoadingCircle";
+import LoadingCircle from "../Components/common/LoadingCircle";
 import ProjectListCard from "../Components/ProjectListCard";
 import UserDataTable from "../Components/UserDataTable";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";

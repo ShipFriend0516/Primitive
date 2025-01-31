@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import CommentType from "../Types/CommentType";
-import LoadingCircle from "./LoadingCircle";
+import CommentType from "../../Types/CommentType";
+import LoadingCircle from "../common/LoadingCircle";
 
 interface Params {
   id: string;
