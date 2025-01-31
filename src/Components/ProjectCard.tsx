@@ -3,6 +3,8 @@ import ProjectType from "../Types/ProjectType.d";
 import { HiLockClosed } from "react-icons/hi";
 import logo from "../Images/logo.webp";
 import { useState } from "react";
+import LoadingSpinner from "@/src/Components/common/loading/LoadingSpinner";
+import { formatTimeDifference } from "@/src/Utils/timeFormat";
 
 interface Props extends ProjectType {
   setTagFilter: (tag: string) => void;
@@ -58,13 +60,22 @@ const ProjectCard = ({
             })}
           </p> */}
           <span className="mt-1 text-sm inline-flex flex-wrap gap-1">
-            <span className="mb-1 px-1.5 bg-gray-200 rounded-md  h-5 text-transparent" key={1}>
+            <span
+              className="mb-1 px-1.5 bg-gray-200 rounded-md  h-5 text-transparent"
+              key={1}
+            >
               {"tag"}
             </span>
-            <span className="mb-1 px-1.5 bg-gray-200 rounded-md  h-5 text-transparent" key={2}>
+            <span
+              className="mb-1 px-1.5 bg-gray-200 rounded-md  h-5 text-transparent"
+              key={2}
+            >
               {"tag"}
             </span>
-            <span className="mb-1 px-1.5 bg-gray-200 rounded-md  h-5 text-transparent" key={3}>
+            <span
+              className="mb-1 px-1.5 bg-gray-200 rounded-md  h-5 text-transparent"
+              key={3}
+            >
               {"tag"}
             </span>
           </span>
@@ -87,7 +98,12 @@ const ProjectCard = ({
         >
           {projectThumbnail ? (
             <div className="w-full h-full flex justify-center items-center">
-              {!isImageLoaded && <div className="loader"></div>}
+              {!isImageLoaded && (
+                <LoadingSpinner
+                  className={"text-black/75 w-12 h-12 animate-spin"}
+                />
+              )}
+              {/*{!isImageLoaded && <div className="loader"> </div>}*/}
               <img
                 onClick={onClickProject}
                 className="cursor-pointer object-cover aspect-video"
@@ -133,29 +149,6 @@ const ProjectCard = ({
     );
   };
 
-  function formatTimeDifference(uploadedTime: number) {
-    const now = new Date().getTime();
-    const uploadedDate = new Date(uploadedTime);
-    const past = new Date(uploadedTime).getTime();
-
-    const diffInMs = now - past;
-    const diffInMinutes = Math.floor(diffInMs / 60000);
-    const diffInHours = Math.floor(diffInMs / 3600000);
-    const diffInDays = Math.floor(diffInMs / 86400000);
-
-    if (diffInMinutes < 1) {
-      return "방금 전";
-    } else if (diffInMinutes < 60) {
-      return `${diffInMinutes}분 전`;
-    } else if (diffInHours < 24) {
-      return `${diffInHours}시간 전`;
-    } else {
-      const year = uploadedDate.getFullYear();
-      const month = String(uploadedDate.getMonth() + 1).padStart(2, "0");
-      const day = String(uploadedDate.getDate()).padStart(2, "0");
-      return `${year % 100}/${month}`;
-    }
-  }
   return isEmpty ? preRender() : cardRender();
 };
 
