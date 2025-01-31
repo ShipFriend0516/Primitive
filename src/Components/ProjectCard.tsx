@@ -3,6 +3,7 @@ import ProjectType from "../Types/ProjectType.d";
 import { HiLockClosed } from "react-icons/hi";
 import logo from "../Images/logo.webp";
 import { useState } from "react";
+import LoadingSpinner from "@/src/Components/common/loading/LoadingSpinner";
 
 interface Props extends ProjectType {
   setTagFilter: (tag: string) => void;
@@ -58,13 +59,22 @@ const ProjectCard = ({
             })}
           </p> */}
           <span className="mt-1 text-sm inline-flex flex-wrap gap-1">
-            <span className="mb-1 px-1.5 bg-gray-200 rounded-md  h-5 text-transparent" key={1}>
+            <span
+              className="mb-1 px-1.5 bg-gray-200 rounded-md  h-5 text-transparent"
+              key={1}
+            >
               {"tag"}
             </span>
-            <span className="mb-1 px-1.5 bg-gray-200 rounded-md  h-5 text-transparent" key={2}>
+            <span
+              className="mb-1 px-1.5 bg-gray-200 rounded-md  h-5 text-transparent"
+              key={2}
+            >
               {"tag"}
             </span>
-            <span className="mb-1 px-1.5 bg-gray-200 rounded-md  h-5 text-transparent" key={3}>
+            <span
+              className="mb-1 px-1.5 bg-gray-200 rounded-md  h-5 text-transparent"
+              key={3}
+            >
               {"tag"}
             </span>
           </span>
@@ -87,7 +97,12 @@ const ProjectCard = ({
         >
           {projectThumbnail ? (
             <div className="w-full h-full flex justify-center items-center">
-              {!isImageLoaded && <div className="loader"></div>}
+              {!isImageLoaded && (
+                <LoadingSpinner
+                  className={"text-black/75 w-20 h-20 animate-spin"}
+                />
+              )}
+              {/*{!isImageLoaded && <div className="loader"> </div>}*/}
               <img
                 onClick={onClickProject}
                 className="cursor-pointer object-cover aspect-video"
