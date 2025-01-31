@@ -10,7 +10,7 @@ import {
 
 import { collection, addDoc, where, getDocs, query } from "firebase/firestore";
 import app, { db } from "../firebase";
-import { FaGithub } from "react-icons/fa";
+import {FaGithub, FaUser} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import useStore from "../store";
 import LoadingCircle from "../Components/common/LoadingCircle";
@@ -169,11 +169,12 @@ const LoginPage = () => {
   return (
     <section className="flex flex-col   h-screen w-screen overflow-hidden">
       <NavBar />
-      <div className="bg-gradient-to-t from-emerald-950 to-indigo-950 w-full flex flex-col justify-center items-center h-screen bollock ">
+      <div className="bg-gradient-to-t from-emerald-950 to-indigo-950 w-full flex gradient flex-col justify-center items-center h-screen bollock ">
         <form className="authForm flex flex-col justify-center w-full">
           <h2 className="text-2xl font-bold text-center p-5 text-white">
             {isLogin ? "로그인" : "회원가입"}
           </h2>
+
           {!isLogin && (
             <div className="flex justify-center gap-3">
               <input
@@ -287,6 +288,7 @@ const LoginPage = () => {
           </button>
           <div className="p-1 text-left text-red-500 text-sm">{error}</div>
           <div className="p-1 text-left text-green-500 text-sm">{message}</div>
+          {!isLogin && (<p className={'p-1 inline-flex items-center gap-1 text-gray-400'}><FaUser/>회원가입은 운영진 승인 방식입니다.</p>)}
           <div className="w-full flex justify-end text-white py-2">
             <button type="button" onClick={toggleForm} className="text-right">
               {isLogin ? (
