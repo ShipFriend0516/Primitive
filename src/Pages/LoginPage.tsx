@@ -14,6 +14,8 @@ import {FaGithub, FaUser} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import useStore from "../store";
 import LoadingCircle from "../Components/common/LoadingCircle";
+import GlassButton from "@/src/Components/common/button/GlassButton";
+import LoadingSpinner from "@/src/Components/common/loading/LoadingSpinner";
 
 const LoginPage = () => {
   // 상태관리
@@ -169,7 +171,7 @@ const LoginPage = () => {
   return (
     <section className="flex flex-col   h-screen w-screen overflow-hidden">
       <NavBar />
-      <div className="bg-gradient-to-t from-emerald-950 to-indigo-950 w-full flex gradient flex-col justify-center items-center h-screen bollock ">
+      <div className="bg-gradient-to-tr from-emerald-950 to-indigo-950 w-full flex gradient flex-col justify-center items-center h-screen bollock ">
         <form className="authForm flex flex-col justify-center w-full">
           <h2 className="text-2xl font-bold text-center p-5 text-white">
             {isLogin ? "로그인" : "회원가입"}
@@ -264,28 +266,11 @@ const LoginPage = () => {
               />
             </>
           )}
-          <button
-            type="button"
-            onClick={(e) => handleSubmit(e)}
-            className="authBtn flex justify-center items-center"
-          >
+          <GlassButton onClick={(e) => handleSubmit(e as React.MouseEvent)} className={"authBtn flex justify-center items-center"} text={<>
             {isLogin ? `${loginLoading ? "" : "로그인"}` : `${loginLoading ? "" : "회원가입"}`}
             {loginLoading && (
-              <div className="inline-flex text-rose-100 opacity-90">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  viewBox="0 0 256 256"
-                  className="h-6 mr-1 animate-spin"
-                >
-                  <path d="M232,128a104,104,0,0,1-208,0c0-41,23.81-78.36,60.66-95.27a8,8,0,0,1,6.68,14.54C60.15,61.59,40,93.27,40,128a88,88,0,0,0,176,0c0-34.73-20.15-66.41-51.34-80.73a8,8,0,0,1,6.68-14.54C208.19,49.64,232,87,232,128Z"></path>
-                </svg>
-                Loading...
-              </div>
-            )}
-          </button>
+                <LoadingSpinner text={'Loading...'} />
+            )}</>}/>
           <div className="p-1 text-left text-red-500 text-sm">{error}</div>
           <div className="p-1 text-left text-green-500 text-sm">{message}</div>
           {!isLogin && (<p className={'p-1 inline-flex items-center gap-1 text-gray-400'}><FaUser/>회원가입은 운영진 승인 방식입니다.</p>)}
@@ -301,7 +286,9 @@ const LoginPage = () => {
                 </>
               )}
             </button>
+
           </div>
+  
           {/* <div className="socialWrapper">
             <button
               onClick={(e) => githubAuthHandler(e)}
