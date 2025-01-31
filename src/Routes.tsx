@@ -1,6 +1,6 @@
 import RecruitPage from "./Pages/RecruitPage/RecruitPage";
 import MainPage from "./Pages/MainPage";
-import MembersPage from "./Pages/MembersPage";
+import MembersPage from "./Pages/MembersPage/MembersPage";
 import ProjectPage from "./Pages/ProjectPage";
 import ErrorPage from "./Pages/ErrorPage";
 import TestPage from "./Pages/TestPage";
