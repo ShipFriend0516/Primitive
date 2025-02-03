@@ -1,7 +1,6 @@
 import {
   FaHeart,
   FaGithub,
-  FaEye,
   FaCalendar,
   FaUsers,
   FaStar,
@@ -79,17 +78,12 @@ const TestProjectCard = ({ projectDetail }: ProjectCardProps) => {
             {/* Stats */}
             <div className="flex justify-around py-4 border-t border-white/20">
               <div className="flex items-center gap-1">
-                <FaHeart size={24} />
+                <FaHeart size={20} />
                 <span className="text-sm">{projectDetail.likeCount || 0}</span>
               </div>
-              {/*<div className="flex items-center gap-1">*/}
-              {/*  <FaEye size={24} />*/}
-              {/*  <span className="text-sm">{5}</span>*/}
-              {/*</div>*/}
-              {/* GitHub 링크가 있을 때만 스타 수를 표시합니다 */}
               {projectDetail.githubLink && (
                 <div className="flex items-center gap-1">
-                  <FaStar size={24} />
+                  <FaStar size={20} />
                   <span className="text-sm">
                     {githubStars !== null ? githubStars : "-"}
                   </span>
