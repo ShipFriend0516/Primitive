@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import NavBar from "../Components/common/NavBar";
-import ProjectCard from "../Components/ProjectCard";
+import ProjectCard from "../Components/project/ProjectCard";
 import Footer from "../Components/common/Footer";
 import {
   QueryDocumentSnapshot,
@@ -46,7 +46,9 @@ const ProjectPage = () => {
   // 상태 관리
   const [projects, setProjects] = useState<ProjectDetail[]>([]);
   const [projectsLoading, setProjectsLoading] = useState(true);
-  const [filter, setFilter] = useState<Filter>(isFilter(filterKind) ? filterKind : "default");
+  const [filter, setFilter] = useState<Filter>(
+    isFilter(filterKind) ? filterKind : "default",
+  );
   const [tagFilter, setTagFilter] = useState("");
   const [isLast, setIsLast] = useState(false);
 
@@ -109,20 +111,22 @@ const ProjectPage = () => {
           query(
             collection(db, "projects"),
             ...(isLoggedIn ? [] : [where("isPrivate", "==", false)]),
-            ...(tagFilter ? [where("techStack", "array-contains", tagFilter)] : [])
+            ...(tagFilter
+              ? [where("techStack", "array-contains", tagFilter)]
+              : []),
             // orderBy("createdAt", "desc")
-          )
+          ),
         );
         setProjects(
           response.docs.map((doc) => ({
             id: doc.id,
             ...(doc.data() as Omit<ProjectDetail, "id">),
-          }))
+          })),
         );
-        if(response.docs.length < 12) {
-            setIsLast(true);
+        if (response.docs.length < 12) {
+          setIsLast(true);
         } else {
-            setIsLast(false);
+          setIsLast(false);
         }
         const lastDoc = response.docs[response.docs.length - 1];
         setLastDoc(lastDoc);
@@ -134,9 +138,11 @@ const ProjectPage = () => {
             collection(db, "projects"),
             filterWhere[filter as keyof MyIndexType],
             ...(isLoggedIn ? [] : [where("isPrivate", "==", false)]),
-            ...(tagFilter !== "" ? [where("techStack", "array-contains", tagFilter)] : []),
-            orderBy("createdAt", "desc")
-          )
+            ...(tagFilter !== ""
+              ? [where("techStack", "array-contains", tagFilter)]
+              : []),
+            orderBy("createdAt", "desc"),
+          ),
         );
         const lastDoc = response.docs[response.docs.length - 1];
         setLastDoc(lastDoc);
@@ -144,7 +150,7 @@ const ProjectPage = () => {
           response.docs.map((doc) => ({
             id: doc.id,
             ...(doc.data() as Omit<ProjectDetail, "id">),
-          }))
+          })),
         );
         setProjectsLoading(false);
       }
@@ -154,17 +160,24 @@ const ProjectPage = () => {
   };
 
   // 무한 스크롤시 추가 프로젝트 불러오기
-  const getAdditionalProjects = async (isPrivate: boolean, lastDoc: QueryDocumentSnapshot) => {
+  const getAdditionalProjects = async (
+    isPrivate: boolean,
+    lastDoc: QueryDocumentSnapshot,
+  ) => {
     try {
       if (lastDoc === null || lastDoc === undefined) return;
       const additionalQuery = query(
         collection(db, "projects"),
         orderBy("createdAt", "desc"),
         ...(isPrivate ? [] : [where("isPrivate", "==", false)]),
-        ...(filter !== "default" ? [filterWhere[filter as keyof MyIndexType]] : []),
-        ...(tagFilter !== "" ? [where("techStack", "array-contains", tagFilter)] : []),
+        ...(filter !== "default"
+          ? [filterWhere[filter as keyof MyIndexType]]
+          : []),
+        ...(tagFilter !== ""
+          ? [where("techStack", "array-contains", tagFilter)]
+          : []),
         limit(12),
-        startAfter(lastDoc)
+        startAfter(lastDoc),
       );
 
       const response = await getDocs(additionalQuery);
@@ -260,7 +273,8 @@ const ProjectPage = () => {
           <div className="w-4/5 inline-flex justify-end items-center">
             {tagFilter && (
               <div onClick={() => setTagFilter("")}>
-                <span className="tag px-1.5 py-0.5">{tagFilter}</span>로 검색 중...
+                <span className="tag px-1.5 py-0.5">{tagFilter}</span>로 검색
+                중...
               </div>
             )}
           </div>

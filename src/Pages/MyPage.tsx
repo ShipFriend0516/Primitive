@@ -4,13 +4,21 @@ import NavBar from "../Components/common/NavBar";
 import useStore from "../store";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
-import { collection, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { db, storage } from "../firebase";
 import logo from "../Images/logo.webp";
 import User from "../Types/User.d";
 import { ProjectDetail } from "../Types/ProjectType";
 import LoadingCircle from "../Components/common/LoadingCircle";
-import ProjectListCard from "../Components/ProjectListCard";
+import ProjectListCard from "../Components/project/ProjectListCard";
 import UserDataTable from "../Components/UserDataTable";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { HiPlusSmall } from "react-icons/hi2";
@@ -92,7 +100,10 @@ const MyPage = () => {
       const auth = getAuth();
       if (auth.currentUser) {
         const response = await getDocs(
-          query(collection(db, "projects"), where("authorId", "==", auth.currentUser.uid))
+          query(
+            collection(db, "projects"),
+            where("authorId", "==", auth.currentUser.uid),
+          ),
         );
         const data = response.docs.map((doc) => ({
           id: doc.id,
@@ -130,7 +141,7 @@ const MyPage = () => {
         return;
       }
       const savedFile = `profile-images/${user?.username}${getTimeStamp()}${file.name.slice(
-        lastDotIndex
+        lastDotIndex,
       )}`;
 
       setIsUploading(true);
@@ -140,7 +151,8 @@ const MyPage = () => {
       uploadedFile.on(
         "state_changed",
         (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           setProgress(progress);
 
           switch (snapshot.state) {
@@ -161,7 +173,7 @@ const MyPage = () => {
             console.log(result);
           }
           setIsUploading(false);
-        }
+        },
       );
     } catch (err) {
       console.error(err);
@@ -190,7 +202,9 @@ const MyPage = () => {
           <div className="text-2xl rounded-md bg-gray-300 text-gray-300 mb-2">
             {"user.username"}
           </div>
-          <div className="w-2/3 text-sm rounded-md bg-gray-300 text-gray-300">{"설명"}</div>
+          <div className="w-2/3 text-sm rounded-md bg-gray-300 text-gray-300">
+            {"설명"}
+          </div>
         </div>
       </div>
     ) : (
@@ -243,7 +257,9 @@ const MyPage = () => {
     <section className="min-h-screen flex flex-col justify-between">
       <NavBar />
       <div className="px-5 md:p-8 max-w-5xl mx-auto w-full flex flex-col ">
-        <div className="w-full mt-16 mb-12 mx-auto p-5 border-b">{profileRender()}</div>
+        <div className="w-full mt-16 mb-12 mx-auto p-5 border-b">
+          {profileRender()}
+        </div>
         <div className=" w-full flex flex-col gap-2">
           <h3 className="text-2xl font-bold ">내 정보</h3>
           {userLoading ? (
