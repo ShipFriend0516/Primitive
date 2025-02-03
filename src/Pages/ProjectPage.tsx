@@ -21,7 +21,6 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { ProjectDetail } from "../Types/ProjectType";
 import useStore from "../store";
 import { HiPencilSquare } from "react-icons/hi2";
-import Pagination from "../Components/Pagination";
 import LoadingCircle from "../Components/common/LoadingCircle";
 import ScrollToTop from "../Components/common/ScrollToTop";
 
@@ -49,6 +48,7 @@ const ProjectPage = () => {
   const [projectsLoading, setProjectsLoading] = useState(true);
   const [filter, setFilter] = useState<Filter>(isFilter(filterKind) ? filterKind : "default");
   const [tagFilter, setTagFilter] = useState("");
+  const [isLast, setIsLast] = useState(false);
 
   // 페이지네이션
   const [additionalLoading, setAdditionalLoading] = useState(false);
@@ -59,7 +59,7 @@ const ProjectPage = () => {
   };
   const observer = new IntersectionObserver(async (entries, observer) => {
     entries.forEach((entry) => {
-      if (entry.isIntersecting) {
+      if (entry.isIntersecting && !isLast) {
         setAdditionalLoading(true);
         getAdditionalProjects(isLoggedIn || false, lastDoc!);
         setAdditionalLoading(false);
@@ -119,6 +119,11 @@ const ProjectPage = () => {
             ...(doc.data() as Omit<ProjectDetail, "id">),
           }))
         );
+        if(response.docs.length < 12) {
+            setIsLast(true);
+        } else {
+            setIsLast(false);
+        }
         const lastDoc = response.docs[response.docs.length - 1];
         setLastDoc(lastDoc);
         setProjectsLoading(false);
