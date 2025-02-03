@@ -143,15 +143,14 @@ const AuthForm = () => {
       <GlassButton
         onClick={(e) => handleSubmit(e as React.MouseEvent)}
         className={"authBtn flex justify-center items-center"}
-        text={
-          <>
-            {isLogin
-              ? `${loginLoading ? "" : "로그인"}`
-              : `${loginLoading ? "" : "회원가입"}`}
-            {loginLoading && <LoadingSpinner text={"Loading..."} />}
-          </>
-        }
-      />
+      >
+        <>
+          {isLogin
+            ? `${loginLoading ? "" : "로그인"}`
+            : `${loginLoading ? "" : "회원가입"}`}
+          {loginLoading && <LoadingSpinner text={"Loading..."} />}
+        </>
+      </GlassButton>
       <div className="p-1 text-left text-red-500 text-sm">{error}</div>
       <div className="p-1 text-left text-green-500 text-sm">{message}</div>
       {!isLogin && (

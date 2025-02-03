@@ -7,7 +7,7 @@ import Introduction2 from "../../Images/2024/2.webp";
 import Introduction3 from "../../Images/2024/3.webp";
 import Introduction4 from "../../Images/2024/4.webp";
 
-import ProjectCard from "../ProjectCard";
+import ProjectCard from "../project/ProjectCard";
 
 import { useEffect, useRef, useState } from "react";
 import Cover from "./Cover";
@@ -53,7 +53,10 @@ const Intro = () => {
   }, []);
 
   useEffect(() => {
-    const callback = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
+    const callback = (
+      entries: IntersectionObserverEntry[],
+      observer: IntersectionObserver,
+    ) => {
       entries.forEach((entry, i) => {
         if (entry.isIntersecting) {
           projectCount && startAnimation();
@@ -126,7 +129,11 @@ const Intro = () => {
   const getRecentProjects = async () => {
     try {
       const response = await getDocs(
-        query(collection(db, "projects"), where("isPrivate", "==", false), limit(3))
+        query(
+          collection(db, "projects"),
+          where("isPrivate", "==", false),
+          limit(3),
+        ),
       );
 
       const data = response.docs.map((doc) => ({
@@ -140,8 +147,8 @@ const Intro = () => {
     }
   };
 
-  if(!db) {
-    return <div>Firebase와의 연결이 없습니다. </div>
+  if (!db) {
+    return <div>Firebase와의 연결이 없습니다. </div>;
   }
 
   return (
@@ -149,7 +156,9 @@ const Intro = () => {
       <section className="bg-gradient-to-b from-black to-indigo-950 bg-black text-white h-screen flex flex-col justify-center items-center select-none">
         <div className="top-1/4 mb-10">
           <h1 className="text-center primitive">PRIMITIVE</h1>
-          <h2 className="btn-shine text-center">0과 1 사이 무한한 가능성, KNU 프로그래밍 동아리</h2>
+          <h2 className="btn-shine text-center">
+            0과 1 사이 무한한 가능성, KNU 프로그래밍 동아리
+          </h2>
         </div>
       </section>
       <section className="bg-white w-screen select-none">
@@ -174,14 +183,16 @@ const Intro = () => {
             PRIMITIVE는..
           </h3>
           <p className="md:text-2xl text-xl mb-2">
-            프리미티브는 공주대학교 천안캠퍼스에서 활동하고 있는 프로그래밍 동아리입니다.
+            프리미티브는 공주대학교 천안캠퍼스에서 활동하고 있는 프로그래밍
+            동아리입니다.
           </p>
           <p className="md:text-2xl text-xl mb-2">
-            열정적인 동아리 부원들과 함께 프로그래밍을 통해 앱이나 웹사이트를 만들어 실제로 사용할
-            수 있는 멋진 결과물들을 만들어 내고 있습니다.
+            열정적인 동아리 부원들과 함께 프로그래밍을 통해 앱이나 웹사이트를
+            만들어 실제로 사용할 수 있는 멋진 결과물들을 만들어 내고 있습니다.
           </p>
           <p className="md:text-2xl text-xl mb-2">
-            프로그래밍으로 즐겁고 의미있는 대학생활을 보내고 싶다면, PRIMITIVE와 함께 하세요!
+            프로그래밍으로 즐겁고 의미있는 대학생활을 보내고 싶다면, PRIMITIVE와
+            함께 하세요!
           </p>
           <div className="cardSection">
             <div className="introCards mt-10" ref={introCardRef}>
@@ -194,7 +205,9 @@ const Intro = () => {
                 <span className="font-bold">{120}명+</span>
               </div>
               <div className="w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100">
-                <h4 className="text-2xl md:text-3xl gothic">등록된 프로젝트 수</h4>
+                <h4 className="text-2xl md:text-3xl gothic">
+                  등록된 프로젝트 수
+                </h4>
                 <span className="font-bold">
                   <span>{animatedProjectCount}</span>개
                 </span>
@@ -210,8 +223,8 @@ const Intro = () => {
               무슨 활동을 하나요?
             </h3>
             <p className="text-xl">
-              정규 활동으로는 신입생 교육과 창업동아리가 있고, 자율적으로 스터디·공모전·프로젝트를
-              진행합니다.
+              정규 활동으로는 신입생 교육과 창업동아리가 있고, 자율적으로
+              스터디·공모전·프로젝트를 진행합니다.
             </p>
           </div>
           <div
@@ -243,7 +256,9 @@ const Intro = () => {
             <h3 className="2xl:text-4xl xl:text-4xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4">
               대표 프로젝트
             </h3>
-            <p className="text-xl">Primitive의 대표 프로젝트에는 이런 것들이 있어요</p>
+            <p className="text-xl">
+              Primitive의 대표 프로젝트에는 이런 것들이 있어요
+            </p>
           </div>
           <div className="w-full h-2/4 grid grid-cols-1 grid-rows-1 md:grid-cols-3 gap-5 ">
             {projectsLoading

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import ProjectType from "../Types/ProjectType.d";
+import ProjectType from "../../Types/ProjectType";
 import { HiLockClosed } from "react-icons/hi";
-import logo from "../Images/logo.webp";
+import logo from "../../Images/logo.webp";
 import { useState } from "react";
 import LoadingSpinner from "@/src/Components/common/loading/LoadingSpinner";
 import { formatTimeDifference } from "@/src/Utils/timeFormat";
