@@ -1,7 +1,7 @@
 interface GlassButtonProps {
   className?: string;
   onClick?: (e?: React.MouseEvent) => void;
-  children?: React.ReactElement;
+  children?: React.ReactElement | string;
 }
 
 const GlassButton = ({ className, onClick, children }: GlassButtonProps) => {
