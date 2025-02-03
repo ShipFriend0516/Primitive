@@ -23,6 +23,7 @@ import useStore from "../store";
 import { HiPencilSquare } from "react-icons/hi2";
 import LoadingCircle from "../Components/common/LoadingCircle";
 import ScrollToTop from "../Components/common/ScrollToTop";
+import TestProjectCard from "@/src/Components/project/TestProjectCard";
 
 type Filter = "default" | "app" | "web" | "personal" | "team";
 type MyIndexType = {
@@ -282,7 +283,10 @@ const ProjectPage = () => {
             id="projectGrid"
             className="w-4/5 mx-20 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3"
           >
-            {projectsLoading ? preRender() : renderProjects()}
+            {/*{projectsLoading ? preRender() : renderProjects()}*/}
+            {projects.map((project) => (
+              <TestProjectCard projectDetail={project} />
+            ))}
           </div>
           {additionalLoading && <LoadingCircle />}
         </div>
