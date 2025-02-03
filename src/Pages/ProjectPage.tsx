@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import NavBar from "../Components/common/NavBar";
 import ProjectCard from "../Components/project/ProjectCard";
 import Footer from "../Components/common/Footer";
@@ -27,6 +27,7 @@ import LoadingCircle from "../Components/common/LoadingCircle";
 import ScrollToTop from "../Components/common/ScrollToTop";
 import TestProjectCard from "@/src/Components/project/TestProjectCard";
 import { getLikesCount } from "@/src/api/firebase/like";
+import Skeleton from "@/src/Components/common/Skeleton";
 
 type Filter = "default" | "app" | "web" | "personal" | "team";
 type MyIndexType = {
@@ -318,9 +319,25 @@ const ProjectPage = () => {
             className="w-4/5 mx-20 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3"
           >
             {/*{projectsLoading ? preRender() : renderProjects()}*/}
-            {projects.map((project) => (
-              <TestProjectCard key={project.id} projectDetail={project} />
-            ))}
+            {projectsLoading
+              ? Array(12)
+                  .fill(0)
+                  .map((el) => (
+                    <>
+                      <Skeleton
+                        className={
+                          "flex flex-col w-full h-[363px] p-1 gap-2 bg-gray-300/50 rounded-b-none"
+                        }
+                      >
+                        <>
+                          <Skeleton className={"w-full h-64"} />
+                        </>
+                      </Skeleton>
+                    </>
+                  ))
+              : projects.map((project) => (
+                  <TestProjectCard key={project.id} projectDetail={project} />
+                ))}
           </div>
           {additionalLoading && <LoadingCircle />}
         </div>
