@@ -1,13 +1,19 @@
 interface GlassButtonProps {
-    text: string | React.ReactElement
-    className?: string
-    onClick?: (e?: React.MouseEvent) => void
+  className?: string;
+  onClick?: (e?: React.MouseEvent) => void;
+  children?: React.ReactElement;
 }
 
-const GlassButton = ({text, className,onClick}:GlassButtonProps) => {
-    return <button  type="button" onClick={onClick} className={'glassmorphism ' + className}>
-        {text}
+const GlassButton = ({ className, onClick, children }: GlassButtonProps) => {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={"glassmorphism " + className}
+    >
+      {children}
     </button>
-}
+  );
+};
 
-export default GlassButton
+export default GlassButton;
