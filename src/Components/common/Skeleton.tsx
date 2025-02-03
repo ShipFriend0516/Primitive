@@ -1,8 +1,13 @@
 interface SkeletonProps {
   className?: string;
+  children?: React.ReactElement;
 }
 
-const Skeleton = ({ className }: SkeletonProps) => {
-  return <div className={`bg-gray-500/80 animate-pulse ${className} `}></div>;
+const Skeleton = ({ className, children }: SkeletonProps) => {
+  return (
+    <div className={`bg-gray-300/70 rounded-md animate-pulse ${className} `}>
+      {children}
+    </div>
+  );
 };
 export default Skeleton;

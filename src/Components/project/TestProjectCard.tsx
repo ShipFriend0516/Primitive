@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { getGitHubStars } from "@/src/Utils/githubAPI";
 import ProjectHoverDetail from "@/src/Components/project/ProjectHoverDetail";
 import LoadingSpinner from "@/src/Components/common/loading/LoadingSpinner";
-import { FaRegImage } from "react-icons/fa";
 import { MdOutlineHideImage } from "react-icons/md";
 
 interface ProjectCardProps {
@@ -51,7 +50,6 @@ const TestProjectCard = ({ projectDetail }: ProjectCardProps) => {
           githubStars={githubStars || 0}
         />
       </div>
-
       <Link
         className="p-4 w-full h-2/7 flex flex-col h-[108px]"
         to={`/project/${projectDetail.id}`}
