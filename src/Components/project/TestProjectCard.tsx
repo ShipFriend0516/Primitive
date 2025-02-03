@@ -4,6 +4,9 @@ import { HiLockClosed } from "react-icons/hi";
 import { useEffect, useState } from "react";
 import { getGitHubStars } from "@/src/Utils/githubAPI";
 import ProjectHoverDetail from "@/src/Components/project/ProjectHoverDetail";
+import LoadingSpinner from "@/src/Components/common/loading/LoadingSpinner";
+import { FaRegImage } from "react-icons/fa";
+import { MdOutlineHideImage } from "react-icons/md";
 
 interface ProjectCardProps {
   projectDetail: ProjectDetail;
@@ -11,7 +14,7 @@ interface ProjectCardProps {
 
 const TestProjectCard = ({ projectDetail }: ProjectCardProps) => {
   const [githubStars, setGithubStars] = useState<number | null>(null);
-
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
   useEffect(() => {
     const fetchGitHubStars = async () => {
       if (projectDetail.githubLink) {
@@ -25,9 +28,21 @@ const TestProjectCard = ({ projectDetail }: ProjectCardProps) => {
 
   return (
     <div className="relative bg-white shadow shadow-gray-300 rounded-md p-1 flex flex-col justify-center items-center aspect-square">
-      <div className="w-full h-4/5 overflow-hidden group  ">
+      <div className="w-full h-4/5 overflow-hidden group bg-gray-100 ">
+        {!isImageLoaded && (
+          <div className={"flex items-center justify-center h-full"}>
+            {projectDetail.thumbnail ? (
+              <LoadingSpinner
+                className={"text-black/75 w-12 h-12 animate-spin"}
+              />
+            ) : (
+              <MdOutlineHideImage color={"gray"} size={32} />
+            )}
+          </div>
+        )}
         <img
-          className="rounded-t-md w-full h-full object-cover transition-transform group-hover:scale-105"
+          onLoad={() => setIsImageLoaded(true)}
+          className="rounded-t-md w-full h-full object-cover transition-transform group-hover:scale-105 "
           src={projectDetail.thumbnail}
           alt={projectDetail.name}
         />
