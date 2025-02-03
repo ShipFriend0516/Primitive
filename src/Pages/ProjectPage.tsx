@@ -15,6 +15,8 @@ import {
   startAfter,
   startAt,
   where,
+  getDoc,
+  doc,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -24,6 +26,7 @@ import { HiPencilSquare } from "react-icons/hi2";
 import LoadingCircle from "../Components/common/LoadingCircle";
 import ScrollToTop from "../Components/common/ScrollToTop";
 import TestProjectCard from "@/src/Components/project/TestProjectCard";
+import { getLikesCount } from "@/src/api/firebase/like";
 
 type Filter = "default" | "app" | "web" | "personal" | "team";
 type MyIndexType = {
@@ -104,11 +107,12 @@ const ProjectPage = () => {
   // 메서드
 
   // 프로젝트 불러오기
+
   const getProjects = async () => {
     try {
       // Filter 없을 때
       if (filter === "default") {
-        const response = await getDocs(
+        const projectDocs = await getDocs(
           query(
             collection(db, "projects"),
             ...(isLoggedIn ? [] : [where("isPrivate", "==", false)]),
@@ -118,18 +122,28 @@ const ProjectPage = () => {
             // orderBy("createdAt", "desc")
           ),
         );
-        setProjects(
-          response.docs.map((doc) => ({
+        const projectsData = await Promise.all(
+          projectDocs.docs.map(async (doc) => ({
             id: doc.id,
             ...(doc.data() as Omit<ProjectDetail, "id">),
           })),
         );
-        if (response.docs.length < 12) {
+
+        const projectsWithLikes = await Promise.all(
+          projectsData.map(async (project) => ({
+            ...project,
+            likeCount: (await getLikesCount(project.id)) || 0,
+          })),
+        );
+
+        setProjects(projectsWithLikes);
+
+        if (projectDocs.docs.length < 12) {
           setIsLast(true);
         } else {
           setIsLast(false);
         }
-        const lastDoc = response.docs[response.docs.length - 1];
+        const lastDoc = projectDocs.docs[projectDocs.docs.length - 1];
         setLastDoc(lastDoc);
         setProjectsLoading(false);
       } else {
@@ -147,12 +161,22 @@ const ProjectPage = () => {
         );
         const lastDoc = response.docs[response.docs.length - 1];
         setLastDoc(lastDoc);
-        setProjects(
-          response.docs.map((doc) => ({
+
+        const projects = await Promise.all(
+          response.docs.map(async (doc) => ({
             id: doc.id,
             ...(doc.data() as Omit<ProjectDetail, "id">),
           })),
         );
+
+        const projectsWithLikes = await Promise.all(
+          projects.map(async (project) => ({
+            ...project,
+            likeCount: (await getLikesCount(project.id)) || 0,
+          })),
+        );
+
+        setProjects(projectsWithLikes);
         setProjectsLoading(false);
       }
     } catch (error) {
@@ -182,18 +206,28 @@ const ProjectPage = () => {
       );
 
       const response = await getDocs(additionalQuery);
-      const data = response.docs.map((doc) => ({
-        id: doc.id,
-        ...(doc.data() as Omit<ProjectDetail, "id">),
-      }));
-      console.log(data);
+      const data = await Promise.all(
+        response.docs.map((doc) => ({
+          id: doc.id,
+          likeCount: 0,
+          ...(doc.data() as Omit<ProjectDetail, "id">),
+        })),
+      );
+
+      const projectData = await Promise.all(
+        data.map(async (project) => ({
+          ...project,
+          likeCount: (await getLikesCount(project.id)) || 0,
+        })),
+      );
+
       const nextLastDoc = response.docs[response.docs.length - 1];
       if (nextLastDoc) {
         setLastDoc(nextLastDoc);
       } else {
         setLastDoc(null);
       }
-      setProjects((prev) => [...prev, ...data]);
+      setProjects((prev) => [...prev, ...projectData]);
 
       console.log("마지막 요소 감지됨");
     } catch (err) {
@@ -285,7 +319,7 @@ const ProjectPage = () => {
           >
             {/*{projectsLoading ? preRender() : renderProjects()}*/}
             {projects.map((project) => (
-              <TestProjectCard projectDetail={project} />
+              <TestProjectCard key={project.id} projectDetail={project} />
             ))}
           </div>
           {additionalLoading && <LoadingCircle />}

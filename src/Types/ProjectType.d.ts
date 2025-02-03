@@ -23,4 +23,5 @@ export interface ProjectDetail {
   isPrivate?: boolean;
   githubLink?: string;
   otherLink?: string;
+  likeCount?: number;
 }

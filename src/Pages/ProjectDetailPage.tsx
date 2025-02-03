@@ -32,6 +32,7 @@ import ImageDetailView from "../Components/common/ImageDetailView";
 import ScrollToTop from "../Components/common/ScrollToTop";
 import { IoLogoGithub } from "react-icons/io";
 import { HiLink } from "react-icons/hi";
+import { getLikesCount } from "@/src/api/firebase/like";
 
 const ProjectDetailPage = () => {
   const { id } = useParams();
@@ -77,7 +78,9 @@ const ProjectDetailPage = () => {
   }, [id, project]);
 
   useEffect(() => {
-    getLikesCount();
+    if (id != null) {
+      getLikesCount(id).then((result) => setLikesCount(result || 0));
+    }
   }, [id]);
 
   // Method
@@ -87,7 +90,10 @@ const ProjectDetailPage = () => {
         const projectRef = doc(db, "projects", id);
         const response = await getDoc(projectRef);
         console.log(response.data());
-        setProject({ id: response.id, ...(response.data() as Omit<ProjectDetail, "id">) });
+        setProject({
+          id: response.id,
+          ...(response.data() as Omit<ProjectDetail, "id">),
+        });
         setProjectLoading(false);
       }
     } catch (err) {
@@ -135,7 +141,11 @@ const ProjectDetailPage = () => {
   const getComments = async () => {
     try {
       const response = await getDocs(
-        query(collection(db, "comments"), where("projectId", "==", id), orderBy("createdAt"))
+        query(
+          collection(db, "comments"),
+          where("projectId", "==", id),
+          orderBy("createdAt"),
+        ),
       );
 
       const userdatas = await Promise.all(
@@ -149,7 +159,7 @@ const ProjectDetailPage = () => {
               profileThumbnail: userDoc.data()?.profileThumbnail,
             } || "Unknown User"
           );
-        })
+        }),
       );
 
       const data = await Promise.all(
@@ -160,7 +170,7 @@ const ProjectDetailPage = () => {
             username: userdatas[index].username as string,
             profileThumbnail: userdatas[index].profileThumbnail as string,
           };
-        })
+        }),
       );
 
       setComments(data);
@@ -197,7 +207,9 @@ const ProjectDetailPage = () => {
     try {
       const commentRef = doc(db, "comments", commentId);
       await deleteDoc(commentRef);
-      setComments((prev) => prev?.filter((comment) => comment.id !== commentId));
+      setComments((prev) =>
+        prev?.filter((comment) => comment.id !== commentId),
+      );
     } catch (err) {
       console.error(err);
     }
@@ -219,7 +231,7 @@ const ProjectDetailPage = () => {
           } else {
             return value;
           }
-        })
+        }),
       );
     } catch (error) {
       console.error(error);
@@ -300,15 +312,6 @@ const ProjectDetailPage = () => {
 
   // Like
 
-  const getLikesCount = async () => {
-    try {
-      const likesRef = await getDocs(query(collection(db, "likes"), where("projectId", "==", id)));
-      setLikesCount(likesRef.docs.length || 0);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const getIsLiked = async () => {
     try {
       const likesRef = await getDocs(
@@ -316,8 +319,8 @@ const ProjectDetailPage = () => {
           collection(db, "likes"),
           where("projectId", "==", id),
           where("userId", "==", userId),
-          limit(1)
-        )
+          limit(1),
+        ),
       );
 
       if (likesRef.docs.length > 0) {
@@ -347,7 +350,11 @@ const ProjectDetailPage = () => {
   const deleteLike = async () => {
     try {
       const like = await getDocs(
-        query(collection(db, "likes"), where("projectId", "==", id), where("userId", "==", userId))
+        query(
+          collection(db, "likes"),
+          where("projectId", "==", id),
+          where("userId", "==", userId),
+        ),
       );
       const doc = like.docs;
       console.log(doc);
@@ -454,7 +461,9 @@ const ProjectDetailPage = () => {
               <span className="animate-bounce delay-3">.</span>
             </div>
           )}
-          <h1 className="text-3xl text-center md:text-5xl font-bold">{project!.name}</h1>
+          <h1 className="text-3xl text-center md:text-5xl font-bold">
+            {project!.name}
+          </h1>
           <p className=" md:text-xl mb-2 text-center">{project!.intro}</p>
           <div className="flex justify-between">
             <span className="text-left w-full mb-2 text-sm">
@@ -463,7 +472,10 @@ const ProjectDetailPage = () => {
             <span className="text-right w-full mb-2 text-sm text-gray-500">
               {isProjectOwner && (
                 <>
-                  <button className="mr-1" onClick={() => setUpdateDialog(true)}>
+                  <button
+                    className="mr-1"
+                    onClick={() => setUpdateDialog(true)}
+                  >
                     수정
                   </button>
                   <button onClick={() => setDeleteDialog(true)}>삭제</button>
@@ -472,7 +484,9 @@ const ProjectDetailPage = () => {
             </span>
           </div>
           <div className="w-full inline-flex flex-wrap items-center gap-2 mt-2 text-xs md:text-sm">
-            <h3 className="px-2 py-1 bg-indigo-800 text-white rounded-md">프로젝트 참여자</h3>
+            <h3 className="px-2 py-1 bg-indigo-800 text-white rounded-md">
+              프로젝트 참여자
+            </h3>
             {project!.participants!.map((participant, index) => (
               <span
                 key={index}
@@ -505,7 +519,9 @@ const ProjectDetailPage = () => {
           </div>
           <article
             className="w-full min-w-full mt-6 projectDescription flex flex-col items-start"
-            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(project!.description!) }}
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(project!.description!),
+            }}
           ></article>
           <hr />
           <div className="inline-flex gap-1.5 mt-3">
@@ -518,7 +534,9 @@ const ProjectDetailPage = () => {
               onClick={toggleLike}
               className="inline-flex items-center gap-1 rounded-lg border px-3 py-1 hover:bg-gray-700 hover:text-white"
             >
-              <div className="text-xl">{isLiked ? <HiHeart /> : <HiOutlineHeart />}</div>
+              <div className="text-xl">
+                {isLiked ? <HiHeart /> : <HiOutlineHeart />}
+              </div>
               <span>{likesCount || 0}</span>
             </button>
             {project?.githubLink && (
@@ -582,7 +600,9 @@ const ProjectDetailPage = () => {
           </div>
           {deleteDialog && (
             <CheckDialog
-              message={"프로젝트는 삭제하면 복구가 불가능합니다! \n그래도 삭제하시겠습니까?"}
+              message={
+                "프로젝트는 삭제하면 복구가 불가능합니다! \n그래도 삭제하시겠습니까?"
+              }
               btnColor={"red"}
               onConfirm={() => deleteProject()}
               setDialogOpen={setDeleteDialog}
@@ -599,7 +619,10 @@ const ProjectDetailPage = () => {
             />
           )}
           {modalIsOpen && (
-            <ImageDetailView closeModal={closeModal} thumbnail={project?.thumbnail || ""} />
+            <ImageDetailView
+              closeModal={closeModal}
+              thumbnail={project?.thumbnail || ""}
+            />
           )}
           <ScrollToTop />
         </div>

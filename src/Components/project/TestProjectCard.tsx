@@ -7,34 +7,48 @@ import {
   FaStar,
   FaLink,
 } from "react-icons/fa";
-import ProfileContainer from "@/src/Components/project/ProfileContainer";
 import GlassButton from "@/src/Components/common/button/GlassButton";
 import { ProjectDetail } from "@/src/Types/ProjectType";
 import { Link } from "react-router-dom";
 import { HiLockClosed } from "react-icons/hi";
+import { useEffect, useState } from "react";
+import { getGitHubStars } from "@/src/Utils/githubAPI";
 
 interface ProjectCardProps {
   projectDetail: ProjectDetail;
 }
 
 const TestProjectCard = ({ projectDetail }: ProjectCardProps) => {
+  const [githubStars, setGithubStars] = useState<number | null>(null);
+
+  useEffect(() => {
+    const fetchGitHubStars = async () => {
+      if (projectDetail.githubLink) {
+        const stars = await getGitHubStars(projectDetail.githubLink);
+        setGithubStars(stars);
+      }
+    };
+
+    fetchGitHubStars();
+  }, [projectDetail.githubLink]);
+
   return (
     <div className="relative bg-white shadow shadow-gray-300 rounded-md p-1 flex flex-col justify-center items-center aspect-square">
-      <div className="w-full h-4/5 overflow-hidden group relative">
+      <div className="w-full h-4/5 overflow-hidden group  ">
         <img
           className="rounded-t-md w-full h-full object-cover transition-transform group-hover:scale-105"
           src={projectDetail.thumbnail}
           alt={projectDetail.name}
         />
         <div className="rounded-md transition-all duration-300 p-6 backdrop-blur-md bg-black/30 w-full h-full absolute top-0 left-0 opacity-0 group-hover:opacity-100 flex flex-col justify-between text-white">
-          {/* Upper Section */}
-          <div className="space-y-2 ">
+          <div
+            className="space-y-2"
+            aria-label={`[${projectDetail.name}] 프로젝트 디테일`}
+          >
             <h3 className="text-2xl font-bold">{projectDetail.name}</h3>
             <p className="text-sm leading-relaxed text-nowrap overflow-x-hidden">
               {projectDetail.intro}
             </p>
-
-            {/* Project Details */}
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <FaCalendar size={16} />
@@ -50,8 +64,6 @@ const TestProjectCard = ({ projectDetail }: ProjectCardProps) => {
                 </span>
               </div>
             </div>
-
-            {/* Tech Stack */}
             <div className="flex flex-wrap gap-2">
               {(projectDetail.techStack || []).slice(0, 4).map((tech) => (
                 <span
@@ -63,10 +75,27 @@ const TestProjectCard = ({ projectDetail }: ProjectCardProps) => {
               ))}
             </div>
           </div>
-
-          {/* Lower Section */}
           <div className="space-y-4">
-            {/* Action Buttons */}
+            {/* Stats */}
+            <div className="flex justify-around py-4 border-t border-white/20">
+              <div className="flex items-center gap-1">
+                <FaHeart size={24} />
+                <span className="text-sm">{projectDetail.likeCount || 0}</span>
+              </div>
+              {/*<div className="flex items-center gap-1">*/}
+              {/*  <FaEye size={24} />*/}
+              {/*  <span className="text-sm">{5}</span>*/}
+              {/*</div>*/}
+              {/* GitHub 링크가 있을 때만 스타 수를 표시합니다 */}
+              {projectDetail.githubLink && (
+                <div className="flex items-center gap-1">
+                  <FaStar size={24} />
+                  <span className="text-sm">
+                    {githubStars !== null ? githubStars : "-"}
+                  </span>
+                </div>
+              )}
+            </div>
             <div className="w-full flex gap-2 justify-normal">
               <Link className={"flex-1 "} to={`/project/${projectDetail.id}`}>
                 <GlassButton className={"w-full"}>프로젝트 보기</GlassButton>
@@ -94,19 +123,15 @@ const TestProjectCard = ({ projectDetail }: ProjectCardProps) => {
         </div>
       </div>
 
-      {/* Bottom Profile Section */}
       <Link
-        className="p-4 w-full h-1/5 flex items-center justify-between"
+        className="p-4 w-full h-2/7 flex flex-col h-[108px]"
         to={`/project/${projectDetail.id}`}
       >
-        <ProfileContainer
-          username={"정우"}
-          thumbnailUrl={"/24/24PrimitiveLogoTransparent.png"}
-        />
-        <div className={"inline-flex items-center gap-1"}>
+        <div className={"inline-flex items-center gap-2"}>
           {projectDetail.isPrivate && <HiLockClosed />}
-          <h3 className="font-bold">{projectDetail.name}</h3>
+          <h3 className="text-xl font-bold">{projectDetail.name}</h3>
         </div>
+        <p>{projectDetail.intro}</p>
       </Link>
     </div>
   );
