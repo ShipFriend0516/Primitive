@@ -127,15 +127,8 @@ const ProjectPage = () => {
           ...(doc.data() as Omit<ProjectDetail, "id">),
         })),
       );
-      // 좋아요 Join
-      const projectsWithLikes = await Promise.all(
-        projectsData.map(async (project) => ({
-          ...project,
-          likeCount: (await getLikesCount(project.id)) || 0,
-        })),
-      );
 
-      setProjects(projectsWithLikes);
+      setProjects(projectsData);
 
       if (projectDocs.docs.length < 12) {
         setIsLast(true);
