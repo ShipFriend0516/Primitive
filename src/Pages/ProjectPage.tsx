@@ -1,4 +1,4 @@
-import { Suspense, useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import NavBar from "../Components/common/NavBar";
 import ProjectCard from "../Components/project/ProjectCard";
 import Footer from "../Components/common/Footer";
@@ -6,21 +6,16 @@ import {
   QueryDocumentSnapshot,
   QueryFieldFilterConstraint,
   collection,
-  endAt,
-  endBefore,
   getDocs,
   limit,
   orderBy,
   query,
   startAfter,
-  startAt,
   where,
-  getDoc,
-  doc,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { ProjectDetail } from "../Types/ProjectType";
+import { Filter, ProjectDetail } from "../Types/ProjectType";
 import useStore from "../store";
 import { HiPencilSquare } from "react-icons/hi2";
 import LoadingCircle from "../Components/common/LoadingCircle";
@@ -28,8 +23,10 @@ import ScrollToTop from "../Components/common/ScrollToTop";
 import TestProjectCard from "@/src/Components/project/TestProjectCard";
 import { getLikesCount } from "@/src/api/firebase/like";
 import Skeleton from "@/src/Components/common/Skeleton";
+import FilterContainer from "@/src/Components/project/FilterContainer";
+import ProjectHeader from "@/src/Components/project/ProjectHeader";
+import ProjectGridLayout from "@/src/Components/project/ProjectGridLayout";
 
-type Filter = "default" | "app" | "web" | "personal" | "team";
 type MyIndexType = {
   team: QueryFieldFilterConstraint;
   personal: QueryFieldFilterConstraint;
@@ -113,16 +110,15 @@ const ProjectPage = () => {
     try {
       // Filter 없을 때
       if (filter === "default") {
-        const projectDocs = await getDocs(
-          query(
-            collection(db, "projects"),
-            ...(isLoggedIn ? [] : [where("isPrivate", "==", false)]),
-            ...(tagFilter
-              ? [where("techStack", "array-contains", tagFilter)]
-              : []),
-            // orderBy("createdAt", "desc")
-          ),
+        const q = query(
+          collection(db, "projects"),
+          ...(isLoggedIn ? [] : [where("isPrivate", "==", false)]),
+          ...(tagFilter
+            ? [where("techStack", "array-contains", tagFilter)]
+            : []),
+          // orderBy("createdAt", "desc")
         );
+        const projectDocs = await getDocs(q);
         const projectsData = await Promise.all(
           projectDocs.docs.map(async (doc) => ({
             id: doc.id,
@@ -149,17 +145,16 @@ const ProjectPage = () => {
         setProjectsLoading(false);
       } else {
         // Filter 있을 시
-        const response = await getDocs(
-          query(
-            collection(db, "projects"),
-            filterWhere[filter as keyof MyIndexType],
-            ...(isLoggedIn ? [] : [where("isPrivate", "==", false)]),
-            ...(tagFilter !== ""
-              ? [where("techStack", "array-contains", tagFilter)]
-              : []),
-            orderBy("createdAt", "desc"),
-          ),
+        const q = query(
+          collection(db, "projects"),
+          filterWhere[filter as keyof MyIndexType],
+          ...(isLoggedIn ? [] : [where("isPrivate", "==", false)]),
+          ...(tagFilter !== ""
+            ? [where("techStack", "array-contains", tagFilter)]
+            : []),
+          orderBy("createdAt", "desc"),
         );
+        const response = await getDocs(q);
         const lastDoc = response.docs[response.docs.length - 1];
         setLastDoc(lastDoc);
 
@@ -236,109 +231,45 @@ const ProjectPage = () => {
     }
   };
 
-  // Render
-  const renderProjects = () => {
-    return projects.map((project, index) => (
-      <ProjectCard
-        key={project.id}
-        projectThumbnail={project.thumbnail!}
-        projectId={project.id}
-        projectName={project.name!}
-        projectDate={project.createdAt!}
-        projectDescription={project.intro!}
-        projectTechStacks={project.techStack!}
-        projectParticipate={project.participants}
-        isPrivate={project.isPrivate}
-        setTagFilter={setTagFilter}
-      />
-    ));
-  };
-
   const preRender = () => {
     return Array(12)
       .fill(0)
-      .map((project, index) => (
-        <ProjectCard
-          isEmpty={true}
-          key={index}
-          projectThumbnail={project.thumbnail!}
-          projectId={project.id}
-          projectName={project.name!}
-          projectDescription={project.intro!}
-          projectTechStacks={project.techStack!}
-          projectParticipate={project.participants}
-          setTagFilter={() => {}}
-        />
+      .map((el) => (
+        <>
+          <Skeleton
+            className={
+              "flex flex-col w-full h-[363px] p-1 gap-2 bg-gray-300/50 rounded-b-none"
+            }
+          >
+            <>
+              <Skeleton className={"w-full h-64"} />
+            </>
+          </Skeleton>
+        </>
       ));
   };
+
+  const renderProjects = () => {
+    return projects.map((project) => (
+      <TestProjectCard key={project.id} projectDetail={project} />
+    ));
+  };
+
   return (
     <section className="flex flex-col  min-h-screen justify-between">
       <NavBar />
       <>
         <div className="max-w-7xl mx-auto min-h-fit w-full flex-grow flex flex-col items-center relative pb-20">
-          <h1 className="inline-flex text-5xl mt-24 font-bold relative">
-            프로젝트
-            <Link
-              to={"/project/edit"}
-              className="projectAddBtn absolute bg-white -right-14 border rounded-full w-12 h-12 flex justify-center items-center text-3xl cursor-pointer hover:bg-indigo-950 hover:text-white"
-            >
-              <HiPencilSquare />
-            </Link>
-          </h1>
-          <p className="text-lg mt-2 mb-5">프리미티브의 활동들을 모아보세요!</p>
-          <div
-            id="filterGroup"
-            className="w-full justify-center relative flex flex-wrap max-w-full gap-1 mb-5"
-          >
-            <div
-              onClick={() => setFilter("default")}
-              className={`${filter === "default" && "selected"}`}
-            >
-              전체
-            </div>
-            {filters.map((kind) => (
-              <div
-                key={kind}
-                onClick={() => setFilter(kind as Filter)}
-                className={`${filter === kind && "selected"}`}
-              >
-                {kind.toUpperCase()[0].concat(kind.slice(1))}
-              </div>
-            ))}
-          </div>
-          <div className="w-4/5 inline-flex justify-end items-center">
-            {tagFilter && (
-              <div onClick={() => setTagFilter("")}>
-                <span className="tag px-1.5 py-0.5">{tagFilter}</span>로 검색
-                중...
-              </div>
-            )}
-          </div>
-          <div
-            id="projectGrid"
-            className="w-4/5 mx-20 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3"
-          >
-            {/*{projectsLoading ? preRender() : renderProjects()}*/}
-            {projectsLoading
-              ? Array(12)
-                  .fill(0)
-                  .map((el) => (
-                    <>
-                      <Skeleton
-                        className={
-                          "flex flex-col w-full h-[363px] p-1 gap-2 bg-gray-300/50 rounded-b-none"
-                        }
-                      >
-                        <>
-                          <Skeleton className={"w-full h-64"} />
-                        </>
-                      </Skeleton>
-                    </>
-                  ))
-              : projects.map((project) => (
-                  <TestProjectCard key={project.id} projectDetail={project} />
-                ))}
-          </div>
+          <ProjectHeader />
+          <FilterContainer
+            filter={filter}
+            setFilter={setFilter}
+            setTagFilter={setTagFilter}
+            tagFilter={tagFilter}
+          />
+          <ProjectGridLayout>
+            {projectsLoading ? preRender() : renderProjects()}
+          </ProjectGridLayout>
           {additionalLoading && <LoadingCircle />}
         </div>
         <div ref={lastDocRef}></div>
