@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import NavBar from "../Components/common/NavBar";
-import ProjectCard from "../Components/project/ProjectCard";
 import Footer from "../Components/common/Footer";
 import {
   QueryDocumentSnapshot,
@@ -14,10 +13,9 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../firebase";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Filter, ProjectDetail } from "../Types/ProjectType";
 import useStore from "../store";
-import { HiPencilSquare } from "react-icons/hi2";
 import LoadingCircle from "../Components/common/LoadingCircle";
 import ScrollToTop from "../Components/common/ScrollToTop";
 import TestProjectCard from "@/src/Components/project/TestProjectCard";
@@ -32,7 +30,6 @@ type MyIndexType = {
   personal: QueryFieldFilterConstraint;
 };
 
-const filters = ["personal", "team"];
 // filterKind가 Filter 타입인지 확인하는 함수
 const isFilter = (value: any): value is Filter => {
   return ["default", "app", "web", "personal", "team"].includes(value);
@@ -235,17 +232,13 @@ const ProjectPage = () => {
     return Array(12)
       .fill(0)
       .map((el) => (
-        <>
-          <Skeleton
-            className={
-              "flex flex-col w-full h-[363px] p-1 gap-2 bg-gray-300/50 rounded-b-none"
-            }
-          >
-            <>
-              <Skeleton className={"w-full h-64"} />
-            </>
-          </Skeleton>
-        </>
+        <Skeleton
+          className={
+            "flex flex-col w-full h-[363px] p-1 gap-2 bg-gray-300/50 rounded-b-none"
+          }
+        >
+          <Skeleton className={"w-full h-64"} />
+        </Skeleton>
       ));
   };
 
