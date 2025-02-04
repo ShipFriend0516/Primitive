@@ -105,75 +105,49 @@ const ProjectPage = () => {
 
   const getProjects = async () => {
     try {
-      // Filter 없을 때
-      if (filter === "default") {
-        const q = query(
-          collection(db, "projects"),
-          ...(isLoggedIn ? [] : [where("isPrivate", "==", false)]),
-          ...(tagFilter
-            ? [where("techStack", "array-contains", tagFilter)]
-            : []),
-          // orderBy("createdAt", "desc")
-        );
-        const projectDocs = await getDocs(q);
-        const projectsData = await Promise.all(
-          projectDocs.docs.map(async (doc) => ({
-            id: doc.id,
-            ...(doc.data() as Omit<ProjectDetail, "id">),
-          })),
-        );
+      // 검색 쿼리
+      const q = query(
+        collection(db, "projects"),
+        orderBy("createdAt", "desc"),
+        ...(isLoggedIn ? [] : [where("isPrivate", "==", false)]),
+        ...(filter !== "default"
+          ? [filterWhere[filter as keyof MyIndexType]]
+          : []),
+        ...(tagFilter !== ""
+          ? [where("techStack", "array-contains", tagFilter)]
+          : []),
+        limit(12),
+      );
 
-        const projectsWithLikes = await Promise.all(
-          projectsData.map(async (project) => ({
-            ...project,
-            likeCount: (await getLikesCount(project.id)) || 0,
-          })),
-        );
+      const projectDocs = await getDocs(q);
+      const projectsData = await Promise.all(
+        projectDocs.docs.map(async (doc) => ({
+          id: doc.id,
+          likeCount: (await getLikesCount(doc.id)) || 0,
+          ...(doc.data() as Omit<ProjectDetail, "id">),
+        })),
+      );
+      // 좋아요 Join
+      const projectsWithLikes = await Promise.all(
+        projectsData.map(async (project) => ({
+          ...project,
+          likeCount: (await getLikesCount(project.id)) || 0,
+        })),
+      );
 
-        setProjects(projectsWithLikes);
+      setProjects(projectsWithLikes);
 
-        if (projectDocs.docs.length < 12) {
-          setIsLast(true);
-        } else {
-          setIsLast(false);
-        }
-        const lastDoc = projectDocs.docs[projectDocs.docs.length - 1];
-        setLastDoc(lastDoc);
-        setProjectsLoading(false);
+      if (projectDocs.docs.length < 12) {
+        setIsLast(true);
       } else {
-        // Filter 있을 시
-        const q = query(
-          collection(db, "projects"),
-          filterWhere[filter as keyof MyIndexType],
-          ...(isLoggedIn ? [] : [where("isPrivate", "==", false)]),
-          ...(tagFilter !== ""
-            ? [where("techStack", "array-contains", tagFilter)]
-            : []),
-          orderBy("createdAt", "desc"),
-        );
-        const response = await getDocs(q);
-        const lastDoc = response.docs[response.docs.length - 1];
-        setLastDoc(lastDoc);
-
-        const projects = await Promise.all(
-          response.docs.map(async (doc) => ({
-            id: doc.id,
-            ...(doc.data() as Omit<ProjectDetail, "id">),
-          })),
-        );
-
-        const projectsWithLikes = await Promise.all(
-          projects.map(async (project) => ({
-            ...project,
-            likeCount: (await getLikesCount(project.id)) || 0,
-          })),
-        );
-
-        setProjects(projectsWithLikes);
-        setProjectsLoading(false);
+        setIsLast(false);
       }
+
+      const lastDoc = projectDocs.docs[projectDocs.docs.length - 1];
+      setLastDoc(lastDoc);
+      setProjectsLoading(false);
     } catch (error) {
-      console.error(error);
+      console.error("프로젝트 불러오기 실패", error);
     }
   };
 
