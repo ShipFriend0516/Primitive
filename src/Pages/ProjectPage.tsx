@@ -24,6 +24,7 @@ import Skeleton from "@/src/Components/common/Skeleton";
 import FilterContainer from "@/src/Components/project/FilterContainer";
 import ProjectHeader from "@/src/Components/project/ProjectHeader";
 import ProjectGridLayout from "@/src/Components/project/ProjectGridLayout";
+import useInfiniteScroll from "@/src/Hooks/useInfiniteScroll";
 
 type MyIndexType = {
   team: QueryFieldFilterConstraint;
@@ -51,31 +52,7 @@ const ProjectPage = () => {
   const [tagFilter, setTagFilter] = useState("");
   const [isLast, setIsLast] = useState(false);
 
-  // 페이지네이션
-  const [additionalLoading, setAdditionalLoading] = useState(false);
   const lastDocRef = useRef<HTMLDivElement>(null);
-  const [lastDoc, setLastDoc] = useState<QueryDocumentSnapshot | null>();
-  const option = {
-    threshold: 0.5,
-  };
-  const observer = new IntersectionObserver(async (entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting && !isLast) {
-        setAdditionalLoading(true);
-        getAdditionalProjects(isLoggedIn || false, lastDoc!);
-        setAdditionalLoading(false);
-      }
-    });
-  }, option);
-
-  useEffect(() => {
-    if (lastDocRef.current) {
-      observer.observe(lastDocRef.current);
-    }
-    return () => {
-      observer.disconnect();
-    };
-  }, [isLoggedIn, lastDocRef.current, lastDoc]);
 
   useEffect(() => {
     navigate(`/project?filter=${filter}`);
@@ -100,6 +77,57 @@ const ProjectPage = () => {
   };
 
   // 메서드
+  // 무한 스크롤시 추가 프로젝트 불러오기
+  const getAdditionalProjects = async (
+    isPrivate: boolean,
+    lastDoc: QueryDocumentSnapshot,
+  ) => {
+    try {
+      if (lastDoc === null || lastDoc === undefined) return;
+      const additionalQuery = query(
+        collection(db, "projects"),
+        orderBy("createdAt", "desc"),
+        ...(isPrivate ? [] : [where("isPrivate", "==", false)]),
+        ...(filter !== "default"
+          ? [filterWhere[filter as keyof MyIndexType]]
+          : []),
+        ...(tagFilter !== ""
+          ? [where("techStack", "array-contains", tagFilter)]
+          : []),
+        limit(12),
+        startAfter(lastDoc),
+      );
+
+      const response = await getDocs(additionalQuery);
+      const data = await Promise.all(
+        response.docs.map(async (doc) => ({
+          id: doc.id,
+          likeCount: (await getLikesCount(doc.id)) || 0,
+          ...(doc.data() as Omit<ProjectDetail, "id">),
+        })),
+      );
+
+      const nextLastDoc = response.docs[response.docs.length - 1];
+      if (nextLastDoc) {
+        setLastDoc(nextLastDoc);
+      } else {
+        setLastDoc(null);
+      }
+      setProjects((prev) => [...prev, ...data]);
+
+      console.log("마지막 요소 감지됨");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // 무한 스크롤
+  const { additionalLoading, lastDoc, setLastDoc } = useInfiniteScroll({
+    triggerFunction: () => getAdditionalProjects(isLoggedIn || false, lastDoc!),
+    isLast: isLast,
+    observeRef: lastDocRef,
+    isLoggedIn: isLoggedIn,
+  });
 
   // 프로젝트 불러오기
 
@@ -141,57 +169,6 @@ const ProjectPage = () => {
       setProjectsLoading(false);
     } catch (error) {
       console.error("프로젝트 불러오기 실패", error);
-    }
-  };
-
-  // 무한 스크롤시 추가 프로젝트 불러오기
-  const getAdditionalProjects = async (
-    isPrivate: boolean,
-    lastDoc: QueryDocumentSnapshot,
-  ) => {
-    try {
-      if (lastDoc === null || lastDoc === undefined) return;
-      const additionalQuery = query(
-        collection(db, "projects"),
-        orderBy("createdAt", "desc"),
-        ...(isPrivate ? [] : [where("isPrivate", "==", false)]),
-        ...(filter !== "default"
-          ? [filterWhere[filter as keyof MyIndexType]]
-          : []),
-        ...(tagFilter !== ""
-          ? [where("techStack", "array-contains", tagFilter)]
-          : []),
-        limit(12),
-        startAfter(lastDoc),
-      );
-
-      const response = await getDocs(additionalQuery);
-      const data = await Promise.all(
-        response.docs.map((doc) => ({
-          id: doc.id,
-          likeCount: 0,
-          ...(doc.data() as Omit<ProjectDetail, "id">),
-        })),
-      );
-
-      const projectData = await Promise.all(
-        data.map(async (project) => ({
-          ...project,
-          likeCount: (await getLikesCount(project.id)) || 0,
-        })),
-      );
-
-      const nextLastDoc = response.docs[response.docs.length - 1];
-      if (nextLastDoc) {
-        setLastDoc(nextLastDoc);
-      } else {
-        setLastDoc(null);
-      }
-      setProjects((prev) => [...prev, ...projectData]);
-
-      console.log("마지막 요소 감지됨");
-    } catch (err) {
-      console.error(err);
     }
   };
 
