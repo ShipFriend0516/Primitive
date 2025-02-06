@@ -4,7 +4,9 @@ export interface MemberCardType {
   number: number;
   position: string;
   description: string;
-  type?: "small" | null;
+  type?: 'small' | null;
+  emoji?: string;
+  handleClick?: () => void;
 }
 
 export interface MemberDataType {
@@ -13,6 +15,6 @@ export interface MemberDataType {
   email: string;
   password?: string;
   studentYear: string;
-  authority: "동아리원" | "관리자" | "회장" | "부회장";
+  authority: '동아리원' | '관리자' | '회장' | '부회장';
   authorityLevel: 0 | 1 | 3 | 2;
 }
