@@ -27,6 +27,7 @@ import ProjectGridLayout from '@/src/Components/project/ProjectGridLayout';
 import useInfiniteScroll from '@/src/Hooks/useInfiniteScroll';
 
 import ProjectSearchBar from '@/src/Components/project/ProjectSearchBar';
+import GlassButton from '@/src/Components/common/button/GlassButton';
 
 type MyIndexType = {
   team: QueryFieldFilterConstraint;
@@ -191,9 +192,15 @@ const ProjectPage = () => {
   };
 
   const renderProjects = () => {
-    return projects.map((project) => (
-      <TestProjectCard key={project.id} projectDetail={project} />
-    ));
+    return projects.length > 0 ? (
+      projects.map((project) => (
+        <TestProjectCard key={project.id} projectDetail={project} />
+      ))
+    ) : (
+      <div className='relative bg-white shadow shadow-gray-300 rounded-md p-1 flex flex-col justify-center items-center aspect-square '>
+        <p className={'text-xl'}>프로젝트가 없습니다 :(</p>
+      </div>
+    );
   };
 
   return (
@@ -202,7 +209,6 @@ const ProjectPage = () => {
       <>
         <div className='max-w-7xl mx-auto min-h-fit w-full flex-grow flex flex-col items-center relative pb-20'>
           <ProjectHeader />
-
           <ProjectSearchBar
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
