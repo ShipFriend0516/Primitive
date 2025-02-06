@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { debounce } from "lodash";
-import { IoMenuOutline } from "react-icons/io5";
-import { useSpring, animated } from "react-spring";
-import styles from "../../Styles/menu.module.css";
-import useStore from "../../store";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { debounce } from 'lodash';
+import { IoMenuOutline } from 'react-icons/io5';
+import { useSpring, animated } from 'react-spring';
+import styles from '../../Styles/menu.module.css';
+import useStore from '../../store';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const NavBar = () => {
   // 네비게이트
@@ -33,10 +33,10 @@ const NavBar = () => {
       setIsMobile(windowWidth <= 768 ? true : false);
     }, 50);
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, [windowWidth]);
 
@@ -62,18 +62,18 @@ const NavBar = () => {
   };
 
   const logoutHandler = () => {
-    localStorage.removeItem("accessToken");
+    localStorage.removeItem('accessToken');
     logout();
     const auth = getAuth();
     auth.signOut();
-    navigate("/");
+    navigate('/');
   };
 
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        login();
+        login(user.uid);
       } else {
         logout();
       }
@@ -81,54 +81,54 @@ const NavBar = () => {
   }, [isLoggedIn]);
 
   return (
-    <nav className="w-screen md:h-14 h-10 fixed bg-black z-10 text-white flex flex-row gap-5 justify-between items-center border-b-gray-50 sm:text-lg text-xs hahmlet select-none overflow-hidden">
+    <nav className='w-screen md:h-14 h-10 fixed bg-black z-10 text-white flex flex-row gap-5 justify-between items-center border-b-gray-50 sm:text-lg text-xs hahmlet select-none overflow-hidden'>
       <>
         <li
-          className="navbarTo"
+          className='navbarTo'
           onClick={() => {
-            navigate("/");
+            navigate('/');
           }}
         >
           PRIMITIVE
         </li>
       </>
       {isMobile ? (
-        <div className="flex items-center cursor-pointer">
+        <div className='flex items-center cursor-pointer'>
           <IoMenuOutline size={35} onClick={() => handleClick()} />
           {true && (
             <animated.ul className={styles.menu} style={{ ...springs }}>
-              <li onClick={() => navigate("/")}>소개</li>
-              <li onClick={() => navigate("/project")}>프로젝트</li>
-              <li onClick={() => navigate("/members")}>운영진</li>
+              <li onClick={() => navigate('/')}>소개</li>
+              <li onClick={() => navigate('/project')}>프로젝트</li>
+              <li onClick={() => navigate('/members')}>운영진</li>
               {isLoggedIn ? (
                 <>
-                  <li onClick={() => navigate("/mypage")}>마이페이지</li>
+                  <li onClick={() => navigate('/mypage')}>마이페이지</li>
                   <li onClick={logoutHandler}>로그아웃</li>
                 </>
               ) : (
-                <li onClick={() => navigate("/login")}>로그인</li>
+                <li onClick={() => navigate('/login')}>로그인</li>
               )}
-              <li onClick={() => navigate("/recruit")}>JOIN US</li>
+              <li onClick={() => navigate('/recruit')}>JOIN US</li>
             </animated.ul>
           )}
         </div>
       ) : (
-        <ul className="flex flex-row h-full ">
+        <ul className='flex flex-row h-full '>
           <li
-            className={`navbarTo ${pathname === "/" ? "underline underline-offset-4" : ""}`}
-            onClick={() => navigate("/")}
+            className={`navbarTo ${pathname === '/' ? 'underline underline-offset-4' : ''}`}
+            onClick={() => navigate('/')}
           >
             소개
           </li>
           <li
-            className={`navbarTo ${pathname === "/project" ? "underline underline-offset-4" : ""}`}
-            onClick={() => navigate("/project")}
+            className={`navbarTo ${pathname === '/project' ? 'underline underline-offset-4' : ''}`}
+            onClick={() => navigate('/project')}
           >
             프로젝트
           </li>
           <li
-            className={`navbarTo ${pathname === "/members" ? "underline underline-offset-4" : ""}`}
-            onClick={() => navigate("/members")}
+            className={`navbarTo ${pathname === '/members' ? 'underline underline-offset-4' : ''}`}
+            onClick={() => navigate('/members')}
           >
             운영진
           </li>
@@ -136,26 +136,26 @@ const NavBar = () => {
             <>
               <li
                 className={`navbarTo ${
-                  pathname === "/mypage" ? "underline underline-offset-4" : ""
+                  pathname === '/mypage' ? 'underline underline-offset-4' : ''
                 }`}
-                onClick={() => navigate("/mypage")}
+                onClick={() => navigate('/mypage')}
               >
                 마이페이지
               </li>
             </>
           ) : (
             <li
-              className={`navbarTo ${pathname === "/login" ? "underline underline-offset-4" : ""}`}
-              onClick={() => navigate("/login")}
+              className={`navbarTo ${pathname === '/login' ? 'underline underline-offset-4' : ''}`}
+              onClick={() => navigate('/login')}
             >
               로그인
             </li>
           )}
           <li
             className={`navbarTo bg-blue-500 hover:text-black ${
-              pathname === "/recruit" ? "underline underline-offset-4" : ""
+              pathname === '/recruit' ? 'underline underline-offset-4' : ''
             }`}
-            onClick={() => navigate("/recruit")}
+            onClick={() => navigate('/recruit')}
           >
             JOIN US
           </li>

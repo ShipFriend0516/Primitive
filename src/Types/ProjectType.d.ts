@@ -25,3 +25,5 @@ export interface ProjectDetail {
   otherLink?: string;
   likeCount?: number;
 }
+
+export type Filter = 'default' | 'app' | 'web' | 'personal' | 'team' | 'my';

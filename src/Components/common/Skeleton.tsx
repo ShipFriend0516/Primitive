@@ -1,6 +1,6 @@
 interface SkeletonProps {
   className?: string;
-  children?: React.ReactElement;
+  children?: React.ReactElement | React.ReactElement[];
 }
 
 const Skeleton = ({ className, children }: SkeletonProps) => {
