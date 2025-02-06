@@ -9,6 +9,13 @@ import {
 import { Link } from "react-router-dom";
 
 const ProjectSearchBar = () => {
+  const filters = {
+    default: "모든 프로젝트",
+    recent: "최근 업데이트",
+    starred: "즐겨찾기",
+    my: "내 프로젝트",
+  };
+
   return (
     <div
       className={"relative w-4/5 h-12 flex justify-between border-b pb-2 mb-2"}
@@ -26,15 +33,12 @@ const ProjectSearchBar = () => {
         />
       </div>
       <div className={"flex items-center gap-2"}>
-        <Select defaultValue="all">
+        <Select defaultValue="default">
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="필터 선택" />
           </SelectTrigger>
-          <SelectContent className={"bg-white"}>
-            <SelectItem value="all">모든 프로젝트</SelectItem>
-            <SelectItem value="recent">최근 업데이트</SelectItem>
-            <SelectItem value="starred">즐겨찾기</SelectItem>
-            <SelectItem value="my">내 프로젝트</SelectItem>
+          <SelectContent>
+            {Object.entries(filters).map(([value, label]) => (<SelectItem value={value}>{label}</SelectItem>))}
           </SelectContent>
         </Select>
         <Link
@@ -47,3 +51,5 @@ const ProjectSearchBar = () => {
     </div>
   );
 };
+
+export default ProjectSearchBar
