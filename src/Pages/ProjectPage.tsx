@@ -13,7 +13,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../firebase";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Filter, ProjectDetail } from "../Types/ProjectType";
 import useStore from "../store";
 import LoadingCircle from "../Components/common/LoadingCircle";
@@ -25,6 +25,14 @@ import FilterContainer from "@/src/Components/project/FilterContainer";
 import ProjectHeader from "@/src/Components/project/ProjectHeader";
 import ProjectGridLayout from "@/src/Components/project/ProjectGridLayout";
 import useInfiniteScroll from "@/src/Hooks/useInfiniteScroll";
+import { FaPlus, FaSearch } from "react-icons/fa";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type MyIndexType = {
   team: QueryFieldFilterConstraint;
@@ -204,6 +212,47 @@ const ProjectPage = () => {
             setTagFilter={setTagFilter}
             tagFilter={tagFilter}
           />
+          <div
+            className={
+              "relative w-4/5 h-12 flex justify-between border-b pb-2 mb-2"
+            }
+          >
+            <div
+              className={
+                "flex items-center relative w-1/3 border border-gray-300 rounded-md overflow-hidden"
+              }
+            >
+              <FaSearch
+                size={20}
+                color={"gray"}
+                className={"w-10 text-xl px-2 "}
+              />
+              <input
+                className={"flex-1 focus:outline-none"}
+                type={"text"}
+                placeholder={"프로젝트 검색"}
+              />
+            </div>
+            <div className={"flex items-center gap-2"}>
+              <Select defaultValue="all">
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="필터 선택" />
+                </SelectTrigger>
+                <SelectContent className={"bg-white"}>
+                  <SelectItem value="all">모든 프로젝트</SelectItem>
+                  <SelectItem value="recent">최근 업데이트</SelectItem>
+                  <SelectItem value="starred">즐겨찾기</SelectItem>
+                  <SelectItem value="my">내 프로젝트</SelectItem>
+                </SelectContent>
+              </Select>
+              <Link
+                to={"/project/edit"}
+                className="h-full flex items-center gap-2 px-2 py-1 text-sm font-medium text-white bg-emerald-600 rounded-md hover:bg-emerald-700 transition-colors duration-200 shadow-sm"
+              >
+                <FaPlus className="w-4 h-4" />새 프로젝트
+              </Link>
+            </div>
+          </div>
           <ProjectGridLayout>
             {projectsLoading ? preRender() : renderProjects()}
           </ProjectGridLayout>
