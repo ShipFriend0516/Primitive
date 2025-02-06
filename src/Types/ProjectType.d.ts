@@ -26,4 +26,4 @@ export interface ProjectDetail {
   likeCount?: number;
 }
 
-export type Filter = "default" | "app" | "web" | "personal" | "team";
+export type Filter = 'default' | 'app' | 'web' | 'personal' | 'team' | 'my';

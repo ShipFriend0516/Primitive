@@ -31,16 +31,17 @@ import ProjectSearchBar from '@/src/Components/project/ProjectSearchBar';
 type MyIndexType = {
   team: QueryFieldFilterConstraint;
   personal: QueryFieldFilterConstraint;
+  my: QueryFieldFilterConstraint;
 };
 
 // filterKind가 Filter 타입인지 확인하는 함수
 const isFilter = (value: any): value is Filter => {
-  return ['default', 'app', 'web', 'personal', 'team'].includes(value);
+  return ['default', 'app', 'web', 'personal', 'team', 'my'].includes(value);
 };
 
 const ProjectPage = () => {
   // 전역상태
-  const { isLoggedIn } = useStore();
+  const { isLoggedIn, userId } = useStore();
   const [searchParams] = useSearchParams();
   const filterKind = searchParams.get('filter');
   const navigate = useNavigate();
@@ -76,6 +77,7 @@ const ProjectPage = () => {
   const filterWhere: MyIndexType = {
     team: where('participantsCount', '>', 1),
     personal: where('participantsCount', '==', 1),
+    my: where('authorId', '==', userId),
   };
 
   // 메서드
@@ -200,13 +202,13 @@ const ProjectPage = () => {
       <>
         <div className='max-w-7xl mx-auto min-h-fit w-full flex-grow flex flex-col items-center relative pb-20'>
           <ProjectHeader />
-          <FilterContainer
-            filter={filter}
-            setFilter={setFilter}
-            setTagFilter={setTagFilter}
-            tagFilter={tagFilter}
-          />
-          <ProjectSearchBar />
+          {/*<FilterContainer*/}
+          {/*  filter={filter}*/}
+          {/*  setFilter={setFilter}*/}
+          {/*  setTagFilter={setTagFilter}*/}
+          {/*  tagFilter={tagFilter}*/}
+          {/*/>*/}
+          <ProjectSearchBar filter={filter} setFilter={setFilter} />
           <ProjectGridLayout>
             {projectsLoading ? preRender() : renderProjects()}
           </ProjectGridLayout>

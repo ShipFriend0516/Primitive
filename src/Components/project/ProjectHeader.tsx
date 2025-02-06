@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
-import { HiPencilSquare } from "react-icons/hi2";
+import { Link } from 'react-router-dom';
+import { HiPencilSquare } from 'react-icons/hi2';
+import { Filter } from '@/src/Types/ProjectType';
 
 const ProjectHeader = () => {
   return (
     <>
-      <h1 className="inline-flex text-5xl mt-24 font-bold relative">
+      <h1 className='inline-flex text-5xl mt-24 font-bold relative'>
         프로젝트
         {/*<Link*/}
         {/*  to={"/project/edit"}*/}
@@ -13,7 +14,7 @@ const ProjectHeader = () => {
         {/*  <HiPencilSquare />*/}
         {/*</Link>*/}
       </h1>
-      <p className="text-lg mt-2 mb-5">프리미티브의 활동들을 모아보세요!</p>
+      <p className='text-lg mt-2 mb-5'>프리미티브의 활동들을 모아보세요!</p>
     </>
   );
 };
