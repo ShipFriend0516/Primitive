@@ -52,7 +52,7 @@ const ProjectPage = () => {
   const [filter, setFilter] = useState<Filter>(
     isFilter(filterKind) ? filterKind : 'default',
   );
-  const [tagFilter, setTagFilter] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [isLast, setIsLast] = useState(false);
 
   const lastDocRef = useRef<HTMLDivElement>(null);
@@ -62,8 +62,8 @@ const ProjectPage = () => {
   }, [filter]);
 
   useEffect(() => {
-    if (tagFilter) navigate(`/project?filter=${tagFilter}`);
-  }, [tagFilter]);
+    if (searchQuery) navigate(`/project?filter=${searchQuery}`);
+  }, [searchQuery]);
 
   useEffect(() => {
     try {
@@ -72,7 +72,7 @@ const ProjectPage = () => {
     } catch (error) {
       console.error('프로젝트 목록 불러오기 실패!', error);
     }
-  }, [isLoggedIn, filter, tagFilter]);
+  }, [isLoggedIn, filter, searchQuery]);
 
   const filterWhere: MyIndexType = {
     team: where('participantsCount', '>', 1),
@@ -95,8 +95,8 @@ const ProjectPage = () => {
         ...(filter !== 'default'
           ? [filterWhere[filter as keyof MyIndexType]]
           : []),
-        ...(tagFilter !== ''
-          ? [where('techStack', 'array-contains', tagFilter)]
+        ...(searchQuery !== ''
+          ? [where('techStack', 'array-contains', searchQuery)]
           : []),
         limit(12),
         startAfter(lastDoc),
@@ -145,8 +145,8 @@ const ProjectPage = () => {
         ...(filter !== 'default'
           ? [filterWhere[filter as keyof MyIndexType]]
           : []),
-        ...(tagFilter !== ''
-          ? [where('techStack', 'array-contains', tagFilter)]
+        ...(searchQuery !== ''
+          ? [where('techStack', 'array-contains', searchQuery)]
           : []),
         limit(12),
       );
@@ -202,13 +202,13 @@ const ProjectPage = () => {
       <>
         <div className='max-w-7xl mx-auto min-h-fit w-full flex-grow flex flex-col items-center relative pb-20'>
           <ProjectHeader />
-          {/*<FilterContainer*/}
-          {/*  filter={filter}*/}
-          {/*  setFilter={setFilter}*/}
-          {/*  setTagFilter={setTagFilter}*/}
-          {/*  tagFilter={tagFilter}*/}
-          {/*/>*/}
-          <ProjectSearchBar filter={filter} setFilter={setFilter} />
+
+          <ProjectSearchBar
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            filter={filter}
+            setFilter={setFilter}
+          />
           <ProjectGridLayout>
             {projectsLoading ? preRender() : renderProjects()}
           </ProjectGridLayout>
