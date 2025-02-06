@@ -53,7 +53,10 @@ const ProjectSearchBar = ({
           {buffer && (
             <button
               className={'absolute right-2'}
-              onClick={() => setBuffer('')}
+              onClick={() => {
+                setBuffer('');
+                setSearchQuery('');
+              }}
             >
               <FaX color={'gray'} size={12} />
             </button>
