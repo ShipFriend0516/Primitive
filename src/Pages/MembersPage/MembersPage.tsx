@@ -8,7 +8,19 @@ import Fireworks from '@/src/Components/common/Fireworks';
 
 const MembersPage = () => {
   useEffect(() => {}, []);
-  const emojis = ['🔥', '🌿', '🌱', '😁', '😎', '👍', '🚀', '👀', '🎉'];
+  const emojis = [
+    '🔥',
+    '🌿',
+    '🌱',
+    '😁',
+    '😎',
+    '👍',
+    '🚀',
+    '👀',
+    '🎉',
+    '👻',
+    '💀',
+  ];
   const [emojiPresident, setEmojiPresident] = useState(
     emojis[Math.floor(Math.random() * emojis.length)],
   );
