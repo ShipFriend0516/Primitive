@@ -1,30 +1,40 @@
-import project1 from "../../Images/2024/에코초이스.webp";
-import project2 from "../../Images/2024/솜뭉치.webp";
-import project3 from "../../Images/2024/뜨개랑.webp";
+import project1 from '../../Images/2024/에코초이스.webp';
+import project2 from '../../Images/2024/솜뭉치.webp';
+import project3 from '../../Images/2024/뜨개랑.webp';
 
-import Introduction1 from "../../Images/2024/1.webp";
-import Introduction2 from "../../Images/2024/2.webp";
-import Introduction3 from "../../Images/2024/3.webp";
-import Introduction4 from "../../Images/2024/4.webp";
+import Introduction1 from '../../Images/2024/1.webp';
+import Introduction2 from '../../Images/2024/2.webp';
+import Introduction3 from '../../Images/2024/3.webp';
+import Introduction4 from '../../Images/2024/4.webp';
 
-import ProjectCard from "../project/ProjectCard";
+import ProjectCard from '../project/ProjectCard';
 
-import { useEffect, useRef, useState } from "react";
-import Cover from "./Cover";
-import ActivityCard from "./ActivityCard";
-import { collection, getDocs, limit, where } from "firebase/firestore";
-import { db } from "../../firebase";
-import { query } from "firebase/firestore";
-import { ProjectDetail } from "../../Types/ProjectType";
+import { useEffect, useRef, useState } from 'react';
+import Cover from './Cover';
+import ActivityCard from './ActivityCard';
+import { collection, getDocs, limit, where } from 'firebase/firestore';
+import { db } from '../../firebase';
+import { query } from 'firebase/firestore';
+import { ProjectDetail } from '../../Types/ProjectType';
+import { FaArrowRight } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Intro = () => {
   // 스크롤 애니메이션 관련 상태 관리
   const cover1 = useRef(null);
   const cover2 = useRef(null);
   const cover3 = useRef(null);
+  const cover4 = useRef(null);
   const introCardRef = useRef(null);
   const activityCardRef = useRef(null);
-  const coverRefs = [cover1, cover2, cover3, introCardRef, activityCardRef];
+  const coverRefs = [
+    cover1,
+    cover2,
+    cover3,
+    cover4,
+    introCardRef,
+    activityCardRef,
+  ];
 
   // UI 상태관리
   const [projectCount, setProjectCount] = useState(0);
@@ -40,7 +50,7 @@ const Intro = () => {
 
   useEffect(() => {
     try {
-      getDocs(query(collection(db, "projects"))).then((projects) => {
+      getDocs(query(collection(db, 'projects'))).then((projects) => {
         setProjectCount(projects.docs.length);
       });
     } catch (e) {
@@ -60,12 +70,12 @@ const Intro = () => {
       entries.forEach((entry, i) => {
         if (entry.isIntersecting) {
           projectCount && startAnimation();
-          (entry.target as HTMLElement).style.opacity = "1";
-          (entry.target as HTMLElement).style.transform = "translateY(0)";
+          (entry.target as HTMLElement).style.opacity = '1';
+          (entry.target as HTMLElement).style.transform = 'translateY(0)';
           observer.unobserve(entry.target as HTMLElement);
         } else {
-          (entry.target as HTMLElement).style.opacity = "0";
-          (entry.target as HTMLElement).style.transform = "translateY(50px)";
+          (entry.target as HTMLElement).style.opacity = '0';
+          (entry.target as HTMLElement).style.transform = 'translateY(50px)';
         }
       });
     };
@@ -130,15 +140,15 @@ const Intro = () => {
     try {
       const response = await getDocs(
         query(
-          collection(db, "projects"),
-          where("isPrivate", "==", false),
+          collection(db, 'projects'),
+          where('isPrivate', '==', false),
           limit(3),
         ),
       );
 
       const data = response.docs.map((doc) => ({
         id: doc.id,
-        ...(doc.data() as Omit<ProjectDetail, "id">),
+        ...(doc.data() as Omit<ProjectDetail, 'id'>),
       }));
       setProjects(data);
       setProjectsLoading(false);
@@ -152,63 +162,63 @@ const Intro = () => {
   }
 
   return (
-    <div className="bg-black w-screen min-h-screen">
-      <section className="bg-gradient-to-b from-black to-indigo-950 bg-black text-white h-screen flex flex-col justify-center items-center select-none">
-        <div className="top-1/4 mb-10">
-          <h1 className="text-center primitive">PRIMITIVE</h1>
-          <h2 className="btn-shine text-center">
+    <div className='bg-black w-screen min-h-screen'>
+      <section className='bg-gradient-to-b from-black to-indigo-950 bg-black text-white h-screen flex flex-col justify-center items-center select-none'>
+        <div className='top-1/4 mb-10'>
+          <h1 className='text-center primitive'>PRIMITIVE</h1>
+          <h2 className='btn-shine text-center'>
             0과 1 사이 무한한 가능성, KNU 프로그래밍 동아리
           </h2>
         </div>
       </section>
-      <section className="bg-white w-screen select-none">
-        <div className="shuffleBox bg-gradient-to-b from-indigo-950 to-black">
+      <section className='bg-white w-screen select-none'>
+        <div className='shuffleBox bg-gradient-to-b from-indigo-950 to-black'>
           <p>Hello 👋 We Learn</p>
-          <div className="shuffleAnimation">
-            <div className="first">
+          <div className='shuffleAnimation'>
+            <div className='first'>
               <div>Programming</div>
             </div>
-            <div className="second">
+            <div className='second'>
               <div>Networking</div>
             </div>
-            <div className="third">
+            <div className='third'>
               <div>Communication</div>
             </div>
           </div>
         </div>
       </section>
-      <section className="bg-white">
-        <Cover className=" md:p-20 p-10" ref={cover1}>
-          <h3 className="2xl:text-4xl xl:text-4xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4">
+      <section className='bg-white'>
+        <Cover className=' md:p-20 p-10' ref={cover1}>
+          <h3 className='2xl:text-4xl xl:text-4xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4'>
             PRIMITIVE는..
           </h3>
-          <p className="md:text-2xl text-xl mb-2">
+          <p className='md:text-2xl text-xl mb-2'>
             프리미티브는 공주대학교 천안캠퍼스에서 활동하고 있는 프로그래밍
             동아리입니다.
           </p>
-          <p className="md:text-2xl text-xl mb-2">
+          <p className='md:text-2xl text-xl mb-2'>
             열정적인 동아리 부원들과 함께 프로그래밍을 통해 앱이나 웹사이트를
             만들어 실제로 사용할 수 있는 멋진 결과물들을 만들어 내고 있습니다.
           </p>
-          <p className="md:text-2xl text-xl mb-2">
+          <p className='md:text-2xl text-xl mb-2'>
             프로그래밍으로 즐겁고 의미있는 대학생활을 보내고 싶다면, PRIMITIVE와
             함께 하세요!
           </p>
-          <div className="cardSection">
-            <div className="introCards mt-10" ref={introCardRef}>
-              <div className="w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100">
-                <h4 className="text-2xl md:text-3xl gothic">활동 기간</h4>
-                <span className="font-bold">{20}년+</span>
+          <div className='cardSection'>
+            <div className='introCards mt-10' ref={introCardRef}>
+              <div className='w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100'>
+                <h4 className='text-2xl md:text-3xl gothic'>활동 기간</h4>
+                <span className='font-bold'>{20}년+</span>
               </div>
-              <div className="w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100">
-                <h4 className="text-2xl md:text-3xl gothic">총 동아리원 수</h4>
-                <span className="font-bold">{120}명+</span>
+              <div className='w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100'>
+                <h4 className='text-2xl md:text-3xl gothic'>총 동아리원 수</h4>
+                <span className='font-bold'>{120}명+</span>
               </div>
-              <div className="w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100">
-                <h4 className="text-2xl md:text-3xl gothic">
+              <div className='w-60 aspect-video text-5xl py-10 px-8 rounded-xl bg-gray-100'>
+                <h4 className='text-2xl md:text-3xl gothic'>
                   등록된 프로젝트 수
                 </h4>
-                <span className="font-bold">
+                <span className='font-bold'>
                   <span>{animatedProjectCount}</span>개
                 </span>
               </div>
@@ -216,19 +226,19 @@ const Intro = () => {
           </div>
         </Cover>
       </section>
-      <section className="bg-slate-50">
-        <Cover className=" md:p-20 p-10" ref={cover2}>
-          <div className="top-1/4 mb-10">
-            <h3 className="2xl:text-4xl xl:text-4xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4">
+      <section className='bg-slate-50'>
+        <Cover className=' md:p-20 p-10' ref={cover2}>
+          <div className='top-1/4 mb-10'>
+            <h3 className='2xl:text-4xl xl:text-4xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4'>
               무슨 활동을 하나요?
             </h3>
-            <p className="text-xl">
+            <p className='text-xl'>
               정규 활동으로는 신입생 교육과 창업동아리가 있고, 자율적으로
               스터디·공모전·프로젝트를 진행합니다.
             </p>
           </div>
           <div
-            className="max-w-7xl mx-auto w-full h-1/2 grid md:grid-cols-2 md:grid-rows-2 grid-cols-1 gap-5 transition-600"
+            className='max-w-7xl mx-auto w-full h-1/2 grid md:grid-cols-2 md:grid-rows-2 grid-cols-1 gap-5 transition-600'
             ref={activityCardRef}
           >
             <ActivityCard backgroundImage={Introduction4}>
@@ -250,17 +260,17 @@ const Intro = () => {
           </div>
         </Cover>
       </section>
-      <section className="bg-slate-100">
-        <Cover className="" ref={cover3}>
-          <div className="top-1/4 right-10 fade_in">
-            <h3 className="2xl:text-4xl xl:text-4xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4">
+      <section className='bg-slate-100'>
+        <Cover className='' ref={cover3}>
+          <div className='top-1/4 right-10 fade_in'>
+            <h3 className='2xl:text-4xl xl:text-4xl lg:text-4xl md:text-3xl sm:text-3xl text-3xl font-bold mb-4'>
               대표 프로젝트
             </h3>
-            <p className="text-xl">
+            <p className='text-xl'>
               Primitive의 대표 프로젝트에는 이런 것들이 있어요
             </p>
           </div>
-          <div className="w-full h-2/4 grid grid-cols-1 grid-rows-1 md:grid-cols-3 gap-5 ">
+          <div className='w-full h-2/4 grid grid-cols-1 grid-rows-1 md:grid-cols-3 gap-5 '>
             {projectsLoading
               ? projects?.map((project, index) => (
                   <ProjectCard
@@ -287,6 +297,35 @@ const Intro = () => {
                     isPrivate={project.isPrivate}
                   />
                 ))}
+          </div>
+        </Cover>
+      </section>
+      <section className={'bg-white'}>
+        <Cover ref={cover4}>
+          <div className='top-1/4 flex flex-col justify-center items-center'>
+            <p className='text-xl'>
+              <span className={'font-bold'}>프리미티브</span>에 함께하고 싶다면
+              지원하세요!
+            </p>
+            <div
+              className={'mt-4 flex justify-center items-center text-center'}
+            >
+              <Link
+                to={'/recruit'}
+                className={
+                  'flex items-center relative rounded-md px-8 py-2 bg-white shadow-lg hover:shadow-none border border-gray-200 hover:translate-x-0 hover:translate-y-1  group duration-200 overflow-hidden text-xl'
+                }
+              >
+                <span
+                  className={
+                    'flex items-center gap-2  px-3 py-1  w-full h-full absolute top-0 -left-full group-hover:left-0 bg-black transition-all duration-1000 text-white text-center'
+                  }
+                >
+                  지원 페이지로 이동 <FaArrowRight />
+                </span>
+                지금 바로 지원하기
+              </Link>
+            </div>
           </div>
         </Cover>
       </section>
