@@ -1,4 +1,4 @@
-import { FaPlus, FaSearch } from 'react-icons/fa';
+import { FaPlus, FaSearch, FaSearchengin } from 'react-icons/fa';
 import {
   Select,
   SelectContent,
@@ -34,7 +34,9 @@ const ProjectSearchBar = ({
 
   return (
     <div
-      className={'relative w-4/5 h-12 flex justify-between border-b pb-2 mb-2'}
+      className={
+        'relative w-[calc(100%-24px)] sm:w-4/5 sm:px-0 h-12 flex justify-between border-b pb-2 mb-2'
+      }
     >
       <div className={'h-9 flex relative w-1/3 gap-3'}>
         <div
@@ -46,7 +48,7 @@ const ProjectSearchBar = ({
           <input
             className={'flex-1 focus:outline-none'}
             type={'text'}
-            placeholder={'태그로 프로젝트 검색'}
+            placeholder={'태그로 검색'}
             onChange={(e) => setBuffer(e.target.value)}
             value={buffer}
           />
@@ -69,13 +71,14 @@ const ProjectSearchBar = ({
             }
             onClick={() => setSearchQuery(buffer)}
           >
-            검색
+            <FaSearch />
+            <span className={'hidden sm:block'}>검색</span>
           </button>
         )}
       </div>
       <div className={'flex items-center gap-2'}>
         <Select onValueChange={setFilter} defaultValue='default' value={filter}>
-          <SelectTrigger className='w-[180px]'>
+          <SelectTrigger className='max-w-[180px]'>
             <SelectValue placeholder='필터 선택' />
           </SelectTrigger>
           <SelectContent>
@@ -88,7 +91,8 @@ const ProjectSearchBar = ({
           to={'/project/edit'}
           className='h-9 flex items-center gap-2 px-3 py-1 text-sm font-medium text-white bg-emerald-600 rounded-md hover:bg-emerald-700 transition-colors duration-200 shadow-sm'
         >
-          <FaPlus className='w-4 h-4' />새 프로젝트
+          <FaPlus className='w-4 h-4' />
+          <span className={'text-nowrap hidden sm:block'}>새 프로젝트</span>
         </Link>
       </div>
     </div>
