@@ -180,8 +180,9 @@ const ProjectPage = () => {
   const preRender = () => {
     return Array(12)
       .fill(0)
-      .map((el) => (
+      .map((_,index) => (
         <Skeleton
+            key={index}
           className={
             'flex flex-col w-full h-[363px] p-1 gap-2 bg-gray-300/50 rounded-b-none'
           }
