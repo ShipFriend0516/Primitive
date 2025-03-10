@@ -14,7 +14,7 @@ const RecruitPage = () => {
   useEffect(() => {
     const now = new Date();
     const start = new Date(2025, 1, 10);
-    const end = new Date(2025, 2, 14);
+    const end = new Date(2025, 2, 11, 23, 59, 59);
     const weeks = ['일', '월', '화', '수', '목', '금', '토'];
 
     setTimeString(
