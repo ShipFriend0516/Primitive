@@ -60,11 +60,11 @@ const RecruitPage = () => {
           </h3>
         )}
         <p>{timeString}</p>
-        <div className={'mt-4 flex flex-col gap-1'}>
+        <div className={'mt-4 flex flex-col gap-4'}>
           <a href={recruitData.form} download>
             <button
               disabled={!isDate}
-              className={`bg-white shadow-xl py-2 px-6 rounded-lg mb-3 hover:shadow-lg hover:shadow-indigo-200  w-72 ${disabledStyle}`}
+              className={`bg-white shadow-xl py-2 px-6 rounded-lg hover:shadow-lg hover:shadow-indigo-200  w-72 ${disabledStyle}`}
             >
               👉 모집 신청서 양식 다운로드
             </button>
@@ -72,7 +72,7 @@ const RecruitPage = () => {
           <a href={recruitData.ot} download>
             <button
               disabled={!isDate}
-              className={`bg-white shadow-xl py-2 px-6 rounded-lg mb-3 hover:shadow-lg hover:shadow-indigo-200  w-72 ${disabledStyle}`}
+              className={`bg-white shadow-xl py-2 px-6 rounded-lg hover:shadow-lg hover:shadow-indigo-200  w-72 ${disabledStyle}`}
             >
               👉 신입생 OT 자료 다운로드
             </button>
@@ -82,13 +82,13 @@ const RecruitPage = () => {
             target='_blank'
             rel='noreferrer'
           >
-            <button className='bg-yellow-100 py-2 px-6 rounded-lg mb-3 shadow-xl hover:bg-yellow-200 w-72 '>
+            <button className='bg-yellow-100 py-2 px-6 rounded-lg shadow-xl hover:bg-yellow-200 w-72 '>
               <div>🤔 내가 PRIMITIVE에 들어간다면?</div>
               <div>💡 심리테스트 해보기</div>
             </button>
           </a>
           <button
-            className='bg-green-200 py-2 px-6 rounded-lg mb-3 shadow-xl hover:bg-green-300  w-72'
+            className='bg-green-200 py-2 px-6 rounded-lg shadow-xl hover:bg-green-300  w-72'
             onClick={() => handleClick()}
           >
             👀 이번 모집공고 {showInfo ? '닫기' : '확인하기'}
