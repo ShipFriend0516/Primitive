@@ -61,22 +61,29 @@ const RecruitPage = () => {
         )}
         <p>{timeString}</p>
         <div className={'mt-4 flex flex-col gap-4'}>
-          <a href={recruitData.form} download>
-            <button
-              disabled={!isDate}
-              className={`bg-white shadow-xl py-2 px-6 rounded-lg hover:shadow-lg hover:shadow-indigo-200  w-72 ${disabledStyle}`}
-            >
-              👉 모집 신청서 양식 다운로드
-            </button>
-          </a>
-          <a href={recruitData.ot} download>
-            <button
-              disabled={!isDate}
-              className={`bg-white shadow-xl py-2 px-6 rounded-lg hover:shadow-lg hover:shadow-indigo-200  w-72 ${disabledStyle}`}
-            >
-              👉 신입생 OT 자료 다운로드
-            </button>
-          </a>
+          {isDate ? (
+            <>
+              {' '}
+              <a href={recruitData.form} download>
+                <button
+                  disabled={!isDate}
+                  className={`bg-white shadow-xl py-2 px-6 rounded-lg hover:shadow-lg hover:shadow-indigo-200  w-72 ${disabledStyle}`}
+                >
+                  👉 모집 신청서 양식 다운로드
+                </button>
+              </a>
+              <a href={recruitData.ot} download>
+                <button
+                  disabled={!isDate}
+                  className={`bg-white shadow-xl py-2 px-6 rounded-lg hover:shadow-lg hover:shadow-indigo-200  w-72 ${disabledStyle}`}
+                >
+                  👉 신입생 OT 자료 다운로드
+                </button>
+              </a>
+            </>
+          ) : (
+            <div className={'my-1'}></div>
+          )}
           <a
             href='https://hyeonji0401.github.io/JoinPrimitive/'
             target='_blank'
