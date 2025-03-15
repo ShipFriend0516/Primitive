@@ -11,10 +11,22 @@ const RecruitPage = () => {
   const [isDate, setIsDate] = useState(false);
   const [timeString, setTimeString] = useState('');
 
+  // 같은 폴더 내 data.ts에서 모집 정보를 수정해주세요.
   useEffect(() => {
     const now = new Date();
-    const start = new Date(2025, 1, 10);
-    const end = new Date(2025, 2, 14, 23, 59, 59);
+    const start = new Date(
+      recruitData.recruitStartDate.year,
+      recruitData.recruitStartDate.month - 1,
+      recruitData.recruitStartDate.day,
+    );
+    const end = new Date(
+      recruitData.recruitEndDate.year,
+      recruitData.recruitEndDate.month - 1,
+      recruitData.recruitEndDate.day,
+      23,
+      59,
+      59,
+    );
     const weeks = ['일', '월', '화', '수', '목', '금', '토'];
 
     setTimeString(
