@@ -15,7 +15,7 @@ import {
 import { db } from '../firebase';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Filter, ProjectDetail } from '../Types/ProjectType';
-import useStore from '../store';
+import useAuthStore from '../store';
 import LoadingCircle from '../Components/common/LoadingCircle';
 import ScrollToTop from '../Components/common/ScrollToTop';
 import NewProjectCard from '@/src/Components/project/NewProjectCard';
@@ -42,7 +42,7 @@ const isFilter = (value: any): value is Filter => {
 
 const ProjectPage = () => {
   // 전역상태
-  const { isLoggedIn, userId } = useStore();
+  const { isLoggedIn, userId } = useAuthStore();
   const [searchParams] = useSearchParams();
   const filterKind = searchParams.get('filter');
   const navigate = useNavigate();

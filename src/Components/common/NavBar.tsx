@@ -4,7 +4,7 @@ import { debounce } from 'lodash';
 import { IoMenuOutline } from 'react-icons/io5';
 import { useSpring, animated } from 'react-spring';
 import styles from '../../Styles/menu.module.css';
-import useStore from '../../store';
+import useAuthStore from '../../store';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const NavBar = () => {
@@ -12,7 +12,7 @@ const NavBar = () => {
   const navigate = useNavigate();
 
   // 전역 상태관리
-  const { isLoggedIn, login, logout } = useStore();
+  const { isLoggedIn, login, logout } = useAuthStore();
 
   // 페이지 항상 위로
   const { pathname } = useLocation();

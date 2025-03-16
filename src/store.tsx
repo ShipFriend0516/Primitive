@@ -8,7 +8,7 @@ interface LoginStatus {
   login: (userId: string) => void;
 }
 
-const useStore = create(
+const useAuthStore = create(
   persist<LoginStatus>(
     (set) => ({
       isLoggedIn: undefined,
@@ -24,4 +24,4 @@ const useStore = create(
   ),
 );
 
-export default useStore;
+export default useAuthStore;

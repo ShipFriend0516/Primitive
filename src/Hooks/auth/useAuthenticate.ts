@@ -3,10 +3,10 @@ import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import app, { db } from '@/src/firebase';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import useStore from '@/src/store';
+import useAuthStore from '@/src/store';
 
 const useAuthenticate = () => {
-  const { isLoggedIn, login } = useStore();
+  const { isLoggedIn, login } = useAuthStore();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
