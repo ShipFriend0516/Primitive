@@ -11,7 +11,7 @@ interface ProjectCardProps {
   projectDetail: ProjectDetail;
 }
 
-const TestProjectCard = ({ projectDetail }: ProjectCardProps) => {
+const NewProjectCard = ({ projectDetail }: ProjectCardProps) => {
   const [githubStars, setGithubStars] = useState<number | null>(null);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   useEffect(() => {
@@ -66,4 +66,4 @@ const TestProjectCard = ({ projectDetail }: ProjectCardProps) => {
   );
 };
 
-export default TestProjectCard;
+export default NewProjectCard;

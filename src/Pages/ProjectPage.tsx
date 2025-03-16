@@ -18,7 +18,7 @@ import { Filter, ProjectDetail } from '../Types/ProjectType';
 import useStore from '../store';
 import LoadingCircle from '../Components/common/LoadingCircle';
 import ScrollToTop from '../Components/common/ScrollToTop';
-import TestProjectCard from '@/src/Components/project/TestProjectCard';
+import NewProjectCard from '@/src/Components/project/NewProjectCard';
 import { getLikesCount } from '@/src/api/firebase/like';
 import Skeleton from '@/src/Components/common/Skeleton';
 import FilterContainer from '@/src/Components/project/FilterContainer';
@@ -180,9 +180,9 @@ const ProjectPage = () => {
   const preRender = () => {
     return Array(12)
       .fill(0)
-      .map((_,index) => (
+      .map((_, index) => (
         <Skeleton
-            key={index}
+          key={index}
           className={
             'flex flex-col w-full h-[363px] p-1 gap-2 bg-gray-300/50 rounded-b-none'
           }
@@ -195,7 +195,7 @@ const ProjectPage = () => {
   const renderProjects = () => {
     return projects.length > 0 ? (
       projects.map((project) => (
-        <TestProjectCard key={project.id} projectDetail={project} />
+        <NewProjectCard key={project.id} projectDetail={project} />
       ))
     ) : (
       <div className='relative bg-white shadow shadow-gray-300 rounded-md p-1 flex flex-col justify-center items-center aspect-square '>
