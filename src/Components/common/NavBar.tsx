@@ -7,6 +7,12 @@ import styles from '../../Styles/menu.module.css';
 import useAuthStore from '../../store';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
+interface Route {
+  path: string;
+  label: string;
+  className?: string;
+}
+
 const NavBar = () => {
   // 네비게이트
   const navigate = useNavigate();
@@ -25,6 +31,30 @@ const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isMobile, setIsMobile] = useState(windowWidth <= 768 ? true : false);
+
+  // 라우트 정보를 배열로 정의
+  const routes = [
+    { path: '/', label: '소개' },
+    { path: '/project', label: '프로젝트' },
+    { path: '/members', label: '운영진' },
+  ];
+
+  // 로그인 상태에 따라 조건부로 표시할 라우트
+  const authRoutes = isLoggedIn
+    ? [
+        { path: '/mypage', label: '마이페이지' },
+        { path: '/notice', label: '공지사항' },
+      ]
+    : [{ path: '/login', label: '로그인' }];
+
+  // 특별 스타일의 라우트
+  const specialRoutes = [
+    {
+      path: '/recruit',
+      label: 'JOIN US',
+      className: 'bg-blue-500 hover:text-black',
+    },
+  ];
 
   // 모바일 메뉴 관련
   useEffect(() => {
@@ -80,6 +110,28 @@ const NavBar = () => {
     });
   }, [isLoggedIn]);
 
+  // 라우트 항목 렌더링 함수
+  const renderRouteItem = (route: Route, isMobileMenu = false) => {
+    const isActive = pathname === route.path;
+    const baseClassName = isMobileMenu ? '' : 'navbarTo';
+    const activeClassName = isMobileMenu
+      ? ''
+      : isActive
+        ? 'underline underline-offset-4'
+        : '';
+    const specialClassName = route.className || '';
+
+    return (
+      <li
+        key={route.path}
+        className={`${baseClassName} ${activeClassName} ${specialClassName}`}
+        onClick={() => navigate(route.path)}
+      >
+        {route.label}
+      </li>
+    );
+  };
+
   return (
     <nav className='w-screen md:h-14 h-10 fixed bg-black z-10 text-white flex flex-row gap-5 justify-between items-center border-b-gray-50 sm:text-lg text-xs hahmlet select-none overflow-hidden'>
       <>
@@ -95,70 +147,25 @@ const NavBar = () => {
       {isMobile ? (
         <div className='flex items-center cursor-pointer'>
           <IoMenuOutline size={35} onClick={() => handleClick()} />
-          {true && (
+          {
             <animated.ul className={styles.menu} style={{ ...springs }}>
-              <li onClick={() => navigate('/')}>소개</li>
-              <li onClick={() => navigate('/project')}>프로젝트</li>
-              <li onClick={() => navigate('/members')}>운영진</li>
-              {isLoggedIn ? (
-                <>
-                  <li onClick={() => navigate('/mypage')}>마이페이지</li>
-                  <li onClick={logoutHandler}>로그아웃</li>
-                </>
-              ) : (
-                <li onClick={() => navigate('/login')}>로그인</li>
-              )}
-              <li onClick={() => navigate('/recruit')}>JOIN US</li>
+              {routes.map((route) => renderRouteItem(route, true))}
+              {authRoutes.map((route) => renderRouteItem(route, true))}
+              {/*{isLoggedIn && <li onClick={logoutHandler}>로그아웃</li>}*/}
+              {specialRoutes.map((route) => renderRouteItem(route, true))}
             </animated.ul>
-          )}
+          }
         </div>
       ) : (
-        <ul className='flex flex-row h-full '>
-          <li
-            className={`navbarTo ${pathname === '/' ? 'underline underline-offset-4' : ''}`}
-            onClick={() => navigate('/')}
-          >
-            소개
-          </li>
-          <li
-            className={`navbarTo ${pathname === '/project' ? 'underline underline-offset-4' : ''}`}
-            onClick={() => navigate('/project')}
-          >
-            프로젝트
-          </li>
-          <li
-            className={`navbarTo ${pathname === '/members' ? 'underline underline-offset-4' : ''}`}
-            onClick={() => navigate('/members')}
-          >
-            운영진
-          </li>
-          {isLoggedIn ? (
-            <>
-              <li
-                className={`navbarTo ${
-                  pathname === '/mypage' ? 'underline underline-offset-4' : ''
-                }`}
-                onClick={() => navigate('/mypage')}
-              >
-                마이페이지
-              </li>
-            </>
-          ) : (
-            <li
-              className={`navbarTo ${pathname === '/login' ? 'underline underline-offset-4' : ''}`}
-              onClick={() => navigate('/login')}
-            >
-              로그인
-            </li>
-          )}
-          <li
-            className={`navbarTo bg-blue-500 hover:text-black ${
-              pathname === '/recruit' ? 'underline underline-offset-4' : ''
-            }`}
-            onClick={() => navigate('/recruit')}
-          >
-            JOIN US
-          </li>
+        <ul className='flex flex-row h-full'>
+          {routes.map((route) => renderRouteItem(route))}
+          {authRoutes.map((route) => renderRouteItem(route))}
+          {/*{isLoggedIn && (*/}
+          {/*  <li className='navbarTo' onClick={logoutHandler}>*/}
+          {/*    로그아웃*/}
+          {/*  </li>*/}
+          {/*)}*/}
+          {specialRoutes.map((route) => renderRouteItem(route))}
         </ul>
       )}
     </nav>
