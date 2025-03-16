@@ -57,9 +57,9 @@ const NewProjectCard = ({ projectDetail }: ProjectCardProps) => {
         >
           <div className={'inline-flex items-center gap-2'}>
             {projectDetail.isPrivate && <HiLockClosed />}
-            <h3 className='text-xl font-bold'>{projectDetail.name}</h3>
+            <h3 className='text-lg font-bold'>{projectDetail.name}</h3>
           </div>
-          <p>{projectDetail.intro}</p>
+          <p className={'text-sm'}>{projectDetail.intro}</p>
         </Link>
       </div>
     </Link>

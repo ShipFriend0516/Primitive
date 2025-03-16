@@ -59,12 +59,12 @@ const ProjectHoverDetail = ({
         {/* Stats */}
         <div className='flex justify-around py-4 '>
           <div className='flex items-center gap-1'>
-            <FaHeart size={20} />
+            <FaHeart size={16} />
             <span className='text-sm'>{projectDetail.likeCount || 0}</span>
           </div>
           {projectDetail.githubLink && (
             <div className='flex items-center gap-1'>
-              <FaStar size={20} />
+              <FaStar size={16} />
               <span className='text-sm'>
                 {githubStars !== null ? githubStars : '-'}
               </span>
