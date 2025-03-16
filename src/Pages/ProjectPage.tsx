@@ -184,10 +184,10 @@ const ProjectPage = () => {
         <Skeleton
           key={index}
           className={
-            'flex flex-col w-full h-[363px] p-1 gap-2 bg-gray-300/50 rounded-b-none'
+            'flex flex-col w-full h-[300px] p-1 gap-2 bg-gray-300/50 rounded-b-none'
           }
         >
-          <Skeleton className={'w-full h-64'} />
+          <Skeleton className={'w-full h-80'} />
         </Skeleton>
       ));
   };
