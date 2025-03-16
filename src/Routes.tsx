@@ -1,69 +1,74 @@
-import RecruitPage from "./Pages/RecruitPage/RecruitPage";
-import MainPage from "./Pages/MainPage";
-import MembersPage from "./Pages/MembersPage/MembersPage";
-import ProjectPage from "./Pages/ProjectPage";
-import ErrorPage from "./Pages/ErrorPage";
-import TestPage from "./Pages/TestPage";
-import AdminPage from "./Pages/AdminPage";
-import ProjectDetailPage from "./Pages/ProjectDetailPage";
-import LoginPage from "./Pages/LoginPage";
-import MyPage from "./Pages/MyPage";
-import ProjectUploadPage from "./Pages/ProjectUploadPage";
-import NoticePage from "./Pages/NoticePage";
-import NoticeDetailPage from "./Pages/NoticeDetailPage";
+import RecruitPage from './Pages/RecruitPage/RecruitPage';
+import MainPage from './Pages/MainPage';
+import MembersPage from './Pages/MembersPage/MembersPage';
+import ProjectPage from './Pages/ProjectPage';
+import ErrorPage from './Pages/ErrorPage';
+import TestPage from './Pages/TestPage';
+import AdminPage from './Pages/AdminPage';
+import ProjectDetailPage from './Pages/ProjectDetailPage';
+import LoginPage from './Pages/LoginPage';
+import MyPage from './Pages/MyPage';
+import ProjectUploadPage from './Pages/ProjectUploadPage';
+import NoticePage from './Pages/NoticePage';
+import NoticeDetailPage from './Pages/NoticeDetailPage';
+import ProtectedRoute from '@/src/Components/layout/ProtectedRoute';
 
 const routes = [
   {
     element: <MainPage />,
-    path: "/",
+    path: '/',
   },
   {
     element: <LoginPage />,
-    path: "/login",
+    path: '/login',
   },
   {
     element: <ProjectPage />,
-    path: "/project",
+    path: '/project',
   },
   {
     element: <ProjectUploadPage />,
-    path: "/project/edit",
+    path: '/project/edit',
   },
   {
     element: <ProjectDetailPage />,
-    path: "/project/:id",
+    path: '/project/:id',
   },
   {
     element: <MembersPage />,
-    path: "/members",
+    path: '/members',
   },
   {
     element: <RecruitPage />,
-    path: "/recruit",
+    path: '/recruit',
   },
   {
     element: <MyPage />,
-    path: "/mypage",
+    path: '/mypage',
   },
   {
     element: <AdminPage />,
-    path: "/admin",
+    path: '/admin',
   },
   {
     element: <NoticePage />,
-    path: "/notice",
+    path: '/notice',
   },
   {
     element: <NoticeDetailPage />,
-    path: "/notice/:id",
+    path: '/notice/:id',
   },
   {
-    element: <TestPage />,
-    path: "/test",
+    element: (
+      <ProtectedRoute>
+        <TestPage />
+      </ProtectedRoute>
+    ),
+    path: '/test',
   },
   {
     element: <ErrorPage />,
-    path: "/*",
+    path: '/*',
   },
 ];
 

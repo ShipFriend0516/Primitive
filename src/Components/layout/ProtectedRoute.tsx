@@ -8,9 +8,9 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const navigate = useNavigate();
+  const authState = useAuthStore((state) => state.isLoggedIn);
 
   useEffect(() => {
-    const authState = useAuthStore((state) => state.isLoggedIn);
     if (!authState) {
       alert('로그인이 필요한 서비스입니다.');
       navigate('/login', { replace: true });
