@@ -14,6 +14,7 @@ interface ProjectCardProps {
 const NewProjectCard = ({ projectDetail }: ProjectCardProps) => {
   const [githubStars, setGithubStars] = useState<number | null>(null);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+
   useEffect(() => {
     const fetchGitHubStars = async () => {
       if (projectDetail.githubLink) {
@@ -25,10 +26,21 @@ const NewProjectCard = ({ projectDetail }: ProjectCardProps) => {
     fetchGitHubStars();
   }, [projectDetail.githubLink]);
 
+  // 날짜 포맷팅 함수
+  const formatDate = (dateString: number) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
+
   return (
     <Link to={'/project/' + projectDetail.id}>
-      <div className='relative bg-white shadow shadow-gray-300 rounded-md p-1 flex flex-col justify-center items-center h-[300px]'>
-        <div className='w-full h-[200px] overflow-hidden group bg-gray-100 '>
+      <div className='relative bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden'>
+        <div className='w-full h-[200px] overflow-hidden group bg-gray-100'>
           {!isImageLoaded && (
             <div className={'flex items-center justify-center h-full'}>
               {projectDetail.thumbnail ? (
@@ -42,7 +54,7 @@ const NewProjectCard = ({ projectDetail }: ProjectCardProps) => {
           )}
           <img
             onLoad={() => setIsImageLoaded(true)}
-            className='rounded-t-md w-full h-full object-cover transition-transform group-hover:scale-105 '
+            className='w-full h-full object-cover transition-transform group-hover:scale-105'
             src={projectDetail.thumbnail}
             alt={projectDetail.name}
           />
@@ -51,16 +63,23 @@ const NewProjectCard = ({ projectDetail }: ProjectCardProps) => {
             githubStars={githubStars || 0}
           />
         </div>
-        <Link
-          className='p-4 w-full flex flex-col h-[108px]'
-          to={`/project/${projectDetail.id}`}
-        >
-          <div className={'inline-flex items-center gap-2'}>
-            {projectDetail.isPrivate && <HiLockClosed />}
-            <h3 className='text-lg font-bold'>{projectDetail.name}</h3>
+
+        <div className='p-6 w-full'>
+          <div className='mb-1 flex items-center gap-2'>
+            {projectDetail.isPrivate && (
+              <HiLockClosed className='text-gray-500' />
+            )}
+            <h3 className='text-2xl font-semibold'>{projectDetail.name}</h3>
           </div>
-          <p className={'text-sm'}>{projectDetail.intro}</p>
-        </Link>
+          <p className='text-sm text-gray-600 mb-3 overflow-hidden text-ellipsis whitespace-nowrap'>
+            {projectDetail.intro}
+          </p>
+
+          {/* 작성 일자를 작은 글씨로 표시 */}
+          <p className='text-xs text-gray-400'>
+            {formatDate(projectDetail.createdAt || 0)}
+          </p>
+        </div>
       </div>
     </Link>
   );
